@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contato — Douglas N. Schimidt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="estilo.css" />
+
+  <style>
+    .contato-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+    }
+    .contato-inner {
+      max-width: 520px;
+      width: 100%;
+    }
+    .pagina-label {
+      font-family: var(--detalhe);
+      font-size: 0.9rem;
+      color: var(--destaque);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .pagina-titulo {
+      font-family: var(--titulo);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--texto);
+      line-height: 1.1;
+      margin-bottom: 2.5rem;
+    }
+
+    .form-grupo {
+      margin-bottom: 1.2rem;
+    }
+    .form-grupo label {
+      display: block;
+      font-family: var(--detalhe);
+      font-size: 0.9rem;
+      color: var(--texto2);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+    .form-grupo input,
+    .form-grupo textarea {
+      width: 100%;
+      background: #111;
+      border: 1px solid var(--borda);
+      color: var(--texto);
+      font-family: var(--corpo);
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color var(--transicao);
+    }
+    .form-grupo input:focus,
+    .form-grupo textarea:focus {
+      border-color: var(--destaque);
+    }
+    .form-grupo textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    .form-btn {
+      font-family: var(--detalhe);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      color: #0d0d0d;
+      background: var(--destaque);
+      border: none;
+      padding: 0.85rem 2.5rem;
+      cursor: pointer;
+      transition: background var(--transicao);
+      margin-top: 0.5rem;
+    }
+    .form-btn:hover { background: var(--destaque2); }
+
+    .contato-extra {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--borda);
+    }
+    .contato-extra p {
+      font-family: var(--detalhe);
+      font-size: 0.95rem;
+      color: var(--texto2);
+      margin-bottom: 0.5rem;
+    }
+    .contato-extra a {
+      color: var(--destaque);
+      transition: opacity var(--transicao);
+    }
+    .contato-extra a:hover { opacity: 0.7; }
+
+    @media (max-width: 600px) {
+      .contato-wrap { padding: 7rem 1.5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a href="index.html" class="nav-logo">
+      Douglas N. Schimidt
+      <small>adventure photography</small>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="portfolio.html"  onclick="fecharMenu()">Portfólio</a></li>
+      <li><a href="loja.html"       onclick="fecharMenu()">Loja</a></li>
+      <li><a href="expedicoes.html" onclick="fecharMenu()">Expedições</a></li>
+      <li><a href="contato.html" class="ativa" onclick="fecharMenu()">Contato</a></li>
+    </ul>
+  </nav>
+
+  <div class="contato-wrap">
+    <div class="contato-inner reveal">
+      <p class="pagina-label">fale comigo</p>
+      <h1 class="pagina-titulo">Contato</h1>
+
+      <!--
+        FORMULÁRIO: funciona automaticamente quando o site
+        está no Netlify — os envios chegam em:
+        Site Settings → Forms no painel do Netlify.
+        Para receber por e-mail: Forms → Form notifications.
+      -->
+      <form name="contato" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contato" />
+        <p style="display:none"><input name="bot-field" /></p>
+
+        <div class="form-grupo">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
+        </div>
+        <div class="form-grupo">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+        </div>
+        <div class="form-grupo">
+          <label for="msg">Mensagem</label>
+          <textarea id="msg" name="mensagem" placeholder="Oi Douglas..." required></textarea>
+        </div>
+        <button type="submit" class="form-btn">Enviar</button>
+      </form>
+
+      <div class="contato-extra">
+        <!-- Troque pelo seu e-mail real -->
+        <p>E-mail: <a href="mailto:contato@douglasnschimidt.com">contato@douglasnschimidt.com</a></p>
+        <p>Instagram: <a href="https://instagram.com/douglasnanes" target="_blank" rel="noopener">@douglasnanes</a></p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer-logo">Douglas N. Schimidt</span>
+    <span>© 2025</span>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('rolada', window.scrollY > 50));
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => navLinks.classList.toggle('aberto'));
+    function fecharMenu() { navLinks.classList.remove('aberto'); }
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visivel'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>

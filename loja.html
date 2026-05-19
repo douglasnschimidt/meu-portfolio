@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loja — Douglas N. Schimidt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="estilo.css" />
+
+  <style>
+    .pagina-topo {
+      padding: 10rem 3rem 1.5rem;
+    }
+    .pagina-label {
+      font-family: var(--detalhe);
+      font-size: 0.9rem;
+      color: var(--destaque);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .pagina-titulo {
+      font-family: var(--titulo);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--texto);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+    .pagina-desc {
+      font-family: var(--detalhe);
+      font-size: 1rem;
+      color: var(--texto2);
+      margin-bottom: 3rem;
+    }
+
+    /* Grade de produtos */
+    .loja-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 0 3rem 6rem;
+    }
+
+    .produto-card {
+      background: #111;
+      border: 1px solid var(--borda);
+      overflow: hidden;
+      transition: border-color var(--transicao), transform var(--transicao);
+    }
+    .produto-card:hover {
+      border-color: var(--destaque);
+      transform: translateY(-3px);
+    }
+
+    .produto-foto {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+    .produto-foto img {
+      transition: transform 0.5s ease;
+    }
+    .produto-card:hover .produto-foto img {
+      transform: scale(1.04);
+    }
+
+    .produto-info {
+      padding: 1rem 1.2rem 1.3rem;
+    }
+    .produto-nome {
+      font-family: var(--titulo);
+      font-size: 1rem;
+      color: var(--texto);
+      margin-bottom: 0.3rem;
+    }
+    .produto-desc {
+      font-size: 0.82rem;
+      color: var(--texto2);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .produto-rodape {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .produto-preco {
+      font-family: var(--detalhe);
+      font-size: 1.2rem;
+      color: var(--destaque);
+      font-weight: 600;
+    }
+    .produto-btn {
+      font-family: var(--detalhe);
+      font-size: 0.9rem;
+      color: #0d0d0d;
+      background: var(--destaque);
+      border: none;
+      padding: 0.45rem 1.1rem;
+      cursor: pointer;
+      transition: background var(--transicao);
+      letter-spacing: 0.05em;
+    }
+    .produto-btn:hover { background: var(--destaque2); }
+
+    @media (max-width: 600px) {
+      .pagina-topo { padding: 8rem 1.5rem 1.5rem; }
+      .loja-grid { padding: 0 1.5rem 4rem; grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a href="index.html" class="nav-logo">
+      Douglas N. Schimidt
+      <small>adventure photography</small>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="portfolio.html"  onclick="fecharMenu()">Portfólio</a></li>
+      <li><a href="loja.html" class="ativa" onclick="fecharMenu()">Loja</a></li>
+      <li><a href="expedicoes.html" onclick="fecharMenu()">Expedições</a></li>
+      <li><a href="contato.html"    onclick="fecharMenu()">Contato</a></li>
+    </ul>
+  </nav>
+
+  <div class="pagina-topo reveal">
+    <p class="pagina-label">imagens digitais</p>
+    <h1 class="pagina-titulo">Loja</h1>
+    <p class="pagina-desc">Download em alta resolução. Fundo de tela, impressão, arte.</p>
+  </div>
+
+  <!--
+    LOJA: cada .produto-card é um produto.
+    COMO ADICIONAR UM PRODUTO:
+    1. Copie um bloco .produto-card completo
+    2. Troque a foto (src="...")
+    3. Troque nome, descrição e preço
+    4. Troque o href do botão pelo link do Gumroad
+    5. Suba no GitHub
+  -->
+  <main class="loja-grid reveal">
+
+    <div class="produto-card">
+      <div class="produto-foto">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=75" alt="Montanha ao amanhecer" loading="lazy" />
+      </div>
+      <div class="produto-info">
+        <h3 class="produto-nome">Montanha ao amanhecer</h3>
+        <p class="produto-desc">Alta resolução para impressão ou fundo de tela. Arquivo JPEG.</p>
+        <div class="produto-rodape">
+          <span class="produto-preco">R$ 29</span>
+          <!-- Troque o href pelo link real do seu produto no Gumroad -->
+          <a href="https://gumroad.com/l/SEUPRODUTO" target="_blank" rel="noopener">
+            <button class="produto-btn">Comprar</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="produto-foto">
+        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=75" alt="Vale nebuloso" loading="lazy" />
+      </div>
+      <div class="produto-info">
+        <h3 class="produto-nome">Vale nebuloso</h3>
+        <p class="produto-desc">Paisagem minimalista. Perfeita para quadro clean ou wallpaper.</p>
+        <div class="produto-rodape">
+          <span class="produto-preco">R$ 29</span>
+          <a href="https://gumroad.com/l/SEUPRODUTO" target="_blank" rel="noopener">
+            <button class="produto-btn">Comprar</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="produto-card">
+      <div class="produto-foto">
+        <img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=600&q=75" alt="Queda d'água" loading="lazy" />
+      </div>
+      <div class="produto-info">
+        <h3 class="produto-nome">Queda d'água</h3>
+        <p class="produto-desc">Longa exposição. Movimento suave da água em ambiente de mata.</p>
+        <div class="produto-rodape">
+          <span class="produto-preco">R$ 35</span>
+          <a href="https://gumroad.com/l/SEUPRODUTO" target="_blank" rel="noopener">
+            <button class="produto-btn">Comprar</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <span class="footer-logo">Douglas N. Schimidt</span>
+    <span>© 2025</span>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('rolada', window.scrollY > 50));
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => navLinks.classList.toggle('aberto'));
+    function fecharMenu() { navLinks.classList.remove('aberto'); }
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visivel'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>

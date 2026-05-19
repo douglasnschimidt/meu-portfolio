@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expedições — Douglas N. Schimidt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="estilo.css" />
+
+  <style>
+    .pagina-topo {
+      padding: 10rem 3rem 4rem;
+      max-width: 900px;
+    }
+    .pagina-label {
+      font-family: var(--detalhe);
+      font-size: 0.9rem;
+      color: var(--destaque);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .pagina-titulo {
+      font-family: var(--titulo);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--texto);
+      line-height: 1.1;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Layout em duas colunas: foto + texto */
+    .sobre-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      padding: 0 3rem 6rem;
+      align-items: start;
+      max-width: 1100px;
+    }
+
+    /* Foto com borda laranja deslocada */
+    .sobre-foto-wrap {
+      position: relative;
+    }
+    .sobre-foto {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+    .sobre-foto-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--destaque);
+      transform: translate(12px, 12px);
+      pointer-events: none;
+    }
+
+    /* Texto do sobre */
+    .sobre-bio {
+      color: var(--texto2);
+      font-size: 0.95rem;
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Tags — esportes e interesses */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 2rem 0;
+    }
+    .tag {
+      font-family: var(--detalhe);
+      font-size: 0.9rem;
+      color: var(--destaque);
+      border: 1px solid rgba(224,123,57,0.35);
+      padding: 0.3rem 0.9rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Números — continentes, fotos, etc */
+    .numeros {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--borda);
+      border: 1px solid var(--borda);
+      margin: 2rem 0;
+    }
+    .numero-item {
+      background: var(--fundo);
+      padding: 1.2rem 1rem;
+      text-align: center;
+    }
+    .numero-val {
+      font-family: var(--titulo);
+      font-size: 2rem;
+      color: var(--destaque);
+      display: block;
+    }
+    .numero-label {
+      font-family: var(--detalhe);
+      font-size: 0.75rem;
+      color: var(--texto2);
+      letter-spacing: 0.1em;
+    }
+
+    /* Link do Instagram */
+    .sobre-instagram {
+      font-family: var(--detalhe);
+      font-size: 1.05rem;
+      color: var(--texto2);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      transition: color var(--transicao);
+    }
+    .sobre-instagram:hover { color: var(--destaque); }
+
+    @media (max-width: 768px) {
+      .pagina-topo { padding: 8rem 1.5rem 2rem; }
+      .sobre-inner {
+        grid-template-columns: 1fr;
+        padding: 0 1.5rem 4rem;
+        gap: 3rem;
+      }
+      .sobre-foto { aspect-ratio: 1/1; }
+      .numeros { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a href="index.html" class="nav-logo">
+      Douglas N. Schimidt
+      <small>adventure photography</small>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="portfolio.html"  onclick="fecharMenu()">Portfólio</a></li>
+      <li><a href="loja.html"       onclick="fecharMenu()">Loja</a></li>
+      <li><a href="expedicoes.html" class="ativa" onclick="fecharMenu()">Expedições</a></li>
+      <li><a href="contato.html"    onclick="fecharMenu()">Contato</a></li>
+    </ul>
+  </nav>
+
+  <div class="pagina-topo reveal">
+    <p class="pagina-label">quem fotografa</p>
+    <h1 class="pagina-titulo">Expedições</h1>
+  </div>
+
+  <div class="sobre-inner reveal">
+
+    <!-- FOTO: troque o src pelo caminho da sua foto pessoal -->
+    <div class="sobre-foto-wrap">
+      <div class="sobre-foto">
+        <img
+          src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=700&q=80"
+          alt="Douglas N. Schimidt"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <div>
+      <!--
+        BIO: edite o texto abaixo com suas palavras.
+        Dica: direto, sem papo de portfólio corporativo.
+      -->
+      <p class="sobre-bio">
+        Fotógrafo de aventura baseado em São Paulo. Surfista, skatista,
+        viajante — na ordem que aparecer primeiro. Já pisei nos 6 continentes
+        sempre com câmera na mão e a sensação de que o próximo lugar
+        vai ser melhor que o anterior.
+      </p>
+      <p class="sobre-bio">
+        Meu trabalho vive onde a natureza é maior que qualquer cidade:
+        na onda que ninguém mais surfou, na trilha que dobra atrás da
+        montanha, no acampamento debaixo de um céu que a cidade
+        apagou faz tempo.
+      </p>
+      <p class="sobre-bio">
+        Amador em transição séria para profissional. Referências:
+        Chris Burkard, Jimmy Chin, Jefferson Pela — fotógrafos que
+        vivem o que fotografam. É esse o plano.
+      </p>
+
+      <!-- TAGS: edite ou adicione -->
+      <div class="tags">
+        <span class="tag">surf</span>
+        <span class="tag">skate</span>
+        <span class="tag">trilhas</span>
+        <span class="tag">escalada</span>
+        <span class="tag">acampamento</span>
+        <span class="tag">água</span>
+        <span class="tag">viagem</span>
+      </div>
+
+      <!-- NÚMEROS: edite os valores -->
+      <div class="numeros">
+        <div class="numero-item">
+          <span class="numero-val">6</span>
+          <span class="numero-label">continentes</span>
+        </div>
+        <div class="numero-item">
+          <span class="numero-val">1k+</span>
+          <span class="numero-label">fotos</span>
+        </div>
+        <div class="numero-item">
+          <span class="numero-val">∞</span>
+          <span class="numero-label">km rodados</span>
+        </div>
+      </div>
+
+      <!-- INSTAGRAM: troque pelo seu @ -->
+      <a href="https://instagram.com/douglasnanes" target="_blank" rel="noopener" class="sobre-instagram">
+        ↗ @douglasnanes
+      </a>
+    </div>
+
+  </div>
+
+  <footer>
+    <span class="footer-logo">Douglas N. Schimidt</span>
+    <span>© 2025</span>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('rolada', window.scrollY > 50));
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => navLinks.classList.toggle('aberto'));
+    function fecharMenu() { navLinks.classList.remove('aberto'); }
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visivel'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>

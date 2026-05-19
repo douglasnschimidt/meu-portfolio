@@ -1,0 +1,65 @@
+# ─────────────────────────────────────────────────────────────
+# atualizar-galeria.yml
+#
+# O que este arquivo faz (em linguagem simples):
+#   Toda vez que você faz algo no repositório, OU todo dia às 6h
+#   da manhã (horário de Brasília), o GitHub:
+#     1. Roda o script atualizar-site.py
+#     2. Esse script lê suas pastas do Google Drive
+#     3. Gera as páginas HTML com suas fotos
+#     4. Salva tudo no repositório
+#     5. O Netlify detecta e publica em ~30 segundos
+#
+# Você não precisa fazer nada — é tudo automático.
+# ─────────────────────────────────────────────────────────────
+
+name: Atualizar galeria via Google Drive
+
+on:
+  # Roda todo dia às 9h horário de Brasília (12h UTC)
+  schedule:
+    - cron: '0 12 * * *'
+
+  # Roda também quando você enviar arquivos pro GitHub
+  push:
+    branches: [main]
+
+  # Permite rodar manualmente pelo painel do GitHub
+  # (útil quando você quer atualizar na hora, sem esperar)
+  workflow_dispatch:
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixa os arquivos do repositório
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      # 2. Instala o Python (linguagem do script)
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. Instala a biblioteca necessária para o script
+      - name: Instalar dependências
+        run: pip install requests
+
+      # 4. Roda o script que lê o Drive e gera os HTMLs
+      - name: Atualizar páginas do portfólio
+        env:
+          # A chave do Google Drive vem das configurações secretas do GitHub
+          # (você vai configurar isso uma vez — veja o guia)
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: python atualizar-site.py
+
+      # 5. Salva as páginas geradas de volta no repositório
+      - name: Salvar páginas atualizadas
+        run: |
+          git config user.name  "Bot do site"
+          git config user.email "bot@douglasnschimidt.com"
+          git add categoria-*.html
+          git diff --staged --quiet || git commit -m "Galeria atualizada via Google Drive"
+          git push

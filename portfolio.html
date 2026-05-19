@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfólio — Douglas N. Schimidt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="estilo.css" />
+
+  <style>
+    /* ═══ Cabeçalho da página ═══ */
+    .pagina-topo {
+      padding: 10rem 3rem 4rem;
+    }
+    .pagina-label {
+      font-family: var(--detalhe);
+      font-size: 0.9rem;
+      color: var(--destaque);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .pagina-titulo {
+      font-family: var(--titulo);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--texto);
+      line-height: 1.1;
+    }
+
+    /* ═══ Grade das 5 categorias ═══
+       Cada categoria é um card grande que leva para
+       a página de fotos daquela categoria.            */
+    .categorias-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 3px;
+      padding: 0 3px 3px;
+    }
+
+    .categoria-card {
+      position: relative;
+      aspect-ratio: 3/2;       /* proporção largura:altura do card */
+      overflow: hidden;
+      display: block;           /* faz o card inteiro ser clicável  */
+      background: #1a1a1a;
+    }
+
+    /* A foto de fundo do card */
+    .categoria-card img {
+      transition: transform 0.6s ease;
+    }
+    .categoria-card:hover img {
+      transform: scale(1.04);   /* zoom suave ao passar o mouse     */
+    }
+
+    /* Escurecimento sobre a foto do card */
+    .categoria-escuro {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(13,13,13,0.9) 0%,
+        rgba(13,13,13,0.2) 60%,
+        rgba(13,13,13,0)   100%
+      );
+      transition: background var(--transicao);
+    }
+    .categoria-card:hover .categoria-escuro {
+      background: linear-gradient(
+        to top,
+        rgba(13,13,13,0.8) 0%,
+        rgba(13,13,13,0.35) 70%,
+        rgba(13,13,13,0.1)  100%
+      );
+    }
+
+    /* Texto dentro do card */
+    .categoria-info {
+      position: absolute;
+      bottom: 0; left: 0;
+      padding: 1.6rem 2rem;
+    }
+    .categoria-nome {
+      font-family: var(--titulo);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      color: var(--texto);
+      line-height: 1;
+      display: block;
+    }
+    .categoria-sub {
+      font-family: var(--detalhe);
+      font-size: 1rem;
+      color: var(--texto2);
+      display: block;
+      margin-top: 0.3rem;
+      transition: color var(--transicao);
+    }
+    .categoria-card:hover .categoria-sub {
+      color: var(--destaque);
+    }
+
+    /* ═══ Responsivo celular ═══ */
+    @media (max-width: 600px) {
+      .pagina-topo { padding: 8rem 1.5rem 2rem; }
+      .categorias-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ BARRA DE TOPO ════════════════════════════════ -->
+  <nav id="nav">
+    <a href="index.html" class="nav-logo">
+      Douglas N. Schimidt
+      <small>adventure photography</small>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="portfolio.html" class="ativa" onclick="fecharMenu()">Portfólio</a></li>
+      <li><a href="loja.html"       onclick="fecharMenu()">Loja</a></li>
+      <li><a href="expedicoes.html" onclick="fecharMenu()">Expedições</a></li>
+      <li><a href="contato.html"    onclick="fecharMenu()">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══ CABEÇALHO ═══════════════════════════════════ -->
+  <div class="pagina-topo reveal">
+    <p class="pagina-label">trabalho</p>
+    <h1 class="pagina-titulo">Portfólio</h1>
+  </div>
+
+  <!-- ═══ GRADE DAS CATEGORIAS ════════════════════════
+       Cada card leva para uma página separada de fotos.
+
+       COMO TROCAR A FOTO DO CARD:
+       Troque o src="..." pelo caminho da sua foto.
+       Exemplo: src="fotos/terra-capa.jpg"
+  ════════════════════════════════════════════════════ -->
+  <main class="categorias-grid reveal">
+
+    <a class="categoria-card" href="categoria-terra.html">
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=75" alt="Terra" loading="lazy" />
+      <div class="categoria-escuro"></div>
+      <div class="categoria-info">
+        <span class="categoria-nome">Terra</span>
+        <span class="categoria-sub">Onde tudo começa.</span>
+      </div>
+    </a>
+
+    <a class="categoria-card" href="categoria-agua.html">
+      <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=900&q=75" alt="Água" loading="lazy" />
+      <div class="categoria-escuro"></div>
+      <div class="categoria-info">
+        <span class="categoria-nome">Água</span>
+        <span class="categoria-sub">Meu habitat.</span>
+      </div>
+    </a>
+
+    <a class="categoria-card" href="categoria-fogo.html">
+      <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=900&q=75" alt="Fogo" loading="lazy" />
+      <div class="categoria-escuro"></div>
+      <div class="categoria-info">
+        <span class="categoria-nome">Fogo</span>
+        <span class="categoria-sub">Impossível ignorar.</span>
+      </div>
+    </a>
+
+    <a class="categoria-card" href="categoria-ar.html">
+      <img src="https://images.unsplash.com/photo-1540390769625-2fc3f8b1d50c?w=900&q=75" alt="Ar" loading="lazy" />
+      <div class="categoria-escuro"></div>
+      <div class="categoria-info">
+        <span class="categoria-nome">Ar</span>
+        <span class="categoria-sub">O que você não vê.</span>
+      </div>
+    </a>
+
+    <a class="categoria-card" href="categoria-vida.html">
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=900&q=75" alt="Vida" loading="lazy" />
+      <div class="categoria-escuro"></div>
+      <div class="categoria-info">
+        <span class="categoria-nome">Vida</span>
+        <span class="categoria-sub">Seja cotidiana ou selvagem.</span>
+      </div>
+    </a>
+
+  </main>
+
+  <!-- ═══ RODAPÉ ═══════════════════════════════════════ -->
+  <footer>
+    <span class="footer-logo">Douglas N. Schimidt</span>
+    <span>© 2025</span>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('rolada', window.scrollY > 50));
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => navLinks.classList.toggle('aberto'));
+    function fecharMenu() { navLinks.classList.remove('aberto'); }
+
+    // Faz os elementos aparecerem ao rolar
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visivel'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>
