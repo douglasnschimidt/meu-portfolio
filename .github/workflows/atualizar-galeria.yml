@@ -1,0 +1,37 @@
+name: Atualizar galeria via Google Drive
+
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências
+        run: pip install requests
+
+      - name: Atualizar páginas do portfólio
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: python atualizar-site.py
+
+      - name: Salvar páginas atualizadas
+        run: |
+          git config user.name  "Bot do site"
+          git config user.email "bot@douglasnschimidt.com"
+          git add categoria-*.html
+          git diff --staged --quiet || git commit -m "Galeria atualizada via Google Drive"
+          git push
