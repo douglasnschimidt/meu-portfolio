@@ -1,4 +1,16 @@
 /* ════════════════════════════════════════════════════════════
+   FONTE PERSONALIZADA — caligrafia do Douglas
+   O arquivo LapisDeArtista-Regular.ttf deve estar na raiz do site
+   ════════════════════════════════════════════════════════════ */
+@font-face {
+  font-family: 'LapisDeArtista';
+  src: url('LapisDeArtista-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ════════════════════════════════════════════════════════════
    VARIÁVEIS — edite aqui para mudar cores e fontes do site inteiro
    (Este arquivo controla a aparência de todas as páginas de uma vez)
    ════════════════════════════════════════════════════════════ */
@@ -11,9 +23,9 @@
   --borda:        #222;      /* linhas e bordas sutis             */
 
   /* FONTES */
-  --titulo:   'Special Elite', cursive;  /* títulos grandes       */
-  --detalhe:  'Caveat', cursive;         /* rótulos, detalhes     */
-  --corpo:    'Karla', sans-serif;       /* textos corridos       */
+  --titulo:   'Special Elite', cursive;    /* títulos grandes       */
+  --detalhe:  'LapisDeArtista', 'Caveat', cursive; /* rótulos, detalhes — caligrafia do Douglas */
+  --corpo:    'Karla', sans-serif;         /* textos corridos       */
 
   --transicao: 0.35s ease;
 }
@@ -47,16 +59,16 @@ nav {
 nav.rolada { background: rgba(13,13,13,0.97); }
 
 .nav-logo {
-  font-family: var(--titulo);
-  font-size: 1.1rem;
+  font-family: 'LapisDeArtista', var(--detalhe);
+  font-size: 1.3rem;
   letter-spacing: 0.06em;
   color: var(--texto);
   line-height: 1.2;
 }
 .nav-logo small {
   display: block;
-  font-family: var(--detalhe);
-  font-size: 0.75rem;
+  font-family: 'LapisDeArtista', var(--detalhe);
+  font-size: 0.85rem;
   color: var(--destaque);
   letter-spacing: 0.2em;
   font-weight: 400;
@@ -122,8 +134,8 @@ footer span {
   opacity: 0.5;
 }
 .footer-logo {
-  font-family: var(--titulo);
-  font-size: 0.95rem;
+  font-family: 'LapisDeArtista', var(--detalhe);
+  font-size: 1.1rem;
   color: var(--texto2);
   opacity: 0.7 !important;
 }
