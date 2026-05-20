@@ -1,295 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Terra — Douglas N. Schimidt</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="estilo.css" />
-
   <style>
-    /* ═══ Cabeçalho da categoria ═══ */
-    .cat-topo {
-      padding: 9rem 3rem 3rem;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      border-bottom: 1px solid var(--borda);
-      margin-bottom: 3px;
-    }
-    .cat-label {
-      font-family: var(--detalhe);
-      font-size: 0.85rem;
-      color: var(--destaque);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-    }
-    .cat-titulo {
-      font-family: var(--titulo);
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      color: var(--texto);
-      line-height: 1;
-    }
-    .cat-subtitulo {
-      font-family: var(--detalhe);
-      font-size: clamp(1rem, 2.5vw, 1.4rem);
-      color: var(--texto2);
-      font-style: italic;
-      border-left: 2px solid var(--destaque);
-      padding-left: 1rem;
-    }
-    .cat-voltar {
-      font-family: var(--detalhe);
-      font-size: 0.9rem;
-      color: var(--texto2);
-      letter-spacing: 0.08em;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: color var(--transicao);
-    }
-    .cat-voltar:hover { color: var(--destaque); }
-
-    /* ═══ Grade de thumbnails (miniaturas das fotos) ═══ */
-    .fotos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 3px;
-      padding: 0 3px;
-    }
-
-    .foto-item {
-      position: relative;
-      aspect-ratio: 4/3;
-      overflow: hidden;
-      cursor: pointer;
-      background: #1a1a1a;
-    }
-    .foto-item img {
-      transition: transform 0.5s ease;
-    }
-    .foto-item:hover img {
-      transform: scale(1.05);
-    }
-
-    /* Texto que aparece ao passar o mouse */
-    .foto-info {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: flex-end;
-      padding: 1rem;
-      background: rgba(13,13,13,0);
-      transition: background var(--transicao);
-    }
-    .foto-item:hover .foto-info {
-      background: rgba(13,13,13,0.55);
-    }
-    .foto-titulo-hover {
-      font-family: var(--detalhe);
-      font-size: 1rem;
-      color: var(--texto);
-      opacity: 0;
-      transform: translateY(6px);
-      transition: all var(--transicao);
-    }
-    .foto-item:hover .foto-titulo-hover {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ═══ Lightbox (janela que abre a foto em tamanho grande) ═══ */
-    .lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: rgba(8,8,8,0.97);
-      align-items: center;
-      justify-content: center;
-    }
-    .lightbox.aberto { display: flex; }
-    .lightbox-img {
-      max-width: 92vw;
-      max-height: 90vh;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-    }
-    .lightbox-fechar {
-      position: absolute;
-      top: 1.5rem; right: 2rem;
-      font-size: 2rem;
-      color: var(--texto2);
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-family: var(--detalhe);
-      line-height: 1;
-      transition: color var(--transicao);
-    }
-    .lightbox-fechar:hover { color: var(--destaque); }
-
-    /* setas de navegação dentro do lightbox */
-    .lightbox-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: var(--texto2);
-      font-size: 2.5rem;
-      cursor: pointer;
-      padding: 1rem;
-      transition: color var(--transicao);
-      font-family: var(--detalhe);
-    }
-    .lightbox-nav:hover { color: var(--destaque); }
-    .lightbox-nav.anterior { left: 1rem; }
-    .lightbox-nav.proximo  { right: 1rem; }
-
-    /* ═══ Espaço abaixo da grade ═══ */
-    .fim { padding: 4rem 3rem; }
-
-    @media (max-width: 600px) {
-      .cat-topo { padding: 7rem 1.5rem 2rem; }
-      .fotos-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+    .cat-topo{padding:9rem 3rem 3rem;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-bottom:1px solid var(--borda);margin-bottom:3px}
+    .cat-label{font-family:var(--detalhe);font-size:.85rem;color:var(--destaque);letter-spacing:.25em;text-transform:uppercase;margin-bottom:.4rem}
+    .cat-titulo{font-family:var(--titulo);font-size:clamp(2.5rem,6vw,4rem);color:var(--texto);line-height:1}
+    .cat-subtitulo{font-family:var(--detalhe);font-size:clamp(1rem,2.5vw,1.4rem);color:var(--texto2);font-style:italic;border-left:2px solid var(--destaque);padding-left:1rem}
+    .cat-voltar{font-family:var(--detalhe);font-size:.9rem;color:var(--texto2);letter-spacing:.08em;display:flex;align-items:center;gap:.5rem;transition:color var(--transicao)}
+    .cat-voltar:hover{color:var(--destaque)}
+    .cat-qtd{font-family:var(--detalhe);font-size:.8rem;color:var(--texto2);opacity:.5;padding:0 3rem 1rem}
+    .fotos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:3px;padding:0 3px}
+    .foto-item{position:relative;aspect-ratio:4/3;overflow:hidden;cursor:pointer;background:#1a1a1a}
+    .foto-item img{transition:transform .5s ease}
+    .foto-item:hover img{transform:scale(1.05)}
+    .foto-info{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;background:rgba(13,13,13,0);transition:background var(--transicao)}
+    .foto-item:hover .foto-info{background:rgba(13,13,13,.65)}
+    .foto-titulo-hover{font-family:var(--detalhe);font-size:1rem;color:var(--texto);opacity:0;transform:translateY(6px);transition:all var(--transicao)}
+    .foto-desc-hover{font-family:var(--corpo);font-size:.78rem;color:var(--texto2);opacity:0;transform:translateY(6px);transition:all var(--transicao) .04s;margin-top:.2rem;line-height:1.4}
+    .foto-item:hover .foto-titulo-hover,.foto-item:hover .foto-desc-hover{opacity:1;transform:translateY(0)}
+    .lightbox{display:none;position:fixed;inset:0;z-index:200;background:rgba(8,8,8,.97);align-items:center;justify-content:center;flex-direction:column;gap:1rem}
+    .lightbox.aberto{display:flex}
+    .lightbox-img{max-width:88vw;max-height:78vh;width:auto;height:auto;object-fit:contain}
+    .lightbox-info{text-align:center;max-width:600px;padding:0 1rem}
+    .lightbox-titulo{font-family:var(--titulo);font-size:1.2rem;color:var(--texto);margin-bottom:.3rem}
+    .lightbox-desc{font-family:var(--detalhe);font-size:1rem;color:var(--texto2);font-style:italic}
+    .lightbox-fechar{position:absolute;top:1.5rem;right:2rem;font-size:2rem;color:var(--texto2);cursor:pointer;background:none;border:none;font-family:var(--detalhe);line-height:1;transition:color var(--transicao)}
+    .lightbox-fechar:hover{color:var(--destaque)}
+    .lightbox-nav{position:absolute;top:40%;transform:translateY(-50%);background:none;border:none;color:var(--texto2);font-size:2.5rem;cursor:pointer;padding:1rem;transition:color var(--transicao);font-family:var(--detalhe)}
+    .lightbox-nav:hover{color:var(--destaque)}
+    .lightbox-nav.anterior{left:1rem}.lightbox-nav.proximo{right:1rem}
+    .vazio{grid-column:1/-1;text-align:center;padding:4rem;color:#555;font-family:var(--detalhe);font-size:1.4rem}
+    .fim{padding:4rem 3rem}
+    @media(max-width:600px){.cat-topo{padding:7rem 1.5rem 2rem}.fotos-grid{grid-template-columns:repeat(2,1fr)}}
   </style>
 </head>
 <body>
-
-  <!-- ═══ BARRA DE TOPO ════════════════════════════════ -->
   <nav id="nav">
-    <a href="index.html" class="nav-logo">
-      Douglas N. Schimidt
-      <small>adventure photography</small>
-    </a>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="index.html" class="nav-logo">Douglas N. Schimidt<small>adventure photography</small></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
     <ul class="nav-links" id="navLinks">
       <li><a href="portfolio.html" class="ativa" onclick="fecharMenu()">Portfólio</a></li>
-      <li><a href="loja.html"       onclick="fecharMenu()">Loja</a></li>
+      <li><a href="loja.html" onclick="fecharMenu()">Loja</a></li>
       <li><a href="expedicoes.html" onclick="fecharMenu()">Expedições</a></li>
       <li><a href="contato.html"    onclick="fecharMenu()">Contato</a></li>
     </ul>
   </nav>
-
-  <!-- ═══ CABEÇALHO DA CATEGORIA ══════════════════════ -->
   <div class="cat-topo reveal">
-    <div>
-      <p class="cat-label">portfólio</p>
-      <!--
-        ══ NOME E SUBTÍTULO DA CATEGORIA ═══════════
-        Troque "Água" e o subtítulo pelo da categoria
-        que você está criando.
-        ════════════════════════════════════════ -->
-      <h1 class="cat-titulo">Terra</h1>
-    </div>
+    <div><p class="cat-label">portfólio</p><h1 class="cat-titulo">Terra</h1></div>
     <p class="cat-subtitulo">Onde tudo começa.</p>
     <a href="portfolio.html" class="cat-voltar">← voltar</a>
   </div>
-
-  <!-- ═══ GRADE DE FOTOS ══════════════════════════════
-       COMO ADICIONAR UMA FOTO:
-       1. Copie um bloco <div class="foto-item"> abaixo
-       2. Troque o src="..." pelo caminho da sua foto
-          Exemplo: src="fotos/agua/agua-01.jpg"
-       3. Troque o data-titulo pelo nome da foto
-       4. Salve o arquivo e suba no GitHub
-  ════════════════════════════════════════════════════ -->
+  <p class="cat-qtd">0 fotos</p>
   <main class="fotos-grid reveal" id="galeria">
-
-    <div class="foto-item" data-titulo="Montanha" data-src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400&q=85">
-      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=75" alt="Montanha" loading="lazy" />
-      <div class="foto-info"><span class="foto-titulo-hover">Montanha</span></div>
-    </div>
-
-    <div class="foto-item" data-titulo="Escalada" data-src="https://images.unsplash.com/photo-1522163182402-834f871fd851?w=1400&q=85">
-      <img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?w=700&q=75" alt="Escalada" loading="lazy" />
-      <div class="foto-info"><span class="foto-titulo-hover">Escalada</span></div>
-    </div>
-
-    <div class="foto-item" data-titulo="Deserto" data-src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1400&q=85">
-      <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=700&q=75" alt="Deserto" loading="lazy" />
-      <div class="foto-info"><span class="foto-titulo-hover">Deserto</span></div>
-    </div>
-
-    <!--
-      ADICIONE MAIS FOTOS AQUI — copie o bloco acima
-    -->
-
+    <div class="vazio"><p>Nenhuma foto ainda.</p></div>
   </main>
-
   <div class="fim"></div>
-
-  <!-- ═══ LIGHTBOX ════════════════════════════════════ -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-fechar" id="lbFechar">×</button>
-    <button class="lightbox-nav anterior" id="lbAnterior">‹</button>
+    <button class="lightbox-nav anterior" id="lbAnt">‹</button>
     <img class="lightbox-img" src="" alt="" id="lbImg" />
-    <button class="lightbox-nav proximo" id="lbProximo">›</button>
+    <div class="lightbox-info">
+      <p class="lightbox-titulo" id="lbTit"></p>
+      <p class="lightbox-desc"   id="lbDsc"></p>
+    </div>
+    <button class="lightbox-nav proximo" id="lbPro">›</button>
   </div>
-
-  <!-- ═══ RODAPÉ ═══════════════════════════════════════ -->
   <footer>
     <span class="footer-logo">Douglas N. Schimidt</span>
-    <span>© 2025</span>
+    <span>© 2025 — atualizado via Google Drive + Sheets</span>
   </footer>
-
   <script>
-    // Barra do topo escurece ao rolar
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => nav.classList.toggle('rolada', window.scrollY > 50));
-
-    // Menu celular
-    const toggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-    toggle.addEventListener('click', () => navLinks.classList.toggle('aberto'));
-    function fecharMenu() { navLinks.classList.remove('aberto'); }
-
-    // Reveal ao rolar
-    const reveals = document.querySelectorAll('.reveal');
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visivel'); obs.unobserve(e.target); } });
-    }, { threshold: 0.08 });
-    reveals.forEach(el => obs.observe(el));
-
-    // Lightbox — abre foto grande ao clicar na miniatura
-    const itens    = Array.from(document.querySelectorAll('.foto-item'));
-    const lightbox = document.getElementById('lightbox');
-    const lbImg    = document.getElementById('lbImg');
-    let atual = 0;
-
-    function abrirLightbox(i) {
-      atual = i;
-      lbImg.src = itens[i].dataset.src;
-      lbImg.alt = itens[i].dataset.titulo;
-      lightbox.classList.add('aberto');
-      document.body.style.overflow = 'hidden';
-    }
-    function fecharLightbox() {
-      lightbox.classList.remove('aberto');
-      document.body.style.overflow = '';
-    }
-
-    itens.forEach((item, i) => item.addEventListener('click', () => abrirLightbox(i)));
-    document.getElementById('lbFechar').addEventListener('click', fecharLightbox);
-    document.getElementById('lbAnterior').addEventListener('click', () => abrirLightbox((atual - 1 + itens.length) % itens.length));
-    document.getElementById('lbProximo').addEventListener('click',  () => abrirLightbox((atual + 1) % itens.length));
-    lightbox.addEventListener('click', e => { if (e.target === lightbox) fecharLightbox(); });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') fecharLightbox();
-      if (e.key === 'ArrowLeft')  document.getElementById('lbAnterior').click();
-      if (e.key === 'ArrowRight') document.getElementById('lbProximo').click();
+        const _nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => _nav.classList.toggle('rolada', window.scrollY > 50));
+    document.getElementById('navToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('aberto'));
+    function fecharMenu() { document.getElementById('navLinks').classList.remove('aberto'); }
+    document.querySelectorAll('.reveal').forEach(el => {
+      new IntersectionObserver(([e],o) => { if(e.isIntersecting){ el.classList.add('visivel'); o.unobserve(el); } },{threshold:.08}).observe(el);
     });
+    const its=Array.from(document.querySelectorAll('.foto-item'));
+    const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg'),lbTit=document.getElementById('lbTit'),lbDsc=document.getElementById('lbDsc');
+    let cur=0;
+    function abrir(i){cur=i;const e=its[i];lbImg.src=e.dataset.src;lbImg.alt=e.dataset.titulo;lbTit.textContent=e.dataset.titulo||'';lbDsc.textContent=e.dataset.descricao||'';lb.classList.add('aberto');document.body.style.overflow='hidden';}
+    function fechar(){lb.classList.remove('aberto');document.body.style.overflow='';}
+    its.forEach((e,i)=>e.addEventListener('click',()=>abrir(i)));
+    document.getElementById('lbFechar').addEventListener('click',fechar);
+    document.getElementById('lbAnt').addEventListener('click',()=>abrir((cur-1+its.length)%its.length));
+    document.getElementById('lbPro').addEventListener('click',()=>abrir((cur+1)%its.length));
+    lb.addEventListener('click',e=>{if(e.target===lb)fechar();});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')fechar();if(e.key==='ArrowLeft')document.getElementById('lbAnt').click();if(e.key==='ArrowRight')document.getElementById('lbPro').click();});
   </script>
-
 </body>
 </html>
