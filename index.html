@@ -52,9 +52,10 @@
     /* Área do texto — fica à esquerda */
     .hero-texto {
       position: relative;
-      z-index: 2;
+      z-index: 10;
       padding: 0 3rem;
       max-width: 520px;
+      margin-top: 4rem;
     }
 
     .hero-etiqueta {
@@ -94,6 +95,8 @@
       gap: 0.3rem;
       opacity: 0;
       animation: fadeUp 0.7s ease 0.8s forwards;
+      position: relative;
+      z-index: 10;
     }
 
     .hero-menu a {
@@ -106,6 +109,8 @@
       gap: 0.8rem;
       transition: color var(--transicao), gap var(--transicao);
       width: fit-content;
+      cursor: pointer;
+      padding: 0.15rem 0;
     }
 
     /* Traço laranja que aparece ao passar o mouse */
