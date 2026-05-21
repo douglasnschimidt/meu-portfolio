@@ -1,215 +1,395 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Portfólio — Douglas N. Schimidt</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="estilo.css" />
-
   <style>
-    /* ═══ Cabeçalho da página ═══ */
-    .pagina-topo {
-      padding: 10rem 3rem 4rem;
-    }
-    .pagina-label {
-      font-family: var(--detalhe);
-      font-size: 0.9rem;
-      color: var(--destaque);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-    .pagina-titulo {
-      font-family: var(--titulo);
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      color: var(--texto);
-      line-height: 1.1;
-    }
+    /* ── Topo da página ── */
+    .pagina-topo{padding:9rem 3rem 2rem;border-bottom:1px solid var(--borda)}
+    .pagina-label{font-family:var(--detalhe);font-size:.85rem;color:var(--destaque);letter-spacing:.25em;text-transform:uppercase;margin-bottom:.4rem}
+    .pagina-titulo{font-family:var(--titulo);font-size:clamp(2.5rem,6vw,4rem);color:var(--texto);line-height:1;margin-bottom:2rem}
 
-    /* ═══ Grade das 5 categorias ═══
-       Cada categoria é um card grande que leva para
-       a página de fotos daquela categoria.            */
-    .categorias-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 3px;
-      padding: 0 3px 3px;
-    }
+    /* ── Filtros ── */
+    .filtros{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-top:1.5rem}
+    .filtros-grupo{display:flex;gap:.5rem;flex-wrap:wrap}
+    .filtros-sep{width:1px;height:24px;background:var(--borda);margin:0 .4rem}
+    .btn-filtro{font-family:var(--detalhe);font-size:.82rem;letter-spacing:.1em;padding:.35rem .9rem;border:1px solid var(--borda);background:transparent;color:var(--texto2);cursor:pointer;transition:all var(--transicao)}
+    .btn-filtro:hover{color:var(--texto);border-color:var(--texto2)}
+    .btn-filtro.ativo{background:var(--destaque);border-color:var(--destaque);color:#0d0d0d}
 
-    .categoria-card {
-      position: relative;
-      aspect-ratio: 3/2;       /* proporção largura:altura do card */
-      overflow: hidden;
-      display: block;           /* faz o card inteiro ser clicável  */
-      background: #1a1a1a;
-    }
+    /* ── Seções de categoria ── */
+    .categoria-secao{padding:4rem 0;border-bottom:1px solid var(--borda)}
+    .categoria-secao.oculta{display:none}
+    .cat-header{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding:0 3rem 2rem}
+    .cat-label{font-family:var(--detalhe);font-size:.8rem;color:var(--destaque);letter-spacing:.25em;text-transform:uppercase;margin-bottom:.3rem}
+    .cat-titulo{font-family:var(--titulo);font-size:clamp(1.8rem,4vw,2.8rem);color:var(--texto);line-height:1}
+    .cat-subtitulo{font-family:var(--detalhe);font-size:clamp(.95rem,2vw,1.2rem);color:var(--texto2);font-style:italic;border-left:2px solid var(--destaque);padding-left:1rem}
 
-    /* A foto de fundo do card */
-    .categoria-card img {
-      transition: transform 0.6s ease;
-    }
-    .categoria-card:hover img {
-      transform: scale(1.04);   /* zoom suave ao passar o mouse     */
-    }
+    /* ── Grade de fotos ── */
+    .fotos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:3px;padding:0 3px}
+    .foto-item{position:relative;aspect-ratio:4/3;overflow:hidden;cursor:pointer;background:#1a1a1a;
+      -webkit-user-select:none;user-select:none}
+    .foto-item img{transition:transform .5s ease;pointer-events:none;-webkit-user-drag:none;user-drag:none}
+    .foto-item:hover img{transform:scale(1.05)}
+    .foto-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;
+      background:rgba(13,13,13,0);transition:background var(--transicao)}
+    .foto-item:hover .foto-overlay{background:rgba(13,13,13,.65)}
+    .foto-titulo-hover{font-family:var(--detalhe);font-size:1rem;color:var(--texto);opacity:0;transform:translateY(6px);transition:all var(--transicao)}
+    .foto-item:hover .foto-titulo-hover{opacity:1;transform:translateY(0)}
+    .foto-badges{display:flex;gap:.3rem;margin-top:.4rem}
+    .badge-tipo{font-family:var(--detalhe);font-size:.7rem;letter-spacing:.08em;padding:.15rem .5rem;border-radius:2px;opacity:0;transition:opacity var(--transicao)}
+    .foto-item:hover .badge-tipo{opacity:1}
+    .badge-tipo.digital{background:rgba(224,123,57,.2);color:var(--destaque);border:1px solid rgba(224,123,57,.4)}
+    .badge-tipo.fisica{background:rgba(255,255,255,.08);color:var(--texto2);border:1px solid var(--borda)}
+    .foto-item.oculta{display:none}
 
-    /* Escurecimento sobre a foto do card */
-    .categoria-escuro {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(13,13,13,0.9) 0%,
-        rgba(13,13,13,0.2) 60%,
-        rgba(13,13,13,0)   100%
-      );
-      transition: background var(--transicao);
-    }
-    .categoria-card:hover .categoria-escuro {
-      background: linear-gradient(
-        to top,
-        rgba(13,13,13,0.8) 0%,
-        rgba(13,13,13,0.35) 70%,
-        rgba(13,13,13,0.1)  100%
-      );
-    }
+    /* ── Lightbox ── */
+    .lightbox{position:fixed;inset:0;z-index:1000;display:flex;background:rgba(10,10,10,.97);opacity:0;pointer-events:none;transition:opacity .3s ease}
+    .lightbox.aberto{opacity:1;pointer-events:all}
+    .lb-esquerda{flex:1;display:flex;align-items:center;justify-content:center;padding:5rem 2rem 2rem;min-width:0}
+    .lb-foto{max-width:100%;max-height:85vh;object-fit:contain;pointer-events:none;-webkit-user-drag:none;user-drag:none;-webkit-user-select:none;user-select:none}
+    .lb-direita{width:340px;flex-shrink:0;border-left:1px solid var(--borda);display:flex;flex-direction:column;padding:6rem 2rem 2rem;overflow-y:auto}
+    .lb-fechar{position:absolute;top:1.5rem;right:2rem;font-size:1.8rem;color:var(--texto2);cursor:pointer;background:none;border:none;transition:color var(--transicao);z-index:10}
+    .lb-fechar:hover{color:var(--texto)}
+    .lb-nav{position:absolute;top:50%;transform:translateY(-50%);font-size:1.6rem;color:var(--texto2);cursor:pointer;background:none;border:none;transition:color var(--transicao);z-index:10;padding:.5rem}
+    .lb-nav:hover{color:var(--destaque)}
+    .lb-prev{left:1rem}
+    .lb-next{right:360px}
+    .lb-cat{font-family:var(--detalhe);font-size:.8rem;color:var(--destaque);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem}
+    .lb-titulo{font-family:var(--titulo);font-size:1.5rem;color:var(--texto);line-height:1.2;margin-bottom:1rem}
+    .lb-desc{font-size:.9rem;color:var(--texto2);line-height:1.8;margin-bottom:2rem;flex:1}
+    .lb-sem-venda{font-family:var(--detalhe);font-size:.9rem;color:var(--texto2);opacity:.5;margin-top:auto}
+    .lb-secao-compra{border-top:1px solid var(--borda);padding-top:1.5rem;margin-top:auto}
+    .lb-preco-label{font-family:var(--detalhe);font-size:.8rem;color:var(--texto2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+    .lb-preco{font-family:var(--detalhe);font-size:1.6rem;color:var(--destaque);font-weight:600;margin-bottom:1.2rem}
+    .lb-btn{display:block;width:100%;font-family:var(--detalhe);font-size:.95rem;text-align:center;padding:.7rem;background:var(--destaque);color:#0d0d0d;border:none;cursor:pointer;transition:background var(--transicao);text-decoration:none;margin-bottom:.6rem;letter-spacing:.04em}
+    .lb-btn:hover{background:var(--destaque2)}
+    .lb-btn.secundario{background:transparent;border:1px solid var(--borda);color:var(--texto2)}
+    .lb-btn.secundario:hover{border-color:var(--destaque);color:var(--destaque)}
+    .lb-opcoes{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem}
+    .lb-opcao-grupo{display:flex;flex-direction:column;gap:.2rem}
+    .lb-opcao-grupo label{font-family:var(--detalhe);font-size:.75rem;color:var(--texto2);letter-spacing:.08em}
+    .lb-opcao-grupo select{background:#1a1a1a;border:1px solid var(--borda);color:var(--texto);font-family:var(--corpo);font-size:.85rem;padding:.35rem .5rem;outline:none;cursor:pointer;width:100%}
+    .lb-opcao-grupo select:focus{border-color:var(--destaque)}
+    .lb-tabs{display:flex;gap:0;margin-bottom:1.5rem}
+    .lb-tab{flex:1;font-family:var(--detalhe);font-size:.8rem;letter-spacing:.08em;padding:.4rem;border:1px solid var(--borda);background:transparent;color:var(--texto2);cursor:pointer;transition:all var(--transicao);text-align:center}
+    .lb-tab.ativo{background:var(--destaque);border-color:var(--destaque);color:#0d0d0d}
+    .lb-tab-content{display:none}
+    .lb-tab-content.ativo{display:block}
+    .lb-contador{font-family:var(--detalhe);font-size:.8rem;color:var(--texto2);opacity:.5;text-align:center;margin-top:1.5rem}
 
-    /* Texto dentro do card */
-    .categoria-info {
-      position: absolute;
-      bottom: 0; left: 0;
-      padding: 1.6rem 2rem;
-    }
-    .categoria-nome {
-      font-family: var(--titulo);
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      color: var(--texto);
-      line-height: 1;
-      display: block;
-    }
-    .categoria-sub {
-      font-family: var(--detalhe);
-      font-size: 1rem;
-      color: var(--texto2);
-      display: block;
-      margin-top: 0.3rem;
-      transition: color var(--transicao);
-    }
-    .categoria-card:hover .categoria-sub {
-      color: var(--destaque);
-    }
+    /* Proteção de imagem — camada invisível sobre cada foto */
+    .foto-item::after{content:'';position:absolute;inset:0;z-index:1;cursor:pointer}
 
-    /* ═══ Responsivo celular ═══ */
-    @media (max-width: 600px) {
-      .pagina-topo { padding: 8rem 1.5rem 2rem; }
-      .categorias-grid { grid-template-columns: 1fr; }
+    /* ── Responsivo ── */
+    @media(max-width:768px){
+      .lightbox{flex-direction:column}
+      .lb-esquerda{padding:4rem 1rem 0;flex:0 0 55vh}
+      .lb-direita{width:100%;border-left:none;border-top:1px solid var(--borda);padding:1.5rem}
+      .lb-nav.lb-prev{left:.3rem}
+      .lb-nav.lb-next{right:.3rem}
+      .pagina-topo{padding:8rem 1.5rem 2rem}
+      .cat-header{padding:0 1.5rem 1.5rem}
+      .fotos-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
     }
   </style>
 </head>
 <body>
-
-  <!-- ═══ BARRA DE TOPO ════════════════════════════════ -->
   <nav id="nav">
-    <a href="index.html" class="nav-logo">
-      Douglas N. Schimidt
-      <small>adventure photography</small>
-    </a>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="index.html" class="nav-logo">Douglas N. Schimidt<small>adventure photography</small></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
     <ul class="nav-links" id="navLinks">
       <li><a href="portfolio.html" class="ativa" onclick="fecharMenu()">Portfólio</a></li>
-      <li><a href="loja.html"       onclick="fecharMenu()">Loja</a></li>
+      <li><a href="portfolio.html?loja=1" onclick="fecharMenu()">Loja</a></li>
       <li><a href="expedicoes.html" onclick="fecharMenu()">Expedições</a></li>
-      <li><a href="contato.html"    onclick="fecharMenu()">Contato</a></li>
+      <li><a href="contato.html" onclick="fecharMenu()">Contato</a></li>
     </ul>
   </nav>
 
-  <!-- ═══ CABEÇALHO ═══════════════════════════════════ -->
   <div class="pagina-topo reveal">
-    <p class="pagina-label">trabalho</p>
+    <p class="pagina-label">portfólio</p>
     <h1 class="pagina-titulo">Portfólio</h1>
+
+    <div class="filtros">
+      <div class="filtros-grupo" id="filtros-cat">
+        <button class="btn-filtro ativo" data-cat="todos" onclick="filtrarCat(this)">Todos</button>
+        <button class="btn-filtro" data-cat="terra" onclick="filtrarCat(this)">Terra</button>
+        <button class="btn-filtro" data-cat="agua" onclick="filtrarCat(this)">Água</button>
+        <button class="btn-filtro" data-cat="fogo" onclick="filtrarCat(this)">Fogo</button>
+        <button class="btn-filtro" data-cat="ar" onclick="filtrarCat(this)">Ar</button>
+        <button class="btn-filtro" data-cat="vida" onclick="filtrarCat(this)">Vida</button>
+      </div>
+      <div class="filtros-sep"></div>
+      <div class="filtros-grupo" id="filtros-loja">
+        <button class="btn-filtro" data-loja="digital" onclick="filtrarLoja(this)">Digital</button>
+        <button class="btn-filtro" data-loja="fisica" onclick="filtrarLoja(this)">Impressão</button>
+      </div>
+    </div>
   </div>
 
-  <!-- ═══ GRADE DAS CATEGORIAS ════════════════════════
-       Cada card leva para uma página separada de fotos.
 
-       COMO TROCAR A FOTO DO CARD:
-       Troque o src="..." pelo caminho da sua foto.
-       Exemplo: src="fotos/terra-capa.jpg"
-  ════════════════════════════════════════════════════ -->
-  <main class="categorias-grid reveal">
 
-    <a class="categoria-card" href="categoria-terra.html">
-      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=75" alt="Terra" loading="lazy" />
-      <div class="categoria-escuro"></div>
-      <div class="categoria-info">
-        <span class="categoria-nome">Terra</span>
-        <span class="categoria-sub">Onde tudo começa.</span>
+  <!-- ── Lightbox ── -->
+  <div class="lightbox" id="lightbox">
+    <button class="lb-fechar" onclick="fecharLightbox()">&#215;</button>
+    <button class="lb-nav lb-prev" onclick="navLightbox(-1)">&#8592;</button>
+    <button class="lb-nav lb-next" onclick="navLightbox(1)">&#8594;</button>
+
+    <div class="lb-esquerda">
+      <img class="lb-foto" id="lb-img" src="" alt="" />
+    </div>
+
+    <div class="lb-direita">
+      <p class="lb-cat" id="lb-cat"></p>
+      <h2 class="lb-titulo" id="lb-titulo"></h2>
+      <p class="lb-desc" id="lb-desc"></p>
+      <p class="lb-contador" id="lb-contador"></p>
+
+      <div class="lb-secao-compra" id="lb-compra">
+        <!-- preenchido via JS -->
       </div>
-    </a>
+    </div>
+  </div>
 
-    <a class="categoria-card" href="categoria-agua.html">
-      <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=900&q=75" alt="Água" loading="lazy" />
-      <div class="categoria-escuro"></div>
-      <div class="categoria-info">
-        <span class="categoria-nome">Água</span>
-        <span class="categoria-sub">Meu habitat.</span>
-      </div>
-    </a>
-
-    <a class="categoria-card" href="categoria-fogo.html">
-      <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=900&q=75" alt="Fogo" loading="lazy" />
-      <div class="categoria-escuro"></div>
-      <div class="categoria-info">
-        <span class="categoria-nome">Fogo</span>
-        <span class="categoria-sub">Impossível ignorar.</span>
-      </div>
-    </a>
-
-    <a class="categoria-card" href="categoria-ar.html">
-      <img src="https://images.unsplash.com/photo-1540390769625-2fc3f8b1d50c?w=900&q=75" alt="Ar" loading="lazy" />
-      <div class="categoria-escuro"></div>
-      <div class="categoria-info">
-        <span class="categoria-nome">Ar</span>
-        <span class="categoria-sub">O que você não vê.</span>
-      </div>
-    </a>
-
-    <a class="categoria-card" href="categoria-vida.html">
-      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=900&q=75" alt="Vida" loading="lazy" />
-      <div class="categoria-escuro"></div>
-      <div class="categoria-info">
-        <span class="categoria-nome">Vida</span>
-        <span class="categoria-sub">Seja cotidiana ou selvagem.</span>
-      </div>
-    </a>
-
-  </main>
-
-  <!-- ═══ RODAPÉ ═══════════════════════════════════════ -->
   <footer>
     <span class="footer-logo">Douglas N. Schimidt</span>
-    <span>© 2025</span>
+    <span>© 2025 — atualizado via Google Drive + Sheets</span>
   </footer>
-
   <script>
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => nav.classList.toggle('rolada', window.scrollY > 50));
-    const toggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-    toggle.addEventListener('click', () => navLinks.classList.toggle('aberto'));
-    function fecharMenu() { navLinks.classList.remove('aberto'); }
+    /* ── Nav ── */
+    const _nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => _nav.classList.toggle('rolada', window.scrollY > 50));
+    document.getElementById('navToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('aberto'));
+    function fecharMenu() { document.getElementById('navLinks').classList.remove('aberto'); }
+    document.querySelectorAll('.reveal').forEach(el => {
+      new IntersectionObserver(([e],o) => { if(e.isIntersecting){ el.classList.add('visivel'); o.unobserve(el); } },{threshold:.08}).observe(el);
+    });
 
-    // Faz os elementos aparecerem ao rolar
-    const reveals = document.querySelectorAll('.reveal');
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visivel'); obs.unobserve(e.target); } });
-    }, { threshold: 0.08 });
-    reveals.forEach(el => obs.observe(el));
+    /* ── Proteção de imagem ── */
+    document.addEventListener('contextmenu', e => { if(e.target.tagName==='IMG') e.preventDefault(); });
+    document.addEventListener('dragstart',   e => { if(e.target.tagName==='IMG') e.preventDefault(); });
+    document.addEventListener('keyup', e => {
+      if((e.key==='PrintScreen')||(e.metaKey&&e.shiftKey&&(e.key==='3'||e.key==='4'||e.key==='5'))) {
+        navigator.clipboard?.writeText('').catch(()=>{});
+      }
+    });
+
+    /* ── Filtros ── */
+    let catAtiva  = 'todos';
+    let lojaAtiva = new Set();
+
+    function filtrarCat(btn) {
+      document.querySelectorAll('#filtros-cat .btn-filtro').forEach(b => b.classList.remove('ativo'));
+      btn.classList.add('ativo');
+      catAtiva = btn.dataset.cat;
+      aplicarFiltros();
+      if(catAtiva !== 'todos') {
+        const sec = document.getElementById('cat-' + catAtiva);
+        if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    }
+
+    function filtrarLoja(btn) {
+      const tipo = btn.dataset.loja;
+      if(lojaAtiva.has(tipo)) { lojaAtiva.delete(tipo); btn.classList.remove('ativo'); }
+      else                    { lojaAtiva.add(tipo);    btn.classList.add('ativo');    }
+      aplicarFiltros();
+    }
+
+    function aplicarFiltros() {
+      document.querySelectorAll('.categoria-secao').forEach(sec => {
+        const slug = sec.dataset.slug;
+        const catOk = catAtiva === 'todos' || catAtiva === slug;
+        sec.classList.toggle('oculta', !catOk);
+
+        sec.querySelectorAll('.foto-item').forEach(item => {
+          const lojaItem = item.dataset.loja; // ex: "digital", "fisica", "digital fisica", ""
+          let lojaOk = true;
+          if(lojaAtiva.size > 0) {
+            lojaOk = false;
+            lojaAtiva.forEach(t => { if(lojaItem.includes(t)) lojaOk = true; });
+          }
+          item.classList.toggle('oculta', !lojaOk);
+        });
+
+        // oculta seção se todas as fotos estiverem ocultas
+        if(catOk) {
+          const visíveis = sec.querySelectorAll('.foto-item:not(.oculta)').length;
+          sec.classList.toggle('oculta', visíveis === 0);
+        }
+      });
+      atualizarVisiveisLightbox();
+    }
+
+    /* ── Lightbox ── */
+    const PRECOS = {
+      "20x30": { fosco: 129, brilhante: 129, fineart: 189 },
+      "30x40": { fosco: 189, brilhante: 189, fineart: 269 },
+      "40x60": { fosco: 269, brilhante: 269, fineart: 389 },
+      "50x70": { fosco: 349, brilhante: 349, fineart: 499 },
+    };
+    const MOLDURA = { sem: 0, preta: 120, branca: 120, natural: 150 };
+
+    let itensVisiveis = [];
+    let idxAtual = 0;
+
+    function atualizarVisiveisLightbox() {
+      itensVisiveis = Array.from(document.querySelectorAll('.foto-item:not(.oculta)'));
+    }
+
+    function abrirLightbox(el) {
+      atualizarVisiveisLightbox();
+      idxAtual = itensVisiveis.indexOf(el);
+      carregarLightbox(idxAtual);
+      document.getElementById('lightbox').classList.add('aberto');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function carregarLightbox(idx) {
+      const el      = itensVisiveis[idx];
+      const fid     = el.dataset.id;
+      const titulo  = el.dataset.titulo;
+      const desc    = el.dataset.descricao;
+      const naLoja  = el.dataset.naLoja;
+      const cat     = el.dataset.cat;
+      const precoD  = el.dataset.precoDigital;
+      const gumroad = el.dataset.linkGumroad;
+      const shopify = el.dataset.linkShopify;
+
+      document.getElementById('lb-img').src    = `https://drive.google.com/thumbnail?id=${fid}&sz=w1600`;
+      document.getElementById('lb-img').alt    = titulo;
+      document.getElementById('lb-titulo').textContent = titulo;
+      document.getElementById('lb-desc').textContent   = desc || '';
+      document.getElementById('lb-cat').textContent    = cat.toUpperCase();
+      document.getElementById('lb-contador').textContent = `${idx+1} / ${itensVisiveis.length}`;
+
+      const compra = document.getElementById('lb-compra');
+      const temDigital = naLoja === 'digital' || naLoja === 'ambos';
+      const temFisica  = naLoja === 'fisica'  || naLoja === 'ambos';
+
+      if(!temDigital && !temFisica) {
+        compra.innerHTML = '<p class="lb-sem-venda">Esta foto não está à venda.</p>';
+        return;
+      }
+
+      let tabs = '', conteudos = '';
+
+      if(temDigital && temFisica) {
+        tabs = `<div class="lb-tabs">
+          <button class="lb-tab ativo" onclick="trocarTab('digital',this)">Download Digital</button>
+          <button class="lb-tab"       onclick="trocarTab('fisica',this)">Impressão Física</button>
+        </div>`;
+      }
+
+      if(temDigital) {
+        const ativo = !temFisica ? 'ativo' : 'ativo';
+        conteudos += `<div class="lb-tab-content ${ativo}" id="tab-digital">
+          <p class="lb-preco-label">Preço</p>
+          <p class="lb-preco">R$ ${precoD}</p>
+          <p style="font-size:.8rem;color:var(--texto2);margin-bottom:1rem;line-height:1.6">JPEG alta resolução — download imediato via Gumroad</p>
+          <a class="lb-btn" href="${gumroad}" target="_blank" rel="noopener">Comprar download</a>
+        </div>`;
+      }
+
+      if(temFisica) {
+        const ativo = !temDigital ? 'ativo' : '';
+        conteudos += `<div class="lb-tab-content ${ativo}" id="tab-fisica">
+          <div class="lb-opcoes">
+            <div class="lb-opcao-grupo">
+              <label>Tamanho</label>
+              <select id="lb-tam" onchange="calcLbPreco('${fid}','${shopify}')">
+                <option value="20x30">20×30 cm</option>
+                <option value="30x40">30×40 cm</option>
+                <option value="40x60">40×60 cm</option>
+                <option value="50x70">50×70 cm</option>
+              </select>
+            </div>
+            <div class="lb-opcao-grupo">
+              <label>Papel</label>
+              <select id="lb-papel" onchange="calcLbPreco('${fid}','${shopify}')">
+                <option value="fosco">Fosco</option>
+                <option value="brilhante">Brilhante</option>
+                <option value="fineart">Fine Art</option>
+              </select>
+            </div>
+            <div class="lb-opcao-grupo">
+              <label>Moldura</label>
+              <select id="lb-moldura" onchange="calcLbPreco('${fid}','${shopify}')">
+                <option value="sem">Sem moldura</option>
+                <option value="preta">Preta (+R$120)</option>
+                <option value="branca">Branca (+R$120)</option>
+                <option value="natural">Natural (+R$150)</option>
+              </select>
+            </div>
+          </div>
+          <p class="lb-preco-label">Total</p>
+          <p class="lb-preco" id="lb-preco-fisica">R$ 129</p>
+          <a class="lb-btn" id="lb-btn-shopify" href="${shopify}" target="_blank" rel="noopener">Comprar impressão</a>
+        </div>`;
+      }
+
+      compra.innerHTML = tabs + conteudos;
+      if(temFisica) calcLbPreco(fid, shopify);
+    }
+
+    function trocarTab(tipo, btn) {
+      document.querySelectorAll('.lb-tabs .lb-tab').forEach(b => b.classList.remove('ativo'));
+      document.querySelectorAll('.lb-tab-content').forEach(c => c.classList.remove('ativo'));
+      btn.classList.add('ativo');
+      document.getElementById('tab-'+tipo)?.classList.add('ativo');
+    }
+
+    function calcLbPreco(fid, shopify) {
+      const tam     = document.getElementById('lb-tam')?.value    || '20x30';
+      const papel   = document.getElementById('lb-papel')?.value  || 'fosco';
+      const moldura = document.getElementById('lb-moldura')?.value|| 'sem';
+      const base    = PRECOS[tam]?.[papel] ?? 0;
+      const extra   = MOLDURA[moldura] ?? 0;
+      const total   = base + extra;
+      const el = document.getElementById('lb-preco-fisica');
+      if(el) el.textContent = 'R$ ' + total;
+      const btn = document.getElementById('lb-btn-shopify');
+      if(btn) btn.href = shopify + '?tamanho='+tam+'&papel='+papel+'&moldura='+moldura;
+    }
+
+    function fecharLightbox() {
+      document.getElementById('lightbox').classList.remove('aberto');
+      document.body.style.overflow = '';
+      document.getElementById('lb-img').src = '';
+    }
+
+    function navLightbox(dir) {
+      idxAtual = (idxAtual + dir + itensVisiveis.length) % itensVisiveis.length;
+      carregarLightbox(idxAtual);
+    }
+
+    document.addEventListener('keydown', e => {
+      const lb = document.getElementById('lightbox');
+      if(!lb.classList.contains('aberto')) return;
+      if(e.key === 'Escape')      fecharLightbox();
+      if(e.key === 'ArrowRight')  navLightbox(1);
+      if(e.key === 'ArrowLeft')   navLightbox(-1);
+    });
+
+    /* ── Ativa filtros se vier da Loja ── */
+    if(new URLSearchParams(location.search).get('loja') === '1') {
+      ['digital','fisica'].forEach(tipo => {
+        const btn = document.querySelector(`#filtros-loja [data-loja="${tipo}"]`);
+        if(btn) { lojaAtiva.add(tipo); btn.classList.add('ativo'); }
+      });
+      aplicarFiltros();
+    }
+
+    /* Ancora por categoria via URL hash (ex: portfolio.html#cat-agua) */
+    if(location.hash) {
+      const slug = location.hash.replace('#cat-','');
+      const btn  = document.querySelector(`#filtros-cat [data-cat="${slug}"]`);
+      if(btn) filtrarCat(btn);
+    }
+
+    atualizarVisiveisLightbox();
   </script>
-
 </body>
 </html>
