@@ -2,9 +2,7 @@ name: Atualizar galeria via Google Drive
 
 on:
   schedule:
-    - cron: '0 12 * * *'
-  push:
-    branches: [main]
+    - cron: '0 12 * * 1'
   workflow_dispatch:
 
 jobs:
