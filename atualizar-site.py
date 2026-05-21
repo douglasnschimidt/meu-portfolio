@@ -179,9 +179,10 @@ def gerar_portfolio(todas_fotos):
     .pagina-titulo{{font-family:var(--titulo);font-size:clamp(2.5rem,6vw,4rem);color:var(--texto);line-height:1;margin-bottom:2rem}}
 
     /* ── Filtros ── */
-    .filtros{{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-top:1.5rem}}
+    .filtros{{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.5rem;margin-top:1.5rem}}
+    .filtros-bloco{{display:flex;flex-direction:column;gap:.5rem}}
+    .filtros-label{{font-family:var(--detalhe);font-size:.72rem;color:var(--texto2);letter-spacing:.18em;text-transform:uppercase;opacity:.6}}
     .filtros-grupo{{display:flex;gap:.5rem;flex-wrap:wrap}}
-    .filtros-sep{{width:1px;height:24px;background:var(--borda);margin:0 .4rem}}
     .btn-filtro{{font-family:var(--detalhe);font-size:.82rem;letter-spacing:.1em;padding:.35rem .9rem;border:1px solid var(--borda);background:transparent;color:var(--texto2);cursor:pointer;transition:all var(--transicao)}}
     .btn-filtro:hover{{color:var(--texto);border-color:var(--texto2)}}
     .btn-filtro.ativo{{background:var(--destaque);border-color:var(--destaque);color:#0d0d0d}}
@@ -271,18 +272,22 @@ def gerar_portfolio(todas_fotos):
     <h1 class="pagina-titulo">Portfólio</h1>
 
     <div class="filtros">
-      <div class="filtros-grupo" id="filtros-cat">
-        <button class="btn-filtro ativo" data-cat="todos" onclick="filtrarCat(this)">Todos</button>
-        <button class="btn-filtro" data-cat="terra" onclick="filtrarCat(this)">Terra</button>
-        <button class="btn-filtro" data-cat="agua" onclick="filtrarCat(this)">Água</button>
-        <button class="btn-filtro" data-cat="fogo" onclick="filtrarCat(this)">Fogo</button>
-        <button class="btn-filtro" data-cat="ar" onclick="filtrarCat(this)">Ar</button>
-        <button class="btn-filtro" data-cat="vida" onclick="filtrarCat(this)">Vida</button>
+      <div class="filtros-bloco">
+        <span class="filtros-label">Categorias</span>
+        <div class="filtros-grupo" id="filtros-cat">
+          <button class="btn-filtro" data-cat="terra" onclick="filtrarCat(this)">Terra</button>
+          <button class="btn-filtro" data-cat="agua" onclick="filtrarCat(this)">Água</button>
+          <button class="btn-filtro" data-cat="fogo" onclick="filtrarCat(this)">Fogo</button>
+          <button class="btn-filtro" data-cat="ar" onclick="filtrarCat(this)">Ar</button>
+          <button class="btn-filtro" data-cat="vida" onclick="filtrarCat(this)">Vida</button>
+        </div>
       </div>
-      <div class="filtros-sep"></div>
-      <div class="filtros-grupo" id="filtros-loja">
-        <button class="btn-filtro" data-loja="digital" onclick="filtrarLoja(this)">Digital</button>
-        <button class="btn-filtro" data-loja="fisica" onclick="filtrarLoja(this)">Impressão</button>
+      <div class="filtros-bloco">
+        <span class="filtros-label">Loja</span>
+        <div class="filtros-grupo" id="filtros-loja">
+          <button class="btn-filtro" data-loja="digital" onclick="filtrarLoja(this)">Digital</button>
+          <button class="btn-filtro" data-loja="fisica" onclick="filtrarLoja(this)">Impressão</button>
+        </div>
       </div>
     </div>
   </div>
@@ -332,16 +337,16 @@ def gerar_portfolio(todas_fotos):
     }});
 
     /* ── Filtros ── */
-    let catAtiva  = 'todos';
-    let lojaAtiva = new Set();
+    let catsAtivas = new Set();
+    let lojaAtiva  = new Set();
 
     function filtrarCat(btn) {{
-      document.querySelectorAll('#filtros-cat .btn-filtro').forEach(b => b.classList.remove('ativo'));
-      btn.classList.add('ativo');
-      catAtiva = btn.dataset.cat;
+      const cat = btn.dataset.cat;
+      if(catsAtivas.has(cat)) {{ catsAtivas.delete(cat); btn.classList.remove('ativo'); }}
+      else                    {{ catsAtivas.add(cat);    btn.classList.add('ativo');    }}
       aplicarFiltros();
-      if(catAtiva !== 'todos') {{
-        const sec = document.getElementById('cat-' + catAtiva);
+      if(catsAtivas.size === 1 && catsAtivas.has(cat)) {{
+        const sec = document.getElementById('cat-' + cat);
         if(sec) sec.scrollIntoView({{behavior:'smooth', block:'start'}});
       }}
     }}
@@ -355,12 +360,12 @@ def gerar_portfolio(todas_fotos):
 
     function aplicarFiltros() {{
       document.querySelectorAll('.categoria-secao').forEach(sec => {{
-        const slug = sec.dataset.slug;
-        const catOk = catAtiva === 'todos' || catAtiva === slug;
+        const slug  = sec.dataset.slug;
+        const catOk = catsAtivas.size === 0 || catsAtivas.has(slug);
         sec.classList.toggle('oculta', !catOk);
 
         sec.querySelectorAll('.foto-item').forEach(item => {{
-          const lojaItem = item.dataset.loja; // ex: "digital", "fisica", "digital fisica", ""
+          const lojaItem = item.dataset.loja;
           let lojaOk = true;
           if(lojaAtiva.size > 0) {{
             lojaOk = false;
@@ -369,10 +374,9 @@ def gerar_portfolio(todas_fotos):
           item.classList.toggle('oculta', !lojaOk);
         }});
 
-        // oculta seção se todas as fotos estiverem ocultas
         if(catOk) {{
-          const visíveis = sec.querySelectorAll('.foto-item:not(.oculta)').length;
-          sec.classList.toggle('oculta', visíveis === 0);
+          const visiveis = sec.querySelectorAll('.foto-item:not(.oculta)').length;
+          sec.classList.toggle('oculta', visiveis === 0);
         }}
       }});
       atualizarVisiveisLightbox();
