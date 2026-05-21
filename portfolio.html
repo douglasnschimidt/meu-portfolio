@@ -151,7 +151,7 @@
         data-titulo="Arara solitÃ¡ria"
         data-descricao="Arara atravessando o Buraco das Araras em Bonito, MT"
         data-na-loja="digital"
-        data-preco-digital="R$ 50,00"
+        data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
@@ -168,7 +168,7 @@
         data-titulo="Dunas e o cÃ©u"
         data-descricao="Nuvens imponentes sobre um mar de areia no Parque Nacional dos LenÃ§Ã³is Maranhenses"
         data-na-loja="fisica"
-        data-preco-digital="R$ 50,00"
+        data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
@@ -185,7 +185,7 @@
         data-titulo="Dunas e o vento"
         data-descricao=""
         data-na-loja="nao"
-        data-preco-digital="R$ 50,00"
+        data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
@@ -202,7 +202,7 @@
         data-titulo="Mar de nuvens"
         data-descricao=""
         data-na-loja="nao"
-        data-preco-digital="R$ 50,00"
+        data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
@@ -219,7 +219,7 @@
         data-titulo="Nascer do sol nas Prateleiras"
         data-descricao=""
         data-na-loja="nao"
-        data-preco-digital="R$ 50,00"
+        data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
@@ -236,7 +236,7 @@
         data-titulo="Mar de montanhas"
         data-descricao="Uma das vistas mais incrÃ­veis no primeiro parque nacional brasileiro, Parque Nacional do Itatiaia. Chegar atÃ© a base das Prateleiras e avistar todo o Vale do ParaÃ­ba, com mar de nuvens e montanhas se misturando"
         data-na-loja="ambos"
-        data-preco-digital="R$ 50,00"
+        data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
@@ -341,13 +341,9 @@
     }
 
     /* ── Lightbox ── */
-    const PRECOS = {
-      "20x30": { fosco: 129, brilhante: 129, fineart: 189 },
-      "30x40": { fosco: 189, brilhante: 189, fineart: 269 },
-      "40x60": { fosco: 269, brilhante: 269, fineart: 389 },
-      "50x70": { fosco: 349, brilhante: 349, fineart: 499 },
-    };
-    const MOLDURA = { sem: 0, preta: 120, branca: 120, natural: 150 };
+    const TAMANHOS = {"20x30 cm":0,"30x40 cm":0,"40x60 cm":0,"50x70 cm":0};
+    const PAPEIS   = {"Fosco":0,"Brilhante":0,"Fine art":0};
+    const MOLDURAS = {"Sem moldura":0,"Preta":0,"Branca":0,"Natural":0};
 
     let itensVisiveis = [];
     let idxAtual = 0;
@@ -412,37 +408,26 @@
 
       if(temFisica) {
         const ativo = !temDigital ? 'ativo' : '';
+        const opcoesTam    = Object.keys(TAMANHOS).map(k => `<option value="${k}">${k}</option>`).join('');
+        const opcoesPapel  = Object.keys(PAPEIS).map(k => `<option value="${k}">${k}</option>`).join('');
+        const opcoesMold   = Object.keys(MOLDURAS).map(k => `<option value="${k}">${k}</option>`).join('');
         conteudos += `<div class="lb-tab-content ${ativo}" id="tab-fisica">
           <div class="lb-opcoes">
             <div class="lb-opcao-grupo">
               <label>Tamanho</label>
-              <select id="lb-tam" onchange="calcLbPreco('${fid}','${shopify}')">
-                <option value="20x30">20×30 cm</option>
-                <option value="30x40">30×40 cm</option>
-                <option value="40x60">40×60 cm</option>
-                <option value="50x70">50×70 cm</option>
-              </select>
+              <select id="lb-tam" onchange="calcLbPreco('${fid}','${shopify}')">${opcoesTam}</select>
             </div>
             <div class="lb-opcao-grupo">
               <label>Papel</label>
-              <select id="lb-papel" onchange="calcLbPreco('${fid}','${shopify}')">
-                <option value="fosco">Fosco</option>
-                <option value="brilhante">Brilhante</option>
-                <option value="fineart">Fine Art</option>
-              </select>
+              <select id="lb-papel" onchange="calcLbPreco('${fid}','${shopify}')">${opcoesPapel}</select>
             </div>
             <div class="lb-opcao-grupo">
               <label>Moldura</label>
-              <select id="lb-moldura" onchange="calcLbPreco('${fid}','${shopify}')">
-                <option value="sem">Sem moldura</option>
-                <option value="preta">Preta (+R$120)</option>
-                <option value="branca">Branca (+R$120)</option>
-                <option value="natural">Natural (+R$150)</option>
-              </select>
+              <select id="lb-moldura" onchange="calcLbPreco('${fid}','${shopify}')">${opcoesMold}</select>
             </div>
           </div>
           <p class="lb-preco-label">Total</p>
-          <p class="lb-preco" id="lb-preco-fisica">R$ 129</p>
+          <p class="lb-preco" id="lb-preco-fisica">R$ 0</p>
           <a class="lb-btn" id="lb-btn-shopify" href="${shopify}" target="_blank" rel="noopener">Comprar impressão</a>
         </div>`;
       }
@@ -459,16 +444,16 @@
     }
 
     function calcLbPreco(fid, shopify) {
-      const tam     = document.getElementById('lb-tam')?.value    || '20x30';
-      const papel   = document.getElementById('lb-papel')?.value  || 'fosco';
-      const moldura = document.getElementById('lb-moldura')?.value|| 'sem';
-      const base    = PRECOS[tam]?.[papel] ?? 0;
-      const extra   = MOLDURA[moldura] ?? 0;
+      const tam     = document.getElementById('lb-tam')?.value    || Object.keys(TAMANHOS)[0];
+      const papel   = document.getElementById('lb-papel')?.value  || Object.keys(PAPEIS)[0];
+      const moldura = document.getElementById('lb-moldura')?.value|| Object.keys(MOLDURAS)[0];
+      const base    = (TAMANHOS[tam] ?? 0) + (PAPEIS[papel] ?? 0);
+      const extra   = MOLDURAS[moldura] ?? 0;
       const total   = base + extra;
       const el = document.getElementById('lb-preco-fisica');
       if(el) el.textContent = 'R$ ' + total;
       const btn = document.getElementById('lb-btn-shopify');
-      if(btn) btn.href = shopify + '?tamanho='+tam+'&papel='+papel+'&moldura='+moldura;
+      if(btn) btn.href = shopify + '?tamanho='+encodeURIComponent(tam)+'&papel='+encodeURIComponent(papel)+'&moldura='+encodeURIComponent(moldura);
     }
 
     function fecharLightbox() {
