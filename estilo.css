@@ -60,7 +60,7 @@ nav.rolada { background: rgba(13,13,13,0.97); }
 
 .nav-logo {
   font-family: 'LapisDeArtista', var(--detalhe);
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   letter-spacing: 0.06em;
   color: var(--texto);
   line-height: 1.2;
@@ -68,7 +68,7 @@ nav.rolada { background: rgba(13,13,13,0.97); }
 .nav-logo small {
   display: block;
   font-family: 'LapisDeArtista', var(--detalhe);
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: var(--destaque);
   letter-spacing: 0.2em;
   font-weight: 400;
@@ -81,7 +81,7 @@ nav.rolada { background: rgba(13,13,13,0.97); }
 }
 .nav-links a {
   font-family: var(--detalhe);
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--texto2);
   letter-spacing: 0.08em;
   transition: color var(--transicao);
@@ -135,7 +135,7 @@ footer span {
 }
 .footer-logo {
   font-family: 'LapisDeArtista', var(--detalhe);
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   color: var(--texto2);
   opacity: 0.7 !important;
 }
@@ -177,7 +177,7 @@ footer span {
     border-left: 1px solid var(--borda);
   }
   .nav-links.aberto { right: 0; }
-  .nav-links a { font-size: 1.25rem; }
+  .nav-links a { font-size: 1.5rem; }
   .nav-toggle { display: flex; }
 
   footer { flex-direction: column; text-align: center; padding: 1.5rem; }
