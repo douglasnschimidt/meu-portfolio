@@ -181,9 +181,9 @@ def gerar_portfolio(todas_fotos):
     /* ── Filtros ── */
     .filtros{{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.5rem;margin-top:1.5rem}}
     .filtros-bloco{{display:flex;flex-direction:column;gap:.5rem}}
-    .filtros-label{{font-family:var(--detalhe);font-size:.72rem;color:var(--texto2);letter-spacing:.18em;text-transform:uppercase;opacity:.6}}
+    .filtros-label{{font-family:var(--detalhe);font-size:.95rem;color:var(--texto2);letter-spacing:.18em;text-transform:uppercase;opacity:.6}}
     .filtros-grupo{{display:flex;gap:.5rem;flex-wrap:wrap}}
-    .btn-filtro{{font-family:var(--detalhe);font-size:.82rem;letter-spacing:.1em;padding:.35rem .9rem;border:1px solid var(--borda);background:transparent;color:var(--texto2);cursor:pointer;transition:all var(--transicao)}}
+    .btn-filtro{{font-family:var(--detalhe);font-size:1.1rem;letter-spacing:.1em;padding:.4rem 1.1rem;border:1px solid var(--borda);background:transparent;color:var(--texto2);cursor:pointer;transition:all var(--transicao)}}
     .btn-filtro:hover{{color:var(--texto);border-color:var(--texto2)}}
     .btn-filtro.ativo{{background:var(--destaque);border-color:var(--destaque);color:#0d0d0d}}
 
