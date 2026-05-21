@@ -101,6 +101,8 @@ def ler_precos():
             except: pass
     print(f"  precos: {len(tamanhos)} tamanho(s), {len(papeis)} papel(is), {len(molduras)} moldura(s)")
     return tamanhos, papeis, molduras
+
+def listar_drive(pasta_id):
     r = requests.get("https://www.googleapis.com/drive/v3/files", params={
         "q": f"'{pasta_id}' in parents and trashed=false and (mimeType='image/jpeg' or mimeType='image/png')",
         "fields": "files(id,name)", "orderBy": "name", "key": API_KEY,
