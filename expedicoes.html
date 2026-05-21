@@ -40,7 +40,7 @@
       max-width: 1100px;
     }
 
-    /* Foto com borda laranja deslocada */
+    /* Foto sem borda */
     .sobre-foto-wrap {
       position: relative;
     }
@@ -48,14 +48,6 @@
       aspect-ratio: 3/4;
       overflow: hidden;
       background: #1a1a1a;
-    }
-    .sobre-foto-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border: 1px solid var(--destaque);
-      transform: translate(12px, 12px);
-      pointer-events: none;
     }
 
     /* Texto do sobre */
@@ -193,37 +185,6 @@
         vivem o que fotografam. É esse o plano.
       </p>
 
-      <!-- TAGS: edite ou adicione -->
-      <div class="tags">
-        <span class="tag">surf</span>
-        <span class="tag">skate</span>
-        <span class="tag">trilhas</span>
-        <span class="tag">escalada</span>
-        <span class="tag">acampamento</span>
-        <span class="tag">água</span>
-        <span class="tag">viagem</span>
-      </div>
-
-      <!-- NÚMEROS: edite os valores -->
-      <div class="numeros">
-        <div class="numero-item">
-          <span class="numero-val">6</span>
-          <span class="numero-label">continentes</span>
-        </div>
-        <div class="numero-item">
-          <span class="numero-val">1k+</span>
-          <span class="numero-label">fotos</span>
-        </div>
-        <div class="numero-item">
-          <span class="numero-val">∞</span>
-          <span class="numero-label">km rodados</span>
-        </div>
-      </div>
-
-      <!-- INSTAGRAM: troque pelo seu @ -->
-      <a href="https://instagram.com/douglasnanes" target="_blank" rel="noopener" class="sobre-instagram">
-        ↗ @douglasnanes
-      </a>
     </div>
 
   </div>
