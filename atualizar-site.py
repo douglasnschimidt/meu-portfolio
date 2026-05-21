@@ -26,7 +26,8 @@ O que este script faz:
 
 import os, csv, io, requests
 
-PLANILHA_ID = "1DnSWBiIMxd-BqfgUQkcHa-58IeZ85hcquxwGlNvDC80"
+PLANILHA_ID  = "1DnSWBiIMxd-BqfgUQkcHa-58IeZ85hcquxwGlNvDC80"
+PLANILHA_GID = "1134133275"  # Página2 — tabela de preços
 
 PASTAS = {
     "terra": "1tHbeHivJircA47WZnzAK4cmR2iogUWd1",
@@ -67,7 +68,39 @@ def ler_planilha():
     print(f"  planilha: {len(dados)} foto(s) com contexto")
     return dados
 
-def listar_drive(pasta_id):
+def ler_precos():
+    """
+    Lê a Página2 da planilha com tamanhos, papéis e molduras.
+    Retorna três dicts: tamanhos, papeis, molduras
+    Formato da aba:
+      Tamanho | Preço || Papel | Preço adicional || Moldura | Preço adicional
+    """
+    url  = f"https://docs.google.com/spreadsheets/d/{PLANILHA_ID}/export"
+    resp = requests.get(url, params={"format": "csv", "gid": PLANILHA_GID, "key": API_KEY})
+    if not resp.ok:
+        print(f"  aviso: nao consegui ler a tabela de precos (codigo {resp.status_code})")
+        # fallback com valores padrão
+        return (
+            {"20x30 cm": 120, "30x40 cm": 270, "40x60 cm": 350, "50x70 cm": 500},
+            {"Fosco": 0, "Brilhante": 50, "Fine art": 120},
+            {"Sem moldura": 0, "Preta": 120, "Branca": 120, "Natural": 150},
+        )
+    tamanhos, papeis, molduras = {}, {}, {}
+    for linha in csv.DictReader(io.StringIO(resp.text)):
+        tam = linha.get("Tamanho", "").strip()
+        if tam:
+            try: tamanhos[tam] = int(float(linha.get("Preço", "0").strip() or "0"))
+            except: pass
+        papel = linha.get("Papel", "").strip()
+        if papel:
+            try: papeis[papel] = int(float(linha.get("Preço adicional", "0").strip() or "0"))
+            except: pass
+        moldura = linha.get("Moldura", "").strip()
+        if moldura:
+            try: molduras[moldura] = int(float(linha.get("Preço adicional", "0").strip() or "0"))
+            except: pass
+    print(f"  precos: {len(tamanhos)} tamanho(s), {len(papeis)} papel(is), {len(molduras)} moldura(s)")
+    return tamanhos, papeis, molduras
     r = requests.get("https://www.googleapis.com/drive/v3/files", params={
         "q": f"'{pasta_id}' in parents and trashed=false and (mimeType='image/jpeg' or mimeType='image/png')",
         "fields": "files(id,name)", "orderBy": "name", "key": API_KEY,
@@ -98,7 +131,7 @@ RODAPE = """  <footer>
     <span>© 2025 — atualizado via Google Drive + Sheets</span>
   </footer>"""
 
-def gerar_portfolio(todas_fotos):
+def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     """
     todas_fotos: lista de dicts com keys:
       slug, nome_cat, foto_id, foto_nome, titulo, descricao,
@@ -383,13 +416,9 @@ def gerar_portfolio(todas_fotos):
     }}
 
     /* ── Lightbox ── */
-    const PRECOS = {{
-      "20x30": {{ fosco: 129, brilhante: 129, fineart: 189 }},
-      "30x40": {{ fosco: 189, brilhante: 189, fineart: 269 }},
-      "40x60": {{ fosco: 269, brilhante: 269, fineart: 389 }},
-      "50x70": {{ fosco: 349, brilhante: 349, fineart: 499 }},
-    }};
-    const MOLDURA = {{ sem: 0, preta: 120, branca: 120, natural: 150 }};
+    const TAMANHOS = {{{",".join(f'"{k}":{v}' for k,v in tamanhos.items())}}};
+    const PAPEIS   = {{{",".join(f'"{k}":{v}' for k,v in papeis.items())}}};
+    const MOLDURAS = {{{",".join(f'"{k}":{v}' for k,v in molduras.items())}}};
 
     let itensVisiveis = [];
     let idxAtual = 0;
@@ -454,37 +483,26 @@ def gerar_portfolio(todas_fotos):
 
       if(temFisica) {{
         const ativo = !temDigital ? 'ativo' : '';
+        const opcoesTam    = Object.keys(TAMANHOS).map(k => `<option value="${{k}}">${{k}}</option>`).join('');
+        const opcoesPapel  = Object.keys(PAPEIS).map(k => `<option value="${{k}}">${{k}}</option>`).join('');
+        const opcoesMold   = Object.keys(MOLDURAS).map(k => `<option value="${{k}}">${{k}}</option>`).join('');
         conteudos += `<div class="lb-tab-content ${{ativo}}" id="tab-fisica">
           <div class="lb-opcoes">
             <div class="lb-opcao-grupo">
               <label>Tamanho</label>
-              <select id="lb-tam" onchange="calcLbPreco('${{fid}}','${{shopify}}')">
-                <option value="20x30">20×30 cm</option>
-                <option value="30x40">30×40 cm</option>
-                <option value="40x60">40×60 cm</option>
-                <option value="50x70">50×70 cm</option>
-              </select>
+              <select id="lb-tam" onchange="calcLbPreco('${{fid}}','${{shopify}}')">${{opcoesTam}}</select>
             </div>
             <div class="lb-opcao-grupo">
               <label>Papel</label>
-              <select id="lb-papel" onchange="calcLbPreco('${{fid}}','${{shopify}}')">
-                <option value="fosco">Fosco</option>
-                <option value="brilhante">Brilhante</option>
-                <option value="fineart">Fine Art</option>
-              </select>
+              <select id="lb-papel" onchange="calcLbPreco('${{fid}}','${{shopify}}')">${{opcoesPapel}}</select>
             </div>
             <div class="lb-opcao-grupo">
               <label>Moldura</label>
-              <select id="lb-moldura" onchange="calcLbPreco('${{fid}}','${{shopify}}')">
-                <option value="sem">Sem moldura</option>
-                <option value="preta">Preta (+R$120)</option>
-                <option value="branca">Branca (+R$120)</option>
-                <option value="natural">Natural (+R$150)</option>
-              </select>
+              <select id="lb-moldura" onchange="calcLbPreco('${{fid}}','${{shopify}}')">${{opcoesMold}}</select>
             </div>
           </div>
           <p class="lb-preco-label">Total</p>
-          <p class="lb-preco" id="lb-preco-fisica">R$ 129</p>
+          <p class="lb-preco" id="lb-preco-fisica">R$ 0</p>
           <a class="lb-btn" id="lb-btn-shopify" href="${{shopify}}" target="_blank" rel="noopener">Comprar impressão</a>
         </div>`;
       }}
@@ -501,16 +519,16 @@ def gerar_portfolio(todas_fotos):
     }}
 
     function calcLbPreco(fid, shopify) {{
-      const tam     = document.getElementById('lb-tam')?.value    || '20x30';
-      const papel   = document.getElementById('lb-papel')?.value  || 'fosco';
-      const moldura = document.getElementById('lb-moldura')?.value|| 'sem';
-      const base    = PRECOS[tam]?.[papel] ?? 0;
-      const extra   = MOLDURA[moldura] ?? 0;
+      const tam     = document.getElementById('lb-tam')?.value    || Object.keys(TAMANHOS)[0];
+      const papel   = document.getElementById('lb-papel')?.value  || Object.keys(PAPEIS)[0];
+      const moldura = document.getElementById('lb-moldura')?.value|| Object.keys(MOLDURAS)[0];
+      const base    = (TAMANHOS[tam] ?? 0) + (PAPEIS[papel] ?? 0);
+      const extra   = MOLDURAS[moldura] ?? 0;
       const total   = base + extra;
       const el = document.getElementById('lb-preco-fisica');
       if(el) el.textContent = 'R$ ' + total;
       const btn = document.getElementById('lb-btn-shopify');
-      if(btn) btn.href = shopify + '?tamanho='+tam+'&papel='+papel+'&moldura='+moldura;
+      if(btn) btn.href = shopify + '?tamanho='+encodeURIComponent(tam)+'&papel='+encodeURIComponent(papel)+'&moldura='+encodeURIComponent(moldura);
     }}
 
     function fecharLightbox() {{
@@ -561,6 +579,7 @@ def main():
         return
 
     ctx = ler_planilha()
+    tamanhos, papeis, molduras = ler_precos()
     todas_fotos = []
 
     for slug in PASTAS:
@@ -586,7 +605,7 @@ def main():
 
     print(f"\nTotal: {len(todas_fotos)} foto(s)")
     with open("portfolio.html", "w", encoding="utf-8") as fh:
-        fh.write(gerar_portfolio(todas_fotos))
+        fh.write(gerar_portfolio(todas_fotos, tamanhos, papeis, molduras))
     print("  portfolio.html gerado\n")
 
     # Remove arquivos antigos que não são mais usados
