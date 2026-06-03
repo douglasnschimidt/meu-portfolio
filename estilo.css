@@ -4,11 +4,15 @@
    ════════════════════════════════════════════════════════════ */
 @font-face {
   font-family: 'LapisDeArtista';
-  src: url('LapisDeArtista-Regular.ttf') format('truetype');
+  src: url('DnsLetraDeArtista-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
+<link rel="stylesheet" href="https://use.typekit.net/zeo6kqs.css">
+   font-family: "stolzl", sans-serif;
+   font-weight: 400;
+   font-style: normal;
 
 /* ════════════════════════════════════════════════════════════
    VARIÁVEIS — edite aqui para mudar cores e fontes do site inteiro
@@ -25,7 +29,7 @@
   /* FONTES */
   --titulo:   'Special Elite', cursive;    /* títulos grandes       */
   --detalhe:  'LapisDeArtista', 'Caveat', cursive; /* rótulos, detalhes — caligrafia do Douglas */
-  --corpo:    'Karla', sans-serif;         /* textos corridos       */
+  --corpo:    "stolzl", sans-serif; /*'Karla', sans-serif;         /* textos corridos       */
 
   --transicao: 0.35s ease;
 }
