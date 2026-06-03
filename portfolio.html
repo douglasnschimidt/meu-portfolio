@@ -12,23 +12,11 @@
     .pagina-titulo{font-family:var(--titulo);font-size:clamp(2.5rem,6vw,4rem);color:var(--texto);line-height:1;margin-bottom:1.5rem}
 
     /* ── Filtros sticky ── */
-    .filtros-sticky{
-      position:sticky;top:0;z-index:90;
-      background:rgba(13,13,13,.96);
-      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-      border-bottom:1px solid var(--borda);
-      padding:.55rem 3rem;
-      display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;
-    }
+    .filtros-sticky{position:sticky;top:0;z-index:90;background:rgba(13,13,13,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--borda);padding:.55rem 3rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
     .filtros-sep{width:1px;height:1.1rem;background:var(--borda);flex-shrink:0}
     .filtros-grupo{display:flex;gap:.3rem;flex-wrap:wrap;align-items:center}
     .filtros-label-inline{font-family:var(--detalhe);font-size:.7rem;color:var(--texto2);letter-spacing:.15em;text-transform:uppercase;opacity:.5;white-space:nowrap}
-    .btn-filtro{
-      font-family:var(--detalhe);font-size:.78rem;letter-spacing:.07em;
-      padding:.25rem .7rem;
-      border:1px solid var(--borda);background:transparent;color:var(--texto2);
-      cursor:pointer;transition:all var(--transicao);white-space:nowrap;
-    }
+    .btn-filtro{font-family:var(--detalhe);font-size:.78rem;letter-spacing:.07em;padding:.25rem .7rem;border:1px solid var(--borda);background:transparent;color:var(--texto2);cursor:pointer;transition:all var(--transicao);white-space:nowrap;}
     .btn-filtro:hover{color:var(--texto);border-color:var(--texto2)}
     .btn-filtro.ativo{background:var(--destaque);border-color:var(--destaque);color:#0d0d0d}
 
@@ -41,32 +29,11 @@
     .cat-subtitulo{font-family:var(--detalhe);font-size:clamp(.95rem,2vw,1.2rem);color:var(--texto2);font-style:italic;border-left:2px solid var(--destaque);padding-left:1rem}
 
     /* ── Grade masonry ── */
-    .fotos-grid{
-      columns:3;column-gap:3px;padding:0 3px;
-    }
-    .foto-item{
-      position:relative;
-      break-inside:avoid;
-      margin-bottom:3px;
-      overflow:hidden;
-      cursor:pointer;
-      background:#1a1a1a;
-      display:block;
-      -webkit-user-select:none;user-select:none;
-    }
-    /* altura natural — sem aspect-ratio forçado */
-    .foto-item img{
-      width:100%;height:auto;display:block;
-      transition:transform .5s ease;
-      pointer-events:none;-webkit-user-drag:none;
-    }
+    .fotos-grid{columns:3;column-gap:3px;padding:0 3px}
+    .foto-item{position:relative;break-inside:avoid;margin-bottom:3px;overflow:hidden;cursor:pointer;background:#1a1a1a;display:block;-webkit-user-select:none;user-select:none;}
+    .foto-item img{width:100%;height:auto;display:block;transition:transform .5s ease;pointer-events:none;-webkit-user-drag:none;}
     .foto-item:hover img{transform:scale(1.04)}
-    .foto-overlay{
-      position:absolute;inset:0;
-      display:flex;flex-direction:column;justify-content:flex-end;
-      padding:1rem;
-      background:rgba(13,13,13,0);transition:background var(--transicao);
-    }
+    .foto-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;background:rgba(13,13,13,0);transition:background var(--transicao)}
     .foto-item:hover .foto-overlay{background:rgba(13,13,13,.65)}
     .foto-titulo-hover{font-family:var(--detalhe);font-size:1rem;color:var(--texto);opacity:0;transform:translateY(6px);transition:all var(--transicao)}
     .foto-item:hover .foto-titulo-hover{opacity:1;transform:translateY(0)}
@@ -77,7 +44,7 @@
     .badge-tipo.fisica{background:rgba(255,255,255,.08);color:var(--texto2);border:1px solid var(--borda)}
     .foto-item.oculta{display:none}
 
-    /* Proteção: camada invisível */
+    /* Proteção de imagem */
     .foto-item::after{content:'';position:absolute;inset:0;z-index:1;cursor:pointer}
 
     /* ── Lightbox ── */
@@ -85,30 +52,12 @@
     .lightbox.aberto{opacity:1;pointer-events:all}
     .lb-esquerda{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem 2rem;min-width:0;gap:0}
     .lb-foto{max-width:100%;max-height:75vh;object-fit:contain;pointer-events:none;-webkit-user-drag:none;user-drag:none;-webkit-user-select:none;user-select:none}
-
-    /* Painel título+seta no lightbox (desktop e mobile) */
-    .lb-titulo-painel{
-      width:100%;max-width:800px;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:.6rem 0 0;
-      gap:.5rem;
-      cursor:pointer;
-    }
+    .lb-titulo-painel{width:100%;max-width:800px;display:flex;align-items:center;justify-content:space-between;padding:.6rem 0 0;gap:.5rem;cursor:pointer;}
     .lb-titulo-nome{font-family:var(--titulo);font-size:1.1rem;color:var(--texto);line-height:1.2}
-    .lb-titulo-seta{
-      font-size:.7rem;color:var(--destaque);
-      transition:transform .3s ease;
-      flex-shrink:0;user-select:none;
-      padding:.2rem .4rem;border:1px solid rgba(224,123,57,.3);border-radius:2px;
-    }
-    .lb-desc-inline{
-      width:100%;max-width:800px;
-      max-height:0;overflow:hidden;
-      transition:max-height .35s ease;
-    }
+    .lb-titulo-seta{font-size:.7rem;color:var(--destaque);transition:transform .3s ease;flex-shrink:0;user-select:none;padding:.2rem .4rem;border:1px solid rgba(224,123,57,.3);border-radius:2px;}
+    .lb-desc-inline{width:100%;max-width:800px;max-height:0;overflow:hidden;transition:max-height .35s ease;}
     .lb-desc-inline.aberto{max-height:200px}
     .lb-desc-inline p{font-size:.85rem;color:var(--texto2);line-height:1.7;padding:.5rem 0}
-
     .lb-direita{width:340px;flex-shrink:0;border-left:1px solid var(--borda);display:flex;flex-direction:column;padding:6rem 2rem 2rem;overflow-y:auto}
     .lb-fechar{position:absolute;top:1.5rem;right:2rem;font-size:1.8rem;color:var(--texto2);cursor:pointer;background:none;border:none;transition:color var(--transicao);z-index:10}
     .lb-fechar:hover{color:var(--texto)}
@@ -141,21 +90,15 @@
 
     /* ── Responsivo mobile ── */
     @media(max-width:768px){
-      /* Lightbox mobile */
       .lightbox{flex-direction:column}
       .lb-esquerda{padding:4.5rem 1rem 0;flex:none;width:100%;justify-content:flex-start}
       .lb-foto{max-height:52vh}
       .lb-titulo-painel{padding:.5rem 0 0}
       .lb-direita{width:100%;border-left:none;border-top:1px solid var(--borda);padding:1.2rem 1.2rem 1.5rem;flex:1;overflow-y:auto}
+      .lb-direita .lb-cat,.lb-direita .lb-titulo,.lb-direita .lb-desc{display:none}
       .lb-nav.lb-prev{left:.3rem}
       .lb-nav.lb-next{right:.3rem}
-      /* Ocultar painel direito no mobile (título/desc já estão embaixo da foto) */
-      .lb-direita .lb-cat,.lb-direita .lb-titulo,.lb-direita .lb-desc{display:none}
-
-      /* Grade 2 colunas */
       .fotos-grid{columns:2;column-gap:3px}
-
-      /* Topo e cabeçalhos */
       .pagina-topo{padding:7rem 1.2rem 1rem}
       .filtros-sticky{padding:.45rem 1rem;gap:.5rem}
       .filtros-sep{display:none}
@@ -1199,7 +1142,7 @@
       new IntersectionObserver(([e],o) => { if(e.isIntersecting){ el.classList.add('visivel'); o.unobserve(el); } },{threshold:.08}).observe(el);
     });
 
-    /* ── Toggle descrição no lightbox (painel título+seta) ── */
+    /* ── Toggle descrição no lightbox ── */
     function toggleLbDesc() {
       const desc = document.getElementById('lb-desc-inline');
       const seta = document.getElementById('lb-seta-inline');
@@ -1304,12 +1247,10 @@
       // Painel título+seta embaixo da foto
       document.getElementById('lb-titulo-inline').textContent = titulo;
       document.getElementById('lb-desc-inline-texto').textContent = desc || '';
-      // Fechar a descrição sempre que trocar de foto
       const descInline = document.getElementById('lb-desc-inline');
       const setaInline = document.getElementById('lb-seta-inline');
       descInline.classList.remove('aberto');
       setaInline.style.transform = '';
-      // Ocultar seta se não há descrição
       setaInline.style.display = (desc && desc.trim()) ? '' : 'none';
 
       const compra = document.getElementById('lb-compra');
