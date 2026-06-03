@@ -209,35 +209,33 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
   <link rel="stylesheet" href="estilo.css" />
   <style>
     /* ── Topo da página ── */
-    .pagina-topo{{padding:9rem 3rem 2rem;border-bottom:1px solid var(--borda)}}
+    .pagina-topo{{padding:9rem 3rem 1.5rem}}
     .pagina-label{{font-family:var(--detalhe);font-size:.85rem;color:var(--destaque);letter-spacing:.25em;text-transform:uppercase;margin-bottom:.4rem}}
-    .pagina-titulo{{font-family:var(--titulo);font-size:clamp(2.5rem,6vw,4rem);color:var(--texto);line-height:1;margin-bottom:2rem}}
+    .pagina-titulo{{font-family:var(--titulo);font-size:clamp(2.5rem,6vw,4rem);color:var(--texto);line-height:1;margin-bottom:1.5rem}}
 
-    /* ── Filtros ── */
-    .filtros{{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.5rem;margin-top:1.5rem}}
-    .filtros-bloco{{display:flex;flex-direction:column;gap:.5rem}}
-    .filtros-label{{font-family:var(--detalhe);font-size:.95rem;color:var(--texto2);letter-spacing:.18em;text-transform:uppercase;opacity:.6}}
-    .filtros-grupo{{display:flex;gap:.5rem;flex-wrap:wrap}}
-    .btn-filtro{{font-family:var(--detalhe);font-size:1.1rem;letter-spacing:.1em;padding:.4rem 1.1rem;border:1px solid var(--borda);background:transparent;color:var(--texto2);cursor:pointer;transition:all var(--transicao)}}
+    /* ── Filtros sticky ── */
+    .filtros-sticky{{position:sticky;top:0;z-index:90;background:rgba(13,13,13,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--borda);padding:.55rem 3rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}}
+    .filtros-sep{{width:1px;height:1.1rem;background:var(--borda);flex-shrink:0}}
+    .filtros-grupo{{display:flex;gap:.3rem;flex-wrap:wrap;align-items:center}}
+    .filtros-label-inline{{font-family:var(--detalhe);font-size:.7rem;color:var(--texto2);letter-spacing:.15em;text-transform:uppercase;opacity:.5;white-space:nowrap}}
+    .btn-filtro{{font-family:var(--detalhe);font-size:.78rem;letter-spacing:.07em;padding:.25rem .7rem;border:1px solid var(--borda);background:transparent;color:var(--texto2);cursor:pointer;transition:all var(--transicao);white-space:nowrap;}}
     .btn-filtro:hover{{color:var(--texto);border-color:var(--texto2)}}
     .btn-filtro.ativo{{background:var(--destaque);border-color:var(--destaque);color:#0d0d0d}}
 
     /* ── Seções de categoria ── */
-    .categoria-secao{{padding:4rem 0;border-bottom:1px solid var(--borda)}}
+    .categoria-secao{{padding:3.5rem 0;border-bottom:1px solid var(--borda)}}
     .categoria-secao.oculta{{display:none}}
     .cat-header{{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding:0 3rem 2rem}}
     .cat-label{{font-family:var(--detalhe);font-size:.8rem;color:var(--destaque);letter-spacing:.25em;text-transform:uppercase;margin-bottom:.3rem}}
     .cat-titulo{{font-family:var(--titulo);font-size:clamp(1.8rem,4vw,2.8rem);color:var(--texto);line-height:1}}
     .cat-subtitulo{{font-family:var(--detalhe);font-size:clamp(.95rem,2vw,1.2rem);color:var(--texto2);font-style:italic;border-left:2px solid var(--destaque);padding-left:1rem}}
 
-    /* ── Grade de fotos ── */
-    .fotos-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:3px;padding:0 3px}}
-    .foto-item{{position:relative;aspect-ratio:4/3;overflow:hidden;cursor:pointer;background:#1a1a1a;
-      -webkit-user-select:none;user-select:none}}
-    .foto-item img{{transition:transform .5s ease;pointer-events:none;-webkit-user-drag:none;user-drag:none}}
-    .foto-item:hover img{{transform:scale(1.05)}}
-    .foto-overlay{{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;
-      background:rgba(13,13,13,0);transition:background var(--transicao)}}
+    /* ── Grade masonry ── */
+    .fotos-grid{{columns:3;column-gap:3px;padding:0 3px}}
+    .foto-item{{position:relative;break-inside:avoid;margin-bottom:3px;overflow:hidden;cursor:pointer;background:#1a1a1a;display:block;-webkit-user-select:none;user-select:none;}}
+    .foto-item img{{width:100%;height:auto;display:block;transition:transform .5s ease;pointer-events:none;-webkit-user-drag:none;}}
+    .foto-item:hover img{{transform:scale(1.04)}}
+    .foto-overlay{{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;background:rgba(13,13,13,0);transition:background var(--transicao)}}
     .foto-item:hover .foto-overlay{{background:rgba(13,13,13,.65)}}
     .foto-titulo-hover{{font-family:var(--detalhe);font-size:1rem;color:var(--texto);opacity:0;transform:translateY(6px);transition:all var(--transicao)}}
     .foto-item:hover .foto-titulo-hover{{opacity:1;transform:translateY(0)}}
@@ -248,11 +246,20 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     .badge-tipo.fisica{{background:rgba(255,255,255,.08);color:var(--texto2);border:1px solid var(--borda)}}
     .foto-item.oculta{{display:none}}
 
+    /* Proteção de imagem */
+    .foto-item::after{{content:'';position:absolute;inset:0;z-index:1;cursor:pointer}}
+
     /* ── Lightbox ── */
     .lightbox{{position:fixed;inset:0;z-index:1000;display:flex;background:rgba(10,10,10,.97);opacity:0;pointer-events:none;transition:opacity .3s ease}}
     .lightbox.aberto{{opacity:1;pointer-events:all}}
-    .lb-esquerda{{flex:1;display:flex;align-items:center;justify-content:center;padding:5rem 2rem 2rem;min-width:0}}
-    .lb-foto{{max-width:100%;max-height:85vh;object-fit:contain;pointer-events:none;-webkit-user-drag:none;user-drag:none;-webkit-user-select:none;user-select:none}}
+    .lb-esquerda{{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem 2rem;min-width:0;gap:0}}
+    .lb-foto{{max-width:100%;max-height:75vh;object-fit:contain;pointer-events:none;-webkit-user-drag:none;user-drag:none;-webkit-user-select:none;user-select:none}}
+    .lb-titulo-painel{{width:100%;max-width:800px;display:flex;align-items:center;justify-content:space-between;padding:.6rem 0 0;gap:.5rem;cursor:pointer;}}
+    .lb-titulo-nome{{font-family:var(--titulo);font-size:1.1rem;color:var(--texto);line-height:1.2}}
+    .lb-titulo-seta{{font-size:.7rem;color:var(--destaque);transition:transform .3s ease;flex-shrink:0;user-select:none;padding:.2rem .4rem;border:1px solid rgba(224,123,57,.3);border-radius:2px;}}
+    .lb-desc-inline{{width:100%;max-width:800px;max-height:0;overflow:hidden;transition:max-height .35s ease;}}
+    .lb-desc-inline.aberto{{max-height:200px}}
+    .lb-desc-inline p{{font-size:.85rem;color:var(--texto2);line-height:1.7;padding:.5rem 0}}
     .lb-direita{{width:340px;flex-shrink:0;border-left:1px solid var(--borda);display:flex;flex-direction:column;padding:6rem 2rem 2rem;overflow-y:auto}}
     .lb-fechar{{position:absolute;top:1.5rem;right:2rem;font-size:1.8rem;color:var(--texto2);cursor:pointer;background:none;border:none;transition:color var(--transicao);z-index:10}}
     .lb-fechar:hover{{color:var(--texto)}}
@@ -283,19 +290,22 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     .lb-tab-content.ativo{{display:block}}
     .lb-contador{{font-family:var(--detalhe);font-size:.8rem;color:var(--texto2);opacity:.5;text-align:center;margin-top:1.5rem}}
 
-    /* Proteção de imagem — camada invisível sobre cada foto */
-    .foto-item::after{{content:'';position:absolute;inset:0;z-index:1;cursor:pointer}}
-
-    /* ── Responsivo ── */
+    /* ── Responsivo mobile ── */
     @media(max-width:768px){{
       .lightbox{{flex-direction:column}}
-      .lb-esquerda{{padding:4rem 1rem 0;flex:0 0 55vh}}
-      .lb-direita{{width:100%;border-left:none;border-top:1px solid var(--borda);padding:1.5rem}}
+      .lb-esquerda{{padding:4.5rem 1rem 0;flex:none;width:100%;justify-content:flex-start}}
+      .lb-foto{{max-height:52vh}}
+      .lb-titulo-painel{{padding:.5rem 0 0}}
+      .lb-direita{{width:100%;border-left:none;border-top:1px solid var(--borda);padding:1.2rem 1.2rem 1.5rem;flex:1;overflow-y:auto}}
+      .lb-direita .lb-cat,.lb-direita .lb-titulo,.lb-direita .lb-desc{{display:none}}
       .lb-nav.lb-prev{{left:.3rem}}
       .lb-nav.lb-next{{right:.3rem}}
-      .pagina-topo{{padding:8rem 1.5rem 2rem}}
-      .cat-header{{padding:0 1.5rem 1.5rem}}
-      .fotos-grid{{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}}
+      .fotos-grid{{columns:2;column-gap:3px}}
+      .pagina-topo{{padding:7rem 1.2rem 1rem}}
+      .filtros-sticky{{padding:.45rem 1rem;gap:.5rem}}
+      .filtros-sep{{display:none}}
+      .cat-header{{padding:0 1.2rem 1.2rem;flex-direction:column;align-items:flex-start;gap:.4rem}}
+      .cat-subtitulo{{border-left:none;padding-left:0;border-top:1px solid var(--borda);padding-top:.35rem;width:100%}}
     }}
   </style>
 </head>
@@ -305,25 +315,22 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
   <div class="pagina-topo reveal">
     <p class="pagina-label">portfólio</p>
     <h1 class="pagina-titulo">Portfólio</h1>
+  </div>
 
-    <div class="filtros">
-      <div class="filtros-bloco">
-        <span class="filtros-label">Categorias</span>
-        <div class="filtros-grupo" id="filtros-cat">
-          <button class="btn-filtro" data-cat="terra" onclick="filtrarCat(this)">Terra</button>
-          <button class="btn-filtro" data-cat="agua" onclick="filtrarCat(this)">Água</button>
-          <button class="btn-filtro" data-cat="fogo" onclick="filtrarCat(this)">Fogo</button>
-          <button class="btn-filtro" data-cat="ar" onclick="filtrarCat(this)">Ar</button>
-          <button class="btn-filtro" data-cat="vida" onclick="filtrarCat(this)">Vida</button>
-        </div>
-      </div>
-      <div class="filtros-bloco">
-        <span class="filtros-label">Loja</span>
-        <div class="filtros-grupo" id="filtros-loja">
-          <button class="btn-filtro" data-loja="digital" onclick="filtrarLoja(this)">Digital</button>
-          <button class="btn-filtro" data-loja="fisica" onclick="filtrarLoja(this)">Impressão</button>
-        </div>
-      </div>
+  <div class="filtros-sticky">
+    <span class="filtros-label-inline">Cat.</span>
+    <div class="filtros-grupo" id="filtros-cat">
+      <button class="btn-filtro" data-cat="terra" onclick="filtrarCat(this)">Terra</button>
+      <button class="btn-filtro" data-cat="agua" onclick="filtrarCat(this)">Água</button>
+      <button class="btn-filtro" data-cat="fogo" onclick="filtrarCat(this)">Fogo</button>
+      <button class="btn-filtro" data-cat="ar" onclick="filtrarCat(this)">Ar</button>
+      <button class="btn-filtro" data-cat="vida" onclick="filtrarCat(this)">Vida</button>
+    </div>
+    <div class="filtros-sep"></div>
+    <span class="filtros-label-inline">Loja</span>
+    <div class="filtros-grupo" id="filtros-loja">
+      <button class="btn-filtro" data-loja="digital" onclick="filtrarLoja(this)">Digital</button>
+      <button class="btn-filtro" data-loja="fisica" onclick="filtrarLoja(this)">Impressão</button>
     </div>
   </div>
 
@@ -337,6 +344,13 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
 
     <div class="lb-esquerda">
       <img class="lb-foto" id="lb-img" src="" alt="" />
+      <div class="lb-titulo-painel" onclick="toggleLbDesc()">
+        <span class="lb-titulo-nome" id="lb-titulo-inline"></span>
+        <span class="lb-titulo-seta" id="lb-seta-inline">&#9650;</span>
+      </div>
+      <div class="lb-desc-inline" id="lb-desc-inline">
+        <p id="lb-desc-inline-texto"></p>
+      </div>
     </div>
 
     <div class="lb-direita">
@@ -361,6 +375,15 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     document.querySelectorAll('.reveal').forEach(el => {{
       new IntersectionObserver(([e],o) => {{ if(e.isIntersecting){{ el.classList.add('visivel'); o.unobserve(el); }} }},{{threshold:.08}}).observe(el);
     }});
+
+    /* ── Toggle descrição no lightbox ── */
+    function toggleLbDesc() {{
+      const desc = document.getElementById('lb-desc-inline');
+      const seta = document.getElementById('lb-seta-inline');
+      const estaAberto = desc.classList.contains('aberto');
+      desc.classList.toggle('aberto', !estaAberto);
+      seta.style.transform = estaAberto ? '' : 'rotate(180deg)';
+    }}
 
     /* ── Proteção de imagem ── */
     document.addEventListener('contextmenu', e => {{ if(e.target.tagName==='IMG') e.preventDefault(); }});
@@ -454,6 +477,15 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
       document.getElementById('lb-desc').textContent   = desc || '';
       document.getElementById('lb-cat').textContent    = cat.toUpperCase();
       document.getElementById('lb-contador').textContent = `${{idx+1}} / ${{itensVisiveis.length}}`;
+
+      // Painel título+seta embaixo da foto
+      document.getElementById('lb-titulo-inline').textContent = titulo;
+      document.getElementById('lb-desc-inline-texto').textContent = desc || '';
+      const descInline = document.getElementById('lb-desc-inline');
+      const setaInline = document.getElementById('lb-seta-inline');
+      descInline.classList.remove('aberto');
+      setaInline.style.transform = '';
+      setaInline.style.display = (desc && desc.trim()) ? '' : 'none';
 
       const compra = document.getElementById('lb-compra');
       const temDigital = naLoja === 'digital' || naLoja === 'ambos';

@@ -11,35 +11,23 @@
     .pagina-label{font-family:var(--detalhe);font-size:.85rem;color:var(--destaque);letter-spacing:.25em;text-transform:uppercase;margin-bottom:.4rem}
     .pagina-titulo{font-family:var(--titulo);font-size:clamp(2.5rem,6vw,4rem);color:var(--texto);line-height:1;margin-bottom:1.5rem}
 
-    /* ── Filtros — sticky no topo ── */
+    /* ── Filtros sticky ── */
     .filtros-sticky{
-      position:sticky;
-      top:0;
-      z-index:90;
+      position:sticky;top:0;z-index:90;
       background:rgba(13,13,13,.96);
-      backdrop-filter:blur(8px);
-      -webkit-backdrop-filter:blur(8px);
+      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
       border-bottom:1px solid var(--borda);
-      padding:.6rem 3rem;
-      display:flex;
-      align-items:center;
-      gap:1.5rem;
-      flex-wrap:wrap;
+      padding:.55rem 3rem;
+      display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;
     }
-    .filtros-sep{width:1px;height:1.2rem;background:var(--borda);flex-shrink:0}
-    .filtros-grupo{display:flex;gap:.35rem;flex-wrap:wrap;align-items:center}
-    .filtros-label-inline{font-family:var(--detalhe);font-size:.72rem;color:var(--texto2);letter-spacing:.18em;text-transform:uppercase;opacity:.5;white-space:nowrap}
+    .filtros-sep{width:1px;height:1.1rem;background:var(--borda);flex-shrink:0}
+    .filtros-grupo{display:flex;gap:.3rem;flex-wrap:wrap;align-items:center}
+    .filtros-label-inline{font-family:var(--detalhe);font-size:.7rem;color:var(--texto2);letter-spacing:.15em;text-transform:uppercase;opacity:.5;white-space:nowrap}
     .btn-filtro{
-      font-family:var(--detalhe);
-      font-size:.82rem;
-      letter-spacing:.08em;
-      padding:.28rem .75rem;
-      border:1px solid var(--borda);
-      background:transparent;
-      color:var(--texto2);
-      cursor:pointer;
-      transition:all var(--transicao);
-      white-space:nowrap;
+      font-family:var(--detalhe);font-size:.78rem;letter-spacing:.07em;
+      padding:.25rem .7rem;
+      border:1px solid var(--borda);background:transparent;color:var(--texto2);
+      cursor:pointer;transition:all var(--transicao);white-space:nowrap;
     }
     .btn-filtro:hover{color:var(--texto);border-color:var(--texto2)}
     .btn-filtro.ativo{background:var(--destaque);border-color:var(--destaque);color:#0d0d0d}
@@ -52,11 +40,9 @@
     .cat-titulo{font-family:var(--titulo);font-size:clamp(1.8rem,4vw,2.8rem);color:var(--texto);line-height:1}
     .cat-subtitulo{font-family:var(--detalhe);font-size:clamp(.95rem,2vw,1.2rem);color:var(--texto2);font-style:italic;border-left:2px solid var(--destaque);padding-left:1rem}
 
-    /* ── Grade masonry (desktop: 3 colunas) ── */
+    /* ── Grade masonry ── */
     .fotos-grid{
-      columns:3;
-      column-gap:3px;
-      padding:0 3px;
+      columns:3;column-gap:3px;padding:0 3px;
     }
     .foto-item{
       position:relative;
@@ -65,120 +51,64 @@
       overflow:hidden;
       cursor:pointer;
       background:#1a1a1a;
-      -webkit-user-select:none;
-      user-select:none;
-      display:block; /* necessário para masonry funcionar */
-    }
-    /* A imagem ocupa altura natural — sem aspect-ratio forçado */
-    .foto-item img{
-      width:100%;
-      height:auto;
       display:block;
+      -webkit-user-select:none;user-select:none;
+    }
+    /* altura natural — sem aspect-ratio forçado */
+    .foto-item img{
+      width:100%;height:auto;display:block;
       transition:transform .5s ease;
-      pointer-events:none;
-      -webkit-user-drag:none;
+      pointer-events:none;-webkit-user-drag:none;
     }
     .foto-item:hover img{transform:scale(1.04)}
     .foto-overlay{
       position:absolute;inset:0;
       display:flex;flex-direction:column;justify-content:flex-end;
       padding:1rem;
-      background:rgba(13,13,13,0);
-      transition:background var(--transicao);
+      background:rgba(13,13,13,0);transition:background var(--transicao);
     }
     .foto-item:hover .foto-overlay{background:rgba(13,13,13,.65)}
-    .foto-titulo-hover{
-      font-family:var(--detalhe);font-size:1rem;color:var(--texto);
-      opacity:0;transform:translateY(6px);transition:all var(--transicao);
-    }
+    .foto-titulo-hover{font-family:var(--detalhe);font-size:1rem;color:var(--texto);opacity:0;transform:translateY(6px);transition:all var(--transicao)}
     .foto-item:hover .foto-titulo-hover{opacity:1;transform:translateY(0)}
     .foto-badges{display:flex;gap:.3rem;margin-top:.4rem}
-    .badge-tipo{
-      font-family:var(--detalhe);font-size:.7rem;letter-spacing:.08em;
-      padding:.15rem .5rem;border-radius:2px;opacity:0;transition:opacity var(--transicao);
-    }
+    .badge-tipo{font-family:var(--detalhe);font-size:.7rem;letter-spacing:.08em;padding:.15rem .5rem;border-radius:2px;opacity:0;transition:opacity var(--transicao)}
     .foto-item:hover .badge-tipo{opacity:1}
     .badge-tipo.digital{background:rgba(224,123,57,.2);color:var(--destaque);border:1px solid rgba(224,123,57,.4)}
     .badge-tipo.fisica{background:rgba(255,255,255,.08);color:var(--texto2);border:1px solid var(--borda)}
     .foto-item.oculta{display:none}
 
-    /* Proteção: camada invisível sobre cada foto */
+    /* Proteção: camada invisível */
     .foto-item::after{content:'';position:absolute;inset:0;z-index:1;cursor:pointer}
-
-    /* ── Info card mobile (título + expandir) ── */
-    .foto-info-mobile{
-      display:none; /* aparece só no mobile via media query */
-      background:#111;
-      padding:.5rem .75rem .6rem;
-    }
-    .foto-info-header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:.5rem;
-      cursor:pointer;
-    }
-    .foto-titulo-mobile{
-      font-family:var(--detalhe);
-      font-size:.9rem;
-      color:var(--texto);
-      line-height:1.3;
-      flex:1;
-    }
-    .foto-seta{
-      font-size:.75rem;
-      color:var(--destaque);
-      transition:transform .3s ease;
-      flex-shrink:0;
-      user-select:none;
-    }
-    .foto-info-expandido{
-      max-height:0;
-      overflow:hidden;
-      transition:max-height .35s ease;
-    }
-    .foto-info-expandido.aberto{max-height:400px}
-    .foto-info-corpo{
-      padding:.6rem 0 .3rem;
-      border-top:1px solid var(--borda);
-      margin-top:.5rem;
-    }
-    .foto-info-desc{
-      font-size:.8rem;
-      color:var(--texto2);
-      line-height:1.7;
-      margin-bottom:.6rem;
-    }
-    .foto-info-cat{
-      font-family:var(--detalhe);
-      font-size:.7rem;
-      color:var(--destaque);
-      letter-spacing:.15em;
-      text-transform:uppercase;
-      margin-bottom:.5rem;
-    }
-    .foto-info-badges{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.6rem}
-    .foto-info-badge{
-      font-family:var(--detalhe);font-size:.68rem;letter-spacing:.06em;
-      padding:.12rem .45rem;border-radius:2px;
-    }
-    .foto-info-badge.digital{background:rgba(224,123,57,.2);color:var(--destaque);border:1px solid rgba(224,123,57,.4)}
-    .foto-info-badge.fisica{background:rgba(255,255,255,.08);color:var(--texto2);border:1px solid var(--borda)}
-    .foto-ver-mais{
-      display:inline-block;
-      font-family:var(--detalhe);
-      font-size:.78rem;
-      color:var(--destaque);
-      letter-spacing:.06em;
-      border:none;background:none;
-      cursor:pointer;padding:0;
-    }
 
     /* ── Lightbox ── */
     .lightbox{position:fixed;inset:0;z-index:1000;display:flex;background:rgba(10,10,10,.97);opacity:0;pointer-events:none;transition:opacity .3s ease}
     .lightbox.aberto{opacity:1;pointer-events:all}
-    .lb-esquerda{flex:1;display:flex;align-items:center;justify-content:center;padding:5rem 2rem 2rem;min-width:0}
-    .lb-foto{max-width:100%;max-height:85vh;object-fit:contain;pointer-events:none;-webkit-user-drag:none;user-drag:none;-webkit-user-select:none;user-select:none}
+    .lb-esquerda{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem 2rem;min-width:0;gap:0}
+    .lb-foto{max-width:100%;max-height:75vh;object-fit:contain;pointer-events:none;-webkit-user-drag:none;user-drag:none;-webkit-user-select:none;user-select:none}
+
+    /* Painel título+seta no lightbox (desktop e mobile) */
+    .lb-titulo-painel{
+      width:100%;max-width:800px;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:.6rem 0 0;
+      gap:.5rem;
+      cursor:pointer;
+    }
+    .lb-titulo-nome{font-family:var(--titulo);font-size:1.1rem;color:var(--texto);line-height:1.2}
+    .lb-titulo-seta{
+      font-size:.7rem;color:var(--destaque);
+      transition:transform .3s ease;
+      flex-shrink:0;user-select:none;
+      padding:.2rem .4rem;border:1px solid rgba(224,123,57,.3);border-radius:2px;
+    }
+    .lb-desc-inline{
+      width:100%;max-width:800px;
+      max-height:0;overflow:hidden;
+      transition:max-height .35s ease;
+    }
+    .lb-desc-inline.aberto{max-height:200px}
+    .lb-desc-inline p{font-size:.85rem;color:var(--texto2);line-height:1.7;padding:.5rem 0}
+
     .lb-direita{width:340px;flex-shrink:0;border-left:1px solid var(--borda);display:flex;flex-direction:column;padding:6rem 2rem 2rem;overflow-y:auto}
     .lb-fechar{position:absolute;top:1.5rem;right:2rem;font-size:1.8rem;color:var(--texto2);cursor:pointer;background:none;border:none;transition:color var(--transicao);z-index:10}
     .lb-fechar:hover{color:var(--texto)}
@@ -211,32 +141,26 @@
 
     /* ── Responsivo mobile ── */
     @media(max-width:768px){
-      /* Lightbox */
+      /* Lightbox mobile */
       .lightbox{flex-direction:column}
-      .lb-esquerda{padding:4rem 1rem 0;flex:0 0 55vh}
-      .lb-direita{width:100%;border-left:none;border-top:1px solid var(--borda);padding:1.5rem}
+      .lb-esquerda{padding:4.5rem 1rem 0;flex:none;width:100%;justify-content:flex-start}
+      .lb-foto{max-height:52vh}
+      .lb-titulo-painel{padding:.5rem 0 0}
+      .lb-direita{width:100%;border-left:none;border-top:1px solid var(--borda);padding:1.2rem 1.2rem 1.5rem;flex:1;overflow-y:auto}
       .lb-nav.lb-prev{left:.3rem}
       .lb-nav.lb-next{right:.3rem}
+      /* Ocultar painel direito no mobile (título/desc já estão embaixo da foto) */
+      .lb-direita .lb-cat,.lb-direita .lb-titulo,.lb-direita .lb-desc{display:none}
 
-      /* Topo */
-      .pagina-topo{padding:7rem 1.2rem 1rem}
-
-      /* Filtros sticky mobile */
-      .filtros-sticky{padding:.5rem 1rem;gap:.6rem}
-      .filtros-sep{display:none}
-
-      /* Grade masonry 2 colunas */
+      /* Grade 2 colunas */
       .fotos-grid{columns:2;column-gap:3px}
 
-      /* Cabeçalho categoria */
-      .cat-header{padding:0 1.2rem 1.2rem;flex-direction:column;align-items:flex-start;gap:.5rem}
-      .cat-subtitulo{border-left:none;padding-left:0;border-top:1px solid var(--borda);padding-top:.4rem;margin-top:.1rem;width:100%}
-
-      /* Overlay hover: desabilitado no mobile — usa o card abaixo */
-      .foto-overlay{display:none}
-
-      /* Info card mobile: visível */
-      .foto-info-mobile{display:block}
+      /* Topo e cabeçalhos */
+      .pagina-topo{padding:7rem 1.2rem 1rem}
+      .filtros-sticky{padding:.45rem 1rem;gap:.5rem}
+      .filtros-sep{display:none}
+      .cat-header{padding:0 1.2rem 1.2rem;flex-direction:column;align-items:flex-start;gap:.4rem}
+      .cat-subtitulo{border-left:none;padding-left:0;border-top:1px solid var(--borda);padding-top:.35rem;width:100%}
     }
   </style>
 </head>
@@ -294,23 +218,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1FYfMOBchc3Ou-Xs5lyssVPxPGsE5HDv6&sz=w800" alt="A nÃ©voa" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">A nÃ©voa</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">A nÃ©voa</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -323,23 +235,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1Z7Ym12h8Rw50X7m1TojCYMTwQomZNJCo&sz=w800" alt="Pinguins" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Pinguins</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Pinguins</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -352,23 +252,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=11-GvakInfg6w-q6hf0U24Tg0KZ4I3WfV&sz=w800" alt="Solitude" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Solitude</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Solitude</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -381,23 +269,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1HbJ-pNjQUs-2tVct-Hek0sKo34zLpCWr&sz=w800" alt="Tempestade na Nova ZelÃ¢ndia" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Tempestade na Nova ZelÃ¢ndia</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Tempestade na Nova ZelÃ¢ndia</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -410,23 +286,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=11to-w0CTwpt-d0c7EIUBd1gVi4rpeRlc&sz=w800" alt="Marrocos" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Marrocos</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Marrocos</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -439,23 +303,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1COsTDtpwxSf-GT77HB8Fk4wB8CEiLasZ&sz=w800" alt="LenÃ§Ã³is Maranhenses" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">LenÃ§Ã³is Maranhenses</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">LenÃ§Ã³is Maranhenses</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -468,23 +320,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1wSxsdlGyszoy5gyKDZSEYdKzx-0wWloL&sz=w800" alt="Mar de montanhas na Nova ZelÃ¢ndia" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Mar de montanhas na Nova ZelÃ¢ndia</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Mar de montanhas na Nova ZelÃ¢ndia</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -497,23 +337,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1semJ5AJ5PnK0Z8yzAF4o2Uub1Ka3714V&sz=w800" alt="AntÃ¡rtica" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">AntÃ¡rtica</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">AntÃ¡rtica</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -526,23 +354,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1jfvOgOI-Xs2HxiWdLKPBZCnpmloP42xq&sz=w800" alt="Praia do Sono" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Praia do Sono</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Praia do Sono</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -555,23 +371,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1KJ38npLW9xh4mxovgD2zY7ktN1WZrZ_a&sz=w800" alt="Pinguins 2" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Pinguins 2</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Pinguins 2</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
     </div>
@@ -595,23 +399,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1invkUt0F8EYrJevTweWKpMsw-CJcQxqR&sz=w800" alt="Parque Nacional do Itatiaia" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Parque Nacional do Itatiaia</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Parque Nacional do Itatiaia</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -624,23 +416,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1m44sD60V4DMX1r2fZVsPGOoYSWydU6nC&sz=w800" alt="Conhecendo os botos" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Conhecendo os botos</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Conhecendo os botos</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -653,23 +433,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1nIdSVNjIt0RuMx8KcOSVjj7o9C643-5k&sz=w800" alt="Fernando de Noronha" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fernando de Noronha</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Fernando de Noronha</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -682,23 +450,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1UW7ZzrGaMSFwz52FO6qqi75cxqlMJ6VS&sz=w800" alt="Peniche, Portugal" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Peniche, Portugal</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Peniche, Portugal</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -711,23 +467,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1DHigdFrSj8Xx0Vj7e7y3oS8Ry0XdUsuK&sz=w800" alt="Fernando de Noronha 2" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fernando de Noronha 2</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Fernando de Noronha 2</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -740,23 +484,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1iepBSv9DyEikfwl4q6ygGpd2eUsvX00u&sz=w800" alt="Boto cor de rosa" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Boto cor de rosa</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Boto cor de rosa</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -769,23 +501,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1M2NHHetS6QyuZ3cxdgVnoYOl9iJy6a_R&sz=w800" alt="LenÃ§Ã³is Maranhenses 2" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">LenÃ§Ã³is Maranhenses 2</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">LenÃ§Ã³is Maranhenses 2</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -798,23 +518,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1jjBEVsbCiHvGzPjhyMiwrxv0YABO2peX&sz=w800" alt="Flutuante" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Flutuante</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Flutuante</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -827,23 +535,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1ZcuXYU-WlgIG5LFgv5XPtlHOmEyzunnO&sz=w800" alt="Baia dos Porcos" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Baia dos Porcos</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Baia dos Porcos</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -856,23 +552,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1LMHzroYeuikFPZwqljMHDVnKITei_AQR&sz=w800" alt="Fernando de Noronha 3" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fernando de Noronha 3</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Fernando de Noronha 3</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -885,23 +569,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=16SfocLp1AKpWLBLwIMOn1vyIQAtoYxxG&sz=w800" alt="Chapada do Veadeiros" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Chapada do Veadeiros</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Chapada do Veadeiros</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -914,23 +586,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1-SoAqLoSzg682DRnVm8ks0xADs2gmK75&sz=w800" alt="Flutuando na AntÃ¡rtica" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Flutuando na AntÃ¡rtica</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Flutuando na AntÃ¡rtica</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
     </div>
@@ -954,23 +614,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1v6FEv01FrBx-ybzYZmtHUDwHwI8Vi5mz&sz=w800" alt="Por do sol em Bonito" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Por do sol em Bonito</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Por do sol em Bonito</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -983,23 +631,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1qtnCmv7XExHjpTCmcMd5sNw96nFQw2hE&sz=w800" alt="SÃ£o LuÃ­s 2" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">SÃ£o LuÃ­s 2</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">SÃ£o LuÃ­s 2</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1012,23 +648,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=19WO8EbrxmqjUAIV5zlaqvMfh5imwpIa2&sz=w800" alt="SÃ£o LuÃ­s" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">SÃ£o LuÃ­s</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">SÃ£o LuÃ­s</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1041,23 +665,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1tFtefpHYD5-4fMIljf27BtcgjunXVtF0&sz=w800" alt="Por do sol nos LenÃ§Ã³is Maranhenses 2" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Por do sol nos LenÃ§Ã³is Maranhenses 2</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Por do sol nos LenÃ§Ã³is Maranhenses 2</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1070,23 +682,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1eprxj9TWEodsIqGAkivpKFDTGMbf8WIb&sz=w800" alt="Por do sol nos LenÃ§Ã³is Maranhenses" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Por do sol nos LenÃ§Ã³is Maranhenses</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Por do sol nos LenÃ§Ã³is Maranhenses</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1099,23 +699,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1zs42IThg5C8TtG4s6o1iIn1WxaDA7Cdf&sz=w800" alt="Por do sol em Chefchaouen" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Por do sol em Chefchaouen</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Por do sol em Chefchaouen</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
     </div>
@@ -1139,23 +727,11 @@
         data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=18aA0Oy2OGwa-8nNLaSEoR8M_PfFPpgyP&sz=w800" alt="Arara solitÃ¡ria" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Arara solitÃ¡ria</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Arara solitÃ¡ria</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1168,23 +744,11 @@
         data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1ks901c86kbtFaZ39XlGco09xYDQCSNaV&sz=w800" alt="Dunas e o cÃ©u" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Dunas e o cÃ©u</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Dunas e o cÃ©u</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1197,23 +761,11 @@
         data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1XX0xTb_39o_lClXkaKBmfdkg0ob0voKi&sz=w800" alt="Dunas e o vento" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Dunas e o vento</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Dunas e o vento</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1226,23 +778,11 @@
         data-preco-digital="29"
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1gFSX_F51k_4pUr1_jyVKa0XS1IfyIblI&sz=w800" alt="Ar   Pni   As Prateleiras" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Ar   Pni   As Prateleiras</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Ar   Pni   As Prateleiras</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1255,23 +795,11 @@
         data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1tJJUrMEsqj3bR2VAuAmu3mCaNy-HMLRr&sz=w800" alt="Mar de nuvens" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Mar de nuvens</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Mar de nuvens</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1284,23 +812,11 @@
         data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1Ow26Wy4oMHGDmMSeS5Ggjjlepw7VXeC-&sz=w800" alt="Nascer do sol nas Prateleiras" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Nascer do sol nas Prateleiras</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Nascer do sol nas Prateleiras</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1313,23 +829,11 @@
         data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1qVNlKBof-WYn7WdM5NCRK2Sti7AR8wtk&sz=w800" alt="Mar de montanhas" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Mar de montanhas</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Mar de montanhas</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
     </div>
@@ -1353,23 +857,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1fzfzbqlUBJC1QKWj0RLz57dwC9QFj7Cn&sz=w800" alt="Fez, Marrocos 4" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fez, Marrocos 4</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Fez, Marrocos 4</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1382,23 +874,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1O2sZ1QzONESCDluI32DxZOqlv7oMeQ6Z&sz=w800" alt="Interferencia humana 3" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Interferencia humana 3</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Interferencia humana 3</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1411,23 +891,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1FoZwUuOrtyQKzeC8jaNWmAZi7n5DXj8t&sz=w800" alt="Fez, Marrocos 2" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fez, Marrocos 2</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Fez, Marrocos 2</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1440,23 +908,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=11H-daIyfjblyTXkJsGAgPOlwpsu4I7bz&sz=w800" alt="Descansando 2" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Descansando 2</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Descansando 2</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1469,23 +925,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1MOtV6ISrWG7T1p0GpJvdV_tSx8WrdZEG&sz=w800" alt="Vida selvagem em Marrocos" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Vida selvagem em Marrocos</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Vida selvagem em Marrocos</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1498,23 +942,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1eNE_nryv_hzf9NxOEH1mtMolrggJkPtM&sz=w800" alt="Fez, Marrocos 3" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fez, Marrocos 3</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Fez, Marrocos 3</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1527,23 +959,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1i_LMy6jJsS2E2MSU72FegYOopkQDBPu2&sz=w800" alt="interferencia humana 4" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">interferencia humana 4</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">interferencia humana 4</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1556,23 +976,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1A5XzXBrsUAzO0nf6Z8NXB88tno13s54a&sz=w800" alt="AntÃ¡rtica 2" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">AntÃ¡rtica 2</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">AntÃ¡rtica 2</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1585,23 +993,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1Zr4I-IchZCAx9XwLwljq_AgAM96EjJhN&sz=w800" alt="Fez, Marrocos 5" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fez, Marrocos 5</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Fez, Marrocos 5</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1614,23 +1010,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=18Zrcey7oMRxW9kvYZ0WaBiQgkNfAWd1q&sz=w800" alt="Pinguins" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Pinguins</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Pinguins</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1643,23 +1027,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1pTQPAGRb9CLiqz9YnE6QVWLMMq29ed3w&sz=w800" alt="Descansando" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Descansando</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Descansando</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1672,23 +1044,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1ueqjpS4OvBP8PORCmE2z2klt2tcEJ2Yo&sz=w800" alt="Fez, Marrocos" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fez, Marrocos</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Fez, Marrocos</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1701,23 +1061,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1jLHIWqnoCyw2PmA5fQIrczTW7F1Jyn3o&sz=w800" alt="Pinguim na neve 2" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Pinguim na neve 2</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Pinguim na neve 2</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1730,23 +1078,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1fcGSM1pp4b6q0K1JTQl7YLJHyBbZvxbW&sz=w800" alt="Pinguim" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Pinguim</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Pinguim</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1759,23 +1095,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=15-Ag8EsX9C6xzKXlwnCMyBGc0xNEeqF8&sz=w800" alt="Interferencia humana 2" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Interferencia humana 2</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Interferencia humana 2</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1788,23 +1112,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1TO9eR7YYYRM6lfuG4JVPwCXvdK2L3kHo&sz=w800" alt="Interferencia humana" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Interferencia humana</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Interferencia humana</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1817,23 +1129,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=1MRUL_-q_k6PHCOdiSldpPdI_dNx7HDDQ&sz=w800" alt="Pinguim na neve" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Pinguim na neve</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Pinguim na neve</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
       <div class="foto-item"
@@ -1846,23 +1146,11 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
-        onclick="clickFoto(event,this)">
+        onclick="abrirLightbox(this)">
         <img src="https://drive.google.com/thumbnail?id=13Wo8lZMJV_DpM8v_N33rvC8HnAzDollE&sz=w800" alt="Vida selvagem no LenÃ§Ã³is Maranhenses" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Vida selvagem no LenÃ§Ã³is Maranhenses</span>
           <div class="foto-badges"></div>
-      </div>
-      <div class="foto-info-mobile">
-        <div class="foto-info-header" onclick="toggleInfoMobile(this)">
-          <span class="foto-titulo-mobile">Vida selvagem no LenÃ§Ã³is Maranhenses</span>
-          <span class="foto-seta">&#9650;</span>
-        </div>
-        <div class="foto-info-expandido">
-          <div class="foto-info-corpo">
-            <p class="foto-info-desc"></p>
-            
-            <button class="foto-ver-mais" onclick="abrirDaInfo(this)">ver na galeria →</button>
-          </div>
         </div>
       </div>
     </div>
@@ -1876,6 +1164,13 @@
 
     <div class="lb-esquerda">
       <img class="lb-foto" id="lb-img" src="" alt="" />
+      <div class="lb-titulo-painel" onclick="toggleLbDesc()">
+        <span class="lb-titulo-nome" id="lb-titulo-inline"></span>
+        <span class="lb-titulo-seta" id="lb-seta-inline">&#9650;</span>
+      </div>
+      <div class="lb-desc-inline" id="lb-desc-inline">
+        <p id="lb-desc-inline-texto"></p>
+      </div>
     </div>
 
     <div class="lb-direita">
@@ -1904,37 +1199,13 @@
       new IntersectionObserver(([e],o) => { if(e.isIntersecting){ el.classList.add('visivel'); o.unobserve(el); } },{threshold:.08}).observe(el);
     });
 
-    /* ── Info cards mobile — popular descrição e badges a partir do data do foto-item ── */
-    document.querySelectorAll('.foto-item').forEach(item => {
-      const card = item.querySelector('.foto-info-mobile');
-      if(!card) return;
-      const desc  = item.dataset.descricao || '';
-      const loja  = item.dataset.naLoja    || '';
-      const cat   = item.dataset.cat       || '';
-      card.querySelector('.foto-info-desc').textContent = desc;
-      card.querySelector('.foto-info-cat') && (card.querySelector('.foto-info-cat').textContent = cat.toUpperCase());
-      // Badges
-      const badgesEl = card.querySelector('.foto-info-badges');
-      if(badgesEl) {
-        badgesEl.innerHTML = '';
-        if(loja === 'digital' || loja === 'ambos') badgesEl.innerHTML += '<span class="foto-info-badge digital">Digital</span>';
-        if(loja === 'fisica'  || loja === 'ambos') badgesEl.innerHTML += '<span class="foto-info-badge fisica">Impressão</span>';
-      }
-    });
-
-    /* ── Toggle do card expandível mobile ── */
-    function toggleInfoMobile(header) {
-      const expandido = header.nextElementSibling;
-      const seta      = header.querySelector('.foto-seta');
-      const estaAberto = expandido.classList.contains('aberto');
-      expandido.classList.toggle('aberto', !estaAberto);
+    /* ── Toggle descrição no lightbox (painel título+seta) ── */
+    function toggleLbDesc() {
+      const desc = document.getElementById('lb-desc-inline');
+      const seta = document.getElementById('lb-seta-inline');
+      const estaAberto = desc.classList.contains('aberto');
+      desc.classList.toggle('aberto', !estaAberto);
       seta.style.transform = estaAberto ? '' : 'rotate(180deg)';
-    }
-
-    /* ── Abrir lightbox a partir do botão do info card mobile ── */
-    function abrirDaInfo(btn) {
-      const item = btn.closest('.foto-item');
-      if(item) abrirLightbox(item);
     }
 
     /* ── Proteção de imagem ── */
@@ -2004,12 +1275,6 @@
       itensVisiveis = Array.from(document.querySelectorAll('.foto-item:not(.oculta)'));
     }
 
-    /* Clique na foto — ignora se veio do card info mobile */
-    function clickFoto(e, el) {
-      if(e.target.closest('.foto-info-mobile')) return;
-      abrirLightbox(el);
-    }
-
     function abrirLightbox(el) {
       atualizarVisiveisLightbox();
       idxAtual = itensVisiveis.indexOf(el);
@@ -2035,6 +1300,17 @@
       document.getElementById('lb-desc').textContent   = desc || '';
       document.getElementById('lb-cat').textContent    = cat.toUpperCase();
       document.getElementById('lb-contador').textContent = `${idx+1} / ${itensVisiveis.length}`;
+
+      // Painel título+seta embaixo da foto
+      document.getElementById('lb-titulo-inline').textContent = titulo;
+      document.getElementById('lb-desc-inline-texto').textContent = desc || '';
+      // Fechar a descrição sempre que trocar de foto
+      const descInline = document.getElementById('lb-desc-inline');
+      const setaInline = document.getElementById('lb-seta-inline');
+      descInline.classList.remove('aberto');
+      setaInline.style.transform = '';
+      // Ocultar seta se não há descrição
+      setaInline.style.display = (desc && desc.trim()) ? '' : 'none';
 
       const compra = document.getElementById('lb-compra');
       const temDigital = naLoja === 'digital' || naLoja === 'ambos';
