@@ -78,6 +78,7 @@ def ler_precos():
     """
     url  = f"https://docs.google.com/spreadsheets/d/{PLANILHA_ID}/export"
     resp = requests.get(url, params={"format": "csv", "gid": PLANILHA_GID, "key": API_KEY})
+    resp.encoding = 'utf-8'
     if not resp.ok:
         print(f"  aviso: nao consegui ler a tabela de precos (codigo {resp.status_code})")
         # fallback com valores padrão
