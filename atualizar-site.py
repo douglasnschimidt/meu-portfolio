@@ -50,6 +50,7 @@ API_KEY = os.environ.get("GOOGLE_API_KEY", "")
 def ler_planilha():
     url  = f"https://docs.google.com/spreadsheets/d/{PLANILHA_ID}/export"
     resp = requests.get(url, params={"format": "csv", "key": API_KEY})
+    resp.encoding = 'utf-8'
     if not resp.ok:
         print(f"  aviso: nao consegui ler a planilha (codigo {resp.status_code})")
         return {}
