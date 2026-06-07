@@ -25,7 +25,7 @@
   /* FONTES */
   --titulo:   'Special Elite', cursive;    /* títulos grandes       */
   --detalhe:  'LapisDeArtista', 'Caveat', cursive; /* rótulos, detalhes — caligrafia do Douglas */
-  --corpo:    'Karla', sans-serif;         /* textos corridos       */
+  --corpo:    "dunbar-low", sans-serif; /*'Karla', sans-serif;          textos corridos       */
 
   --transicao: 0.35s ease;
 }
