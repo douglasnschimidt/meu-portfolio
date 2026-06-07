@@ -115,7 +115,7 @@ def thumb(fid):  return f"https://drive.google.com/thumbnail?id={fid}&sz=w800"
 def grande(fid): return f"https://drive.google.com/thumbnail?id={fid}&sz=w1600"
 def titulo_fallback(name): return name.rsplit(".",1)[0].replace("-"," ").replace("_"," ").title()
 
-FONTES = '<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />'
+FONTES = '<link rel="stylesheet" href="https://use.typekit.net/zeo6kqs.css" />'
 
 def nav_html(ativa_portfolio=False, ativa_loja=False):
     p = ' class="ativa"' if ativa_portfolio else ""
