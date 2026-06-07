@@ -34,3 +34,13 @@ jobs:
           git add -u categoria-*.html loja.html 2>/dev/null || true
           git diff --staged --quiet || git commit -m "Portfólio atualizado via Google Drive"
           git push
+
+      - name: Publicar no Netlify
+        env:
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+        run: |
+          curl -s -X POST "https://api.netlify.com/api/v1/sites/harmonious-crisp-ede73f/deploys" \
+            -H "Authorization: Bearer $NETLIFY_TOKEN" \
+            -H "Content-Type: application/zip" \
+            --data-binary @<(cd . && zip -r - . -x "*.git*" "*.github*" "*.py" "*.yml" "*.md") \
+            | grep -o '"state":"[^"]*"' | head -1
