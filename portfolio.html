@@ -6,13 +6,24 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="estilo.css" />
   <style>
-    /* ── Topo da página ── */
-    .pagina-topo{padding:9rem 3rem 1.5rem}
-    .pagina-label{font-family:var(--detalhe);font-size:.85rem;color:var(--destaque);letter-spacing:.25em;text-transform:uppercase;margin-bottom:.4rem}
-    .pagina-titulo{font-family:var(--titulo);font-size:clamp(2.5rem,6vw,4rem);color:var(--texto);line-height:1;margin-bottom:1.5rem}
+    /* ── Topo da página — removido (A vermelho) ── */
+    .pagina-topo{display:none}
 
-    /* ── Filtros sticky ── */
-    .filtros-sticky{position:sticky;top:0;z-index:90;background:rgba(13,13,13,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--borda);padding:.55rem 3rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
+    /* ── Filtros sticky — sempre visíveis, top:0 ── */
+    .filtros-sticky{
+      position:sticky;
+      top:0;
+      z-index:90;
+      background:rgba(13,13,13,.97);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--borda);
+      padding:.7rem 3rem;
+      display:flex;
+      align-items:center;
+      gap:1.2rem;
+      flex-wrap:wrap;
+    }
     .filtros-sep{width:1px;height:1.1rem;background:var(--borda);flex-shrink:0}
     .filtros-grupo{display:flex;gap:.3rem;flex-wrap:wrap;align-items:center}
     .filtros-label-inline{font-family:var(--detalhe);font-size:.7rem;color:var(--texto2);letter-spacing:.15em;text-transform:uppercase;opacity:.5;white-space:nowrap}
@@ -20,17 +31,16 @@
     .btn-filtro:hover{color:var(--texto);border-color:var(--texto2)}
     .btn-filtro.ativo{background:var(--destaque);border-color:var(--destaque);color:#0d0d0d}
 
-    /* ── Seções de categoria ── */
-    .categoria-secao{padding:3.5rem 0;border-bottom:1px solid var(--borda)}
+    /* ── Seções de categoria — sem padding-top extra ── */
+    .categoria-secao{padding:0;border-bottom:none}
     .categoria-secao.oculta{display:none}
-    .cat-header{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding:0 3rem 2rem}
-    .cat-label{font-family:var(--detalhe);font-size:.8rem;color:var(--destaque);letter-spacing:.25em;text-transform:uppercase;margin-bottom:.3rem}
-    .cat-titulo{font-family:var(--titulo);font-size:clamp(1.8rem,4vw,2.8rem);color:var(--texto);line-height:1}
-    .cat-subtitulo{font-family:var(--detalhe);font-size:clamp(.95rem,2vw,1.2rem);color:var(--texto2);font-style:italic;border-left:2px solid var(--destaque);padding-left:1rem}
 
-    /* ── Grade masonry ── */
-    .fotos-grid{columns:3;column-gap:3px;padding:0 3px}
-    .foto-item{position:relative;break-inside:avoid;margin-bottom:3px;overflow:hidden;cursor:pointer;background:#1a1a1a;display:block;-webkit-user-select:none;user-select:none;}
+    /* cat-header antigo — escondido (A vermelho) */
+    .cat-header{display:none}
+
+    /* ── Grade masonry — espaçamento dobrado (B) ── */
+    .fotos-grid{columns:3;column-gap:6px;padding:0 6px 6px}
+    .foto-item{position:relative;break-inside:avoid;margin-bottom:6px;overflow:hidden;cursor:pointer;background:#1a1a1a;display:block;-webkit-user-select:none;user-select:none;}
     .foto-item img{width:100%;height:auto;display:block;transition:transform .5s ease;pointer-events:none;-webkit-user-drag:none;}
     .foto-item:hover img{transform:scale(1.04)}
     .foto-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;background:rgba(13,13,13,0);transition:background var(--transicao)}
@@ -46,6 +56,45 @@
 
     /* Proteção de imagem */
     .foto-item::after{content:'';position:absolute;inset:0;z-index:1;cursor:pointer}
+
+    /* ── Card de categoria dentro do grid (A ciano) ── */
+    .cat-card{
+      break-inside:avoid;
+      margin-bottom:6px;
+      background:#111;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding:2rem 1.6rem 1.8rem;
+      min-height:220px;
+      position:relative;
+      border:1px solid #1e1e1e;
+    }
+    .cat-card-label{
+      font-family:var(--detalhe);
+      font-size:.75rem;
+      color:var(--destaque);
+      letter-spacing:.25em;
+      text-transform:uppercase;
+      margin-bottom:.4rem;
+      opacity:.8;
+    }
+    .cat-card-titulo{
+      font-family:var(--titulo);
+      font-size:clamp(1.6rem,3vw,2.4rem);
+      color:var(--texto);
+      line-height:1;
+      margin-bottom:.8rem;
+    }
+    .cat-card-sub{
+      font-family:var(--detalhe);
+      font-size:clamp(.9rem,1.5vw,1.05rem);
+      color:var(--texto2);
+      font-style:italic;
+      border-left:2px solid var(--destaque);
+      padding-left:.8rem;
+      line-height:1.4;
+    }
 
     /* ── Lightbox ── */
     .lightbox{position:fixed;inset:0;z-index:1000;display:flex;background:rgba(10,10,10,.97);opacity:0;pointer-events:none;transition:opacity .3s ease}
@@ -98,12 +147,10 @@
       .lb-direita .lb-cat,.lb-direita .lb-titulo,.lb-direita .lb-desc{display:none}
       .lb-nav.lb-prev{left:.3rem}
       .lb-nav.lb-next{right:.3rem}
-      .fotos-grid{columns:2;column-gap:3px}
-      .pagina-topo{padding:7rem 1.2rem 1rem}
+      .fotos-grid{columns:2;column-gap:6px;padding:0 6px 6px}
       .filtros-sticky{padding:.45rem 1rem;gap:.5rem}
       .filtros-sep{display:none}
-      .cat-header{padding:0 1.2rem 1.2rem;flex-direction:column;align-items:flex-start;gap:.4rem}
-      .cat-subtitulo{border-left:none;padding-left:0;border-top:1px solid var(--borda);padding-top:.35rem;width:100%}
+      .cat-card{min-height:160px;padding:1.4rem 1.2rem}
     }
   </style>
 </head>
@@ -119,10 +166,15 @@
     </ul>
   </nav>
 
-  <div class="pagina-topo reveal">
-    <p class="pagina-label">portfólio</p>
-    <h1 class="pagina-titulo">Portfólio</h1>
-  </div>
+  <style>
+    /* Nav some ao rolar para baixo, volta ao rolar para cima (C) */
+    #nav {
+      transition: transform 0.35s ease, background var(--transicao);
+    }
+    #nav.oculta-nav {
+      transform: translateY(-100%);
+    }
+  </style>
 
   <div class="filtros-sticky">
     <span class="filtros-label-inline">Cat.</span>
@@ -143,14 +195,12 @@
 
 
   <section class="categoria-secao" id="cat-terra" data-slug="terra">
-    <div class="cat-header reveal">
-      <div>
-        <p class="cat-label">terra</p>
-        <h2 class="cat-titulo">Terra</h2>
-      </div>
-      <p class="cat-subtitulo">Onde tudo começa.</p>
-    </div>
     <div class="fotos-grid">
+      <div class="cat-card">
+        <p class="cat-card-label">terra</p>
+        <h2 class="cat-card-titulo">Terra</h2>
+        <p class="cat-card-sub">Onde tudo começa.</p>
+      </div>
       <div class="foto-item"
         data-cat="terra"
         data-loja=""
@@ -324,14 +374,12 @@
     </div>
   </section>
   <section class="categoria-secao" id="cat-agua" data-slug="agua">
-    <div class="cat-header reveal">
-      <div>
-        <p class="cat-label">agua</p>
-        <h2 class="cat-titulo">Água</h2>
-      </div>
-      <p class="cat-subtitulo">Meu habitat.</p>
-    </div>
     <div class="fotos-grid">
+      <div class="cat-card">
+        <p class="cat-card-label">água</p>
+        <h2 class="cat-card-titulo">Água</h2>
+        <p class="cat-card-sub">Meu habitat.</p>
+      </div>
       <div class="foto-item"
         data-cat="agua"
         data-loja=""
@@ -539,14 +587,12 @@
     </div>
   </section>
   <section class="categoria-secao" id="cat-fogo" data-slug="fogo">
-    <div class="cat-header reveal">
-      <div>
-        <p class="cat-label">fogo</p>
-        <h2 class="cat-titulo">Fogo</h2>
-      </div>
-      <p class="cat-subtitulo">Impossível ignorar.</p>
-    </div>
     <div class="fotos-grid">
+      <div class="cat-card">
+        <p class="cat-card-label">fogo</p>
+        <h2 class="cat-card-titulo">Fogo</h2>
+        <p class="cat-card-sub">Impossível ignorar.</p>
+      </div>
       <div class="foto-item"
         data-cat="fogo"
         data-loja=""
@@ -652,14 +698,12 @@
     </div>
   </section>
   <section class="categoria-secao" id="cat-ar" data-slug="ar">
-    <div class="cat-header reveal">
-      <div>
-        <p class="cat-label">ar</p>
-        <h2 class="cat-titulo">Ar</h2>
-      </div>
-      <p class="cat-subtitulo">O que você não vê.</p>
-    </div>
     <div class="fotos-grid">
+      <div class="cat-card">
+        <p class="cat-card-label">ar</p>
+        <h2 class="cat-card-titulo">Ar</h2>
+        <p class="cat-card-sub">O que você não vê.</p>
+      </div>
       <div class="foto-item"
         data-cat="ar"
         data-loja=""
@@ -782,14 +826,12 @@
     </div>
   </section>
   <section class="categoria-secao" id="cat-vida" data-slug="vida">
-    <div class="cat-header reveal">
-      <div>
-        <p class="cat-label">vida</p>
-        <h2 class="cat-titulo">Vida</h2>
-      </div>
-      <p class="cat-subtitulo">Seja cotidiana ou selvagem.</p>
-    </div>
     <div class="fotos-grid">
+      <div class="cat-card">
+        <p class="cat-card-label">vida</p>
+        <h2 class="cat-card-titulo">Vida</h2>
+        <p class="cat-card-sub">Seja cotidiana ou selvagem.</p>
+      </div>
       <div class="foto-item"
         data-cat="vida"
         data-loja=""
@@ -1133,9 +1175,34 @@
     <span>© 2025 — atualizado via Google Drive + Sheets</span>
   </footer>
   <script>
-    /* ── Nav ── */
+    /* ── Nav — some ao rolar para baixo, volta ao rolar para cima (C) ── */
     const _nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => _nav.classList.toggle('rolada', window.scrollY > 50));
+    const _filtros = document.querySelector('.filtros-sticky');
+    let _ultimoScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const atual = window.scrollY;
+      const navAltura = _nav.offsetHeight;
+
+      // Rolando para baixo e passou do topo
+      if (atual > _ultimoScroll && atual > navAltura) {
+        _nav.classList.add('oculta-nav');
+        _filtros.style.top = '0';
+      } else {
+        // Rolando para cima — mostra a nav
+        _nav.classList.remove('oculta-nav');
+        _filtros.style.top = navAltura + 'px';
+      }
+
+      _nav.classList.toggle('rolada', atual > 50);
+      _ultimoScroll = atual;
+    });
+
+    // Posição inicial dos filtros abaixo da nav
+    window.addEventListener('load', () => {
+      _filtros.style.top = _nav.offsetHeight + 'px';
+    });
+
     document.getElementById('navToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('aberto'));
     function fecharMenu() { document.getElementById('navLinks').classList.remove('aberto'); }
     document.querySelectorAll('.reveal').forEach(el => {

@@ -101,6 +101,77 @@
     @media (max-width: 600px) {
       .contato-wrap { padding: 7rem 1.5rem 3rem; }
     }
+
+    /* ── Pop-up de manutenção ── */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(13,13,13,0.85);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      backdrop-filter: blur(4px);
+      animation: fadeIn 0.4s ease forwards;
+    }
+    .popup-caixa {
+      background: #111;
+      border: 1px solid var(--borda);
+      max-width: 420px;
+      width: 100%;
+      padding: 2.5rem 2rem 2rem;
+      position: relative;
+      animation: fadeUp 0.4s ease forwards;
+    }
+    .popup-label {
+      font-family: var(--detalhe);
+      font-size: 0.75rem;
+      color: var(--destaque);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      opacity: 0.8;
+    }
+    .popup-titulo {
+      font-family: var(--titulo);
+      font-size: 1.5rem;
+      color: var(--texto);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .popup-texto {
+      font-family: var(--detalhe);
+      font-size: 1rem;
+      color: var(--texto2);
+      line-height: 1.7;
+      margin-bottom: 1.6rem;
+    }
+    .popup-instagram {
+      display: inline-block;
+      font-family: var(--detalhe);
+      font-size: 1rem;
+      color: #0d0d0d;
+      background: var(--destaque);
+      padding: 0.65rem 1.6rem;
+      text-decoration: none;
+      transition: background var(--transicao);
+      letter-spacing: 0.05em;
+    }
+    .popup-instagram:hover { background: var(--destaque2); }
+    .popup-fechar {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      color: var(--texto2);
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: color var(--transicao);
+      line-height: 1;
+    }
+    .popup-fechar:hover { color: var(--texto); }
   </style>
 </head>
 <body>
@@ -121,17 +192,24 @@
     </ul>
   </nav>
 
+  <!-- ── Pop-up de manutenção ── -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-caixa">
+      <button class="popup-fechar" onclick="fecharPopup()" aria-label="Fechar">&#215;</button>
+      <p class="popup-label">aviso</p>
+      <h2 class="popup-titulo">Formulário em manutenção</h2>
+      <p class="popup-texto">
+        O formulário de contato ainda não está ativo.<br/>
+        Por enquanto, me encontra pelo Instagram — respondo por lá.
+      </p>
+      <a href="https://instagram.com/douglasnanes" target="_blank" rel="noopener" class="popup-instagram">
+        @douglasnanes
+      </a>
+    </div>
+  </div>
+
   <div class="contato-wrap">
     <div class="contato-inner reveal">
-      <p class="pagina-label">fale comigo</p>
-      <h1 class="pagina-titulo">Contato</h1>
-
-      <!--
-        FORMULÁRIO: funciona automaticamente quando o site
-        está no Netlify — os envios chegam em:
-        Site Settings → Forms no painel do Netlify.
-        Para receber por e-mail: Forms → Form notifications.
-      -->
       <form name="contato" method="POST" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="contato" />
         <p style="display:none"><input name="bot-field" /></p>
@@ -164,6 +242,14 @@
   </footer>
 
   <script>
+    function fecharPopup() {
+      document.getElementById('popupOverlay').style.display = 'none';
+    }
+    // Fecha também ao clicar fora da caixa
+    document.getElementById('popupOverlay').addEventListener('click', function(e) {
+      if (e.target === this) fecharPopup();
+    });
+
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => nav.classList.toggle('rolada', window.scrollY > 50));
     const toggle = document.getElementById('navToggle');

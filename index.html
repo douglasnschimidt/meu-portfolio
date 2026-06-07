@@ -20,6 +20,7 @@
       min-height: 600px;
       display: flex;
       align-items: center;
+      justify-content: center;
     }
 
     /* A FOTO DE FUNDO */
@@ -37,36 +38,24 @@
       background-position: center;
     }
 
-    /* Escurecimento sobre a foto para o texto aparecer bem */
+    /* Escurecimento leve — foto fica bem visível */
     .hero-escuro {
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to right,
-        rgba(13,13,13,0.88) 0%,
-        rgba(13,13,13,0.45) 55%,
-        rgba(13,13,13,0.1)  100%
-      );
+      background: rgba(13,13,13,0.32);
     }
 
-    /* Área do texto — fica à esquerda */
+    /* Área do texto — centralizada na landing page (C) */
     .hero-texto {
       position: relative;
       z-index: 10;
-      padding: 0 3rem;
-      max-width: 520px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 2rem;
       margin-top: 4rem;
-    }
-
-    .hero-etiqueta {
-      font-family: var(--detalhe);
-      font-size: 0.9rem;
-      color: var(--destaque);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 0.2s forwards;
     }
 
     .hero-nome {
@@ -88,11 +77,12 @@
       animation: fadeUp 0.7s ease 0.6s forwards;
     }
 
-    /* Links de navegação grandes — o coração da landing page */
+    /* Menu horizontal com separadores | (B) — desktop */
     .hero-menu {
       display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
+      flex-direction: row;
+      align-items: center;
+      gap: 0;
       opacity: 0;
       animation: fadeUp 0.7s ease 0.8s forwards;
       position: relative;
@@ -101,34 +91,22 @@
 
     .hero-menu a {
       font-family: var(--titulo);
-      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-size: clamp(1.2rem, 2.2vw, 1.7rem);
       color: var(--texto2);
-      letter-spacing: 0.04em;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      transition: color var(--transicao), gap var(--transicao);
-      width: fit-content;
-      cursor: pointer;
-      padding: 0.15rem 0;
+      letter-spacing: 0.08em;
+      transition: color var(--transicao);
+      padding: 0.2rem 1.4rem;
     }
 
-    /* Traço laranja que aparece ao passar o mouse */
-    .hero-menu a::before {
-      content: '';
-      display: block;
-      width: 0;
-      height: 1px;
-      background: var(--destaque);
-      transition: width var(--transicao);
-      flex-shrink: 0;
-    }
+    .hero-menu a:hover { color: var(--texto); }
 
-    .hero-menu a:hover {
-      color: var(--texto);
-      gap: 1.2rem;
+    /* Separador | */
+    .hero-sep {
+      color: var(--destaque);
+      font-size: 1.2rem;
+      opacity: 0.6;
+      user-select: none;
     }
-    .hero-menu a:hover::before { width: 28px; }
 
     /* Indicador de scroll */
     .scroll-dica {
@@ -157,38 +135,42 @@
 
     /* ══ Responsivo celular ══ */
     @media (max-width: 768px) {
-      .hero-texto { padding: 0 1.5rem; max-width: 100%; }
-      .hero-escuro {
-        background: linear-gradient(
-          to bottom,
-          rgba(13,13,13,0.6) 0%,
-          rgba(13,13,13,0.8) 100%
-        );
+      .hero-texto { padding: 0 1.5rem; }
+
+      /* Menu vertical empilhado com linhas separadoras (B mobile) */
+      .hero-menu {
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        max-width: 260px;
       }
+
+      .hero-sep { display: none; }
+
+      .hero-menu a {
+        width: 100%;
+        text-align: center;
+        padding: 0.9rem 0;
+        font-size: 1.5rem;
+        border-bottom: 1px solid rgba(240,236,228,0.15);
+      }
+
+      .hero-menu a:first-child {
+        border-top: 1px solid rgba(240,236,228,0.15);
+      }
+
       .scroll-dica { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ═══ BARRA DE TOPO ════════════════════════════════ -->
-  <nav id="nav">
-    <a href="index.html" class="nav-logo">
+  <!-- ═══ BARRA DE TOPO — centralizada na landing page (C) ════ -->
+  <nav id="nav" style="justify-content: center;">
+    <a href="index.html" class="nav-logo" style="text-align: center;">
       Douglas N. Schimidt
       <small>adventure photography</small>
     </a>
-
-    <!-- Botão hamburguer — só aparece no celular -->
-    <button class="nav-toggle" id="navToggle" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-
-    <ul class="nav-links" id="navLinks">
-      <li><a href="portfolio.html" onclick="fecharMenu()">Portfólio</a></li>
-      <li><a href="portfolio.html?loja=1" onclick="fecharMenu()">Loja</a></li>
-      <li><a href="expedicoes.html" onclick="fecharMenu()">Expedições</a></li>
-      <li><a href="contato.html"   onclick="fecharMenu()">Contato</a></li>
-    </ul>
   </nav>
 
   <!-- ═══ HERO — FOTO + MENU GRANDE ══════════════════ -->
@@ -197,22 +179,15 @@
     <div class="hero-escuro"></div>
 
     <div class="hero-texto">
-      <p class="hero-etiqueta">São Paulo → mundo</p>
       <h1 class="hero-nome">Adventure<br/>Photography</h1>
       <p class="hero-descricao">Natureza vista de dentro.</p>
 
-      <!--
-        ══ LINKS DO MENU GRANDE ════════════════════════
-        Esses são os links que aparecem em destaque
-        na landing page, estilo Burkard.
-        Troque os textos se quiser — mas mantenha
-        os href (endereços) apontando para os arquivos certos.
-        ════════════════════════════════════════════ -->
       <nav class="hero-menu">
         <a href="portfolio.html">Portfólio</a>
+        <span class="hero-sep">|</span>
         <a href="portfolio.html?loja=1">Loja</a>
+        <span class="hero-sep">|</span>
         <a href="expedicoes.html">Expedições</a>
-        <a href="contato.html">Contato</a>
       </nav>
     </div>
 
