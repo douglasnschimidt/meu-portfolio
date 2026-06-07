@@ -3,14 +3,27 @@
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Portfólio — Douglas N. Schimidt</title>
-  <link rel="stylesheet" href="https://use.typekit.net/zeo6kqs.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="estilo.css" />
   <style>
-    /* ── Topo da página — removido ── */
+    /* ── Topo da página — removido (A vermelho) ── */
     .pagina-topo{display:none}
 
-    /* ── Filtros sticky — sempre visíveis, top dinâmico via JS ── */
-    .filtros-sticky{position:sticky;top:0;z-index:90;background:rgba(13,13,13,.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--borda);padding:.7rem 3rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
+    /* ── Filtros sticky — sempre visíveis, top:0 ── */
+    .filtros-sticky{
+      position:sticky;
+      top:0;
+      z-index:90;
+      background:rgba(13,13,13,.97);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--borda);
+      padding:.7rem 3rem;
+      display:flex;
+      align-items:center;
+      gap:1.2rem;
+      flex-wrap:wrap;
+    }
     .filtros-sep{width:1px;height:1.1rem;background:var(--borda);flex-shrink:0}
     .filtros-grupo{display:flex;gap:.3rem;flex-wrap:wrap;align-items:center}
     .filtros-label-inline{font-family:var(--detalhe);font-size:.7rem;color:var(--texto2);letter-spacing:.15em;text-transform:uppercase;opacity:.5;white-space:nowrap}
@@ -18,13 +31,16 @@
     .btn-filtro:hover{color:var(--texto);border-color:var(--texto2)}
     .btn-filtro.ativo{background:var(--destaque);border-color:var(--destaque);color:#0d0d0d}
 
-    /* ── Seções de categoria ── */
+    /* ── Seções de categoria — sem padding-top extra ── */
     .categoria-secao{padding:0;border-bottom:none}
     .categoria-secao.oculta{display:none}
 
-    /* ── Grade — ordem por linha, proporção original de cada foto ── */
-    .fotos-grid{display:flex;flex-wrap:wrap;gap:6px;padding:0 6px 6px;align-items:flex-start;}
-    .foto-item{position:relative;overflow:hidden;cursor:pointer;background:#1a1a1a;flex:0 0 calc(33.333% - 4px);-webkit-user-select:none;user-select:none;}
+    /* cat-header antigo — escondido (A vermelho) */
+    .cat-header{display:none}
+
+    /* ── Grade masonry — espaçamento dobrado (B) ── */
+    .fotos-grid{columns:3;column-gap:6px;padding:0 6px 6px}
+    .foto-item{position:relative;break-inside:avoid;margin-bottom:6px;overflow:hidden;cursor:pointer;background:#1a1a1a;display:block;-webkit-user-select:none;user-select:none;}
     .foto-item img{width:100%;height:auto;display:block;transition:transform .5s ease;pointer-events:none;-webkit-user-drag:none;}
     .foto-item:hover img{transform:scale(1.04)}
     .foto-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;background:rgba(13,13,13,0);transition:background var(--transicao)}
@@ -41,11 +57,44 @@
     /* Proteção de imagem */
     .foto-item::after{content:'';position:absolute;inset:0;z-index:1;cursor:pointer}
 
-    /* ── Card de categoria — mesma largura das fotos, altura mínima ── */
-    .cat-card{flex:0 0 calc(33.333% - 4px);background:#111;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem 1.6rem 1.8rem;min-height:200px;position:relative;border:1px solid #1e1e1e;}
-    .cat-card-label{font-family:var(--detalhe);font-size:.75rem;color:var(--destaque);letter-spacing:.25em;text-transform:uppercase;margin-bottom:.4rem;opacity:.8;}
-    .cat-card-titulo{font-family:var(--titulo);font-size:clamp(1.6rem,3vw,2.4rem);color:var(--texto);line-height:1;margin-bottom:.8rem;}
-    .cat-card-sub{font-family:var(--detalhe);font-size:clamp(.9rem,1.5vw,1.05rem);color:var(--texto2);font-style:italic;border-left:2px solid var(--destaque);padding-left:.8rem;line-height:1.4;}
+    /* ── Card de categoria dentro do grid (A ciano) ── */
+    .cat-card{
+      break-inside:avoid;
+      margin-bottom:6px;
+      background:#111;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding:2rem 1.6rem 1.8rem;
+      min-height:220px;
+      position:relative;
+      border:1px solid #1e1e1e;
+    }
+    .cat-card-label{
+      font-family:var(--detalhe);
+      font-size:.75rem;
+      color:var(--destaque);
+      letter-spacing:.25em;
+      text-transform:uppercase;
+      margin-bottom:.4rem;
+      opacity:.8;
+    }
+    .cat-card-titulo{
+      font-family:var(--titulo);
+      font-size:clamp(1.6rem,3vw,2.4rem);
+      color:var(--texto);
+      line-height:1;
+      margin-bottom:.8rem;
+    }
+    .cat-card-sub{
+      font-family:var(--detalhe);
+      font-size:clamp(.9rem,1.5vw,1.05rem);
+      color:var(--texto2);
+      font-style:italic;
+      border-left:2px solid var(--destaque);
+      padding-left:.8rem;
+      line-height:1.4;
+    }
 
     /* ── Lightbox ── */
     .lightbox{position:fixed;inset:0;z-index:1000;display:flex;background:rgba(10,10,10,.97);opacity:0;pointer-events:none;transition:opacity .3s ease}
@@ -98,11 +147,10 @@
       .lb-direita .lb-cat,.lb-direita .lb-titulo,.lb-direita .lb-desc{display:none}
       .lb-nav.lb-prev{left:.3rem}
       .lb-nav.lb-next{right:.3rem}
-      .fotos-grid{gap:6px;padding:0 6px 6px}
-      .foto-item{flex:0 0 calc(50% - 3px);}
-      .cat-card{flex:0 0 calc(50% - 3px);min-height:140px;padding:1.2rem 1rem;}
+      .fotos-grid{columns:2;column-gap:6px;padding:0 6px 6px}
       .filtros-sticky{padding:.45rem 1rem;gap:.5rem}
       .filtros-sep{display:none}
+      .cat-card{min-height:160px;padding:1.4rem 1.2rem}
     }
   </style>
 </head>
@@ -117,10 +165,15 @@
       <li><a href="contato.html" onclick="fecharMenu()">Contato</a></li>
     </ul>
   </nav>
+
   <style>
-    /* Nav some ao rolar para baixo, volta ao rolar para cima */
-    #nav { transition: transform 0.35s ease, background var(--transicao); }
-    #nav.oculta-nav { transform: translateY(-100%); }
+    /* Nav some ao rolar para baixo, volta ao rolar para cima (C) */
+    #nav {
+      transition: transform 0.35s ease, background var(--transicao);
+    }
+    #nav.oculta-nav {
+      transform: translateY(-100%);
+    }
   </style>
 
   <div class="filtros-sticky">
@@ -147,6 +200,40 @@
         <p class="cat-card-label">terra</p>
         <h2 class="cat-card-titulo">Terra</h2>
         <p class="cat-card-sub">Onde tudo começa.</p>
+      </div>
+      <div class="foto-item"
+        data-cat="terra"
+        data-loja=""
+        data-id="1FYfMOBchc3Ou-Xs5lyssVPxPGsE5HDv6"
+        data-titulo="A névoa"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1FYfMOBchc3Ou-Xs5lyssVPxPGsE5HDv6&sz=w800" alt="A névoa" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">A névoa</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="terra"
+        data-loja=""
+        data-id="1Z7Ym12h8Rw50X7m1TojCYMTwQomZNJCo"
+        data-titulo="Pinguins"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1Z7Ym12h8Rw50X7m1TojCYMTwQomZNJCo&sz=w800" alt="Pinguins" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Pinguins</span>
+          <div class="foto-badges"></div>
+        </div>
       </div>
       <div class="foto-item"
         data-cat="terra"
@@ -179,6 +266,57 @@
         <img src="https://drive.google.com/thumbnail?id=1HbJ-pNjQUs-2tVct-Hek0sKo34zLpCWr&sz=w800" alt="Tempestade na Nova Zelândia" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Tempestade na Nova Zelândia</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="terra"
+        data-loja=""
+        data-id="11to-w0CTwpt-d0c7EIUBd1gVi4rpeRlc"
+        data-titulo="Marrocos"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=11to-w0CTwpt-d0c7EIUBd1gVi4rpeRlc&sz=w800" alt="Marrocos" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Marrocos</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="terra"
+        data-loja=""
+        data-id="1COsTDtpwxSf-GT77HB8Fk4wB8CEiLasZ"
+        data-titulo="Lençóis Maranhenses"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1COsTDtpwxSf-GT77HB8Fk4wB8CEiLasZ&sz=w800" alt="Lençóis Maranhenses" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Lençóis Maranhenses</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="terra"
+        data-loja=""
+        data-id="1wSxsdlGyszoy5gyKDZSEYdKzx-0wWloL"
+        data-titulo="Mar de montanhas na Nova Zelândia"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1wSxsdlGyszoy5gyKDZSEYdKzx-0wWloL&sz=w800" alt="Mar de montanhas na Nova Zelândia" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Mar de montanhas na Nova Zelândia</span>
           <div class="foto-badges"></div>
         </div>
       </div>
@@ -219,74 +357,6 @@
       <div class="foto-item"
         data-cat="terra"
         data-loja=""
-        data-id="1FYfMOBchc3Ou-Xs5lyssVPxPGsE5HDv6"
-        data-titulo="A névoa"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1FYfMOBchc3Ou-Xs5lyssVPxPGsE5HDv6&sz=w800" alt="A névoa" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">A névoa</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="terra"
-        data-loja=""
-        data-id="11to-w0CTwpt-d0c7EIUBd1gVi4rpeRlc"
-        data-titulo="Marrocos"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=11to-w0CTwpt-d0c7EIUBd1gVi4rpeRlc&sz=w800" alt="Marrocos" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Marrocos</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="terra"
-        data-loja=""
-        data-id="1wSxsdlGyszoy5gyKDZSEYdKzx-0wWloL"
-        data-titulo="Mar de montanhas na Nova Zelândia"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1wSxsdlGyszoy5gyKDZSEYdKzx-0wWloL&sz=w800" alt="Mar de montanhas na Nova Zelândia" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Mar de montanhas na Nova Zelândia</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="terra"
-        data-loja=""
-        data-id="1Z7Ym12h8Rw50X7m1TojCYMTwQomZNJCo"
-        data-titulo="Pinguins"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1Z7Ym12h8Rw50X7m1TojCYMTwQomZNJCo&sz=w800" alt="Pinguins" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Pinguins</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="terra"
-        data-loja=""
         data-id="1KJ38npLW9xh4mxovgD2zY7ktN1WZrZ_a"
         data-titulo="Pinguins 2"
         data-descricao=""
@@ -301,46 +371,46 @@
           <div class="foto-badges"></div>
         </div>
       </div>
-      <div class="foto-item"
-        data-cat="terra"
-        data-loja=""
-        data-id="1COsTDtpwxSf-GT77HB8Fk4wB8CEiLasZ"
-        data-titulo="Lençóis Maranhenses"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1COsTDtpwxSf-GT77HB8Fk4wB8CEiLasZ&sz=w800" alt="Lençóis Maranhenses" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Lençóis Maranhenses</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
     </div>
   </section>
   <section class="categoria-secao" id="cat-agua" data-slug="agua">
     <div class="fotos-grid">
       <div class="cat-card">
-        <p class="cat-card-label">agua</p>
+        <p class="cat-card-label">água</p>
         <h2 class="cat-card-titulo">Água</h2>
         <p class="cat-card-sub">Meu habitat.</p>
       </div>
       <div class="foto-item"
         data-cat="agua"
         data-loja=""
-        data-id="1-SoAqLoSzg682DRnVm8ks0xADs2gmK75"
-        data-titulo="Flutuando na Antártica"
+        data-id="1invkUt0F8EYrJevTweWKpMsw-CJcQxqR"
+        data-titulo="Parque Nacional do Itatiaia"
         data-descricao=""
         data-na-loja="nao"
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1-SoAqLoSzg682DRnVm8ks0xADs2gmK75&sz=w800" alt="Flutuando na Antártica" loading="lazy" />
+        <img src="https://drive.google.com/thumbnail?id=1invkUt0F8EYrJevTweWKpMsw-CJcQxqR&sz=w800" alt="Parque Nacional do Itatiaia" loading="lazy" />
         <div class="foto-overlay">
-          <span class="foto-titulo-hover">Flutuando na Antártica</span>
+          <span class="foto-titulo-hover">Parque Nacional do Itatiaia</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="agua"
+        data-loja=""
+        data-id="1m44sD60V4DMX1r2fZVsPGOoYSWydU6nC"
+        data-titulo="Conhecendo os botos"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1m44sD60V4DMX1r2fZVsPGOoYSWydU6nC&sz=w800" alt="Conhecendo os botos" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Conhecendo os botos</span>
           <div class="foto-badges"></div>
         </div>
       </div>
@@ -364,23 +434,6 @@
       <div class="foto-item"
         data-cat="agua"
         data-loja=""
-        data-id="1DHigdFrSj8Xx0Vj7e7y3oS8Ry0XdUsuK"
-        data-titulo="Fernando de Noronha 2"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1DHigdFrSj8Xx0Vj7e7y3oS8Ry0XdUsuK&sz=w800" alt="Fernando de Noronha 2" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Fernando de Noronha 2</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="agua"
-        data-loja=""
         data-id="1UW7ZzrGaMSFwz52FO6qqi75cxqlMJ6VS"
         data-titulo="Peniche, Portugal"
         data-descricao=""
@@ -398,34 +451,68 @@
       <div class="foto-item"
         data-cat="agua"
         data-loja=""
-        data-id="16SfocLp1AKpWLBLwIMOn1vyIQAtoYxxG"
-        data-titulo="Chapada do Veadeiros"
+        data-id="1DHigdFrSj8Xx0Vj7e7y3oS8Ry0XdUsuK"
+        data-titulo="Fernando de Noronha 2"
         data-descricao=""
         data-na-loja="nao"
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=16SfocLp1AKpWLBLwIMOn1vyIQAtoYxxG&sz=w800" alt="Chapada do Veadeiros" loading="lazy" />
+        <img src="https://drive.google.com/thumbnail?id=1DHigdFrSj8Xx0Vj7e7y3oS8Ry0XdUsuK&sz=w800" alt="Fernando de Noronha 2" loading="lazy" />
         <div class="foto-overlay">
-          <span class="foto-titulo-hover">Chapada do Veadeiros</span>
+          <span class="foto-titulo-hover">Fernando de Noronha 2</span>
           <div class="foto-badges"></div>
         </div>
       </div>
       <div class="foto-item"
         data-cat="agua"
         data-loja=""
-        data-id="1invkUt0F8EYrJevTweWKpMsw-CJcQxqR"
-        data-titulo="Parque Nacional do Itatiaia"
+        data-id="1iepBSv9DyEikfwl4q6ygGpd2eUsvX00u"
+        data-titulo="Boto cor de rosa"
         data-descricao=""
         data-na-loja="nao"
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1invkUt0F8EYrJevTweWKpMsw-CJcQxqR&sz=w800" alt="Parque Nacional do Itatiaia" loading="lazy" />
+        <img src="https://drive.google.com/thumbnail?id=1iepBSv9DyEikfwl4q6ygGpd2eUsvX00u&sz=w800" alt="Boto cor de rosa" loading="lazy" />
         <div class="foto-overlay">
-          <span class="foto-titulo-hover">Parque Nacional do Itatiaia</span>
+          <span class="foto-titulo-hover">Boto cor de rosa</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="agua"
+        data-loja=""
+        data-id="1M2NHHetS6QyuZ3cxdgVnoYOl9iJy6a_R"
+        data-titulo="Lençóis Maranhenses 2"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1M2NHHetS6QyuZ3cxdgVnoYOl9iJy6a_R&sz=w800" alt="Lençóis Maranhenses 2" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Lençóis Maranhenses 2</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="agua"
+        data-loja=""
+        data-id="1jjBEVsbCiHvGzPjhyMiwrxv0YABO2peX"
+        data-titulo="Flutuante"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1jjBEVsbCiHvGzPjhyMiwrxv0YABO2peX&sz=w800" alt="Flutuante" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Flutuante</span>
           <div class="foto-badges"></div>
         </div>
       </div>
@@ -466,68 +553,34 @@
       <div class="foto-item"
         data-cat="agua"
         data-loja=""
-        data-id="1m44sD60V4DMX1r2fZVsPGOoYSWydU6nC"
-        data-titulo="Conhecendo os botos"
+        data-id="16SfocLp1AKpWLBLwIMOn1vyIQAtoYxxG"
+        data-titulo="Chapada do Veadeiros"
         data-descricao=""
         data-na-loja="nao"
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1m44sD60V4DMX1r2fZVsPGOoYSWydU6nC&sz=w800" alt="Conhecendo os botos" loading="lazy" />
+        <img src="https://drive.google.com/thumbnail?id=16SfocLp1AKpWLBLwIMOn1vyIQAtoYxxG&sz=w800" alt="Chapada do Veadeiros" loading="lazy" />
         <div class="foto-overlay">
-          <span class="foto-titulo-hover">Conhecendo os botos</span>
+          <span class="foto-titulo-hover">Chapada do Veadeiros</span>
           <div class="foto-badges"></div>
         </div>
       </div>
       <div class="foto-item"
         data-cat="agua"
         data-loja=""
-        data-id="1iepBSv9DyEikfwl4q6ygGpd2eUsvX00u"
-        data-titulo="Boto cor de rosa"
+        data-id="1-SoAqLoSzg682DRnVm8ks0xADs2gmK75"
+        data-titulo="Flutuando na Antártica"
         data-descricao=""
         data-na-loja="nao"
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1iepBSv9DyEikfwl4q6ygGpd2eUsvX00u&sz=w800" alt="Boto cor de rosa" loading="lazy" />
+        <img src="https://drive.google.com/thumbnail?id=1-SoAqLoSzg682DRnVm8ks0xADs2gmK75&sz=w800" alt="Flutuando na Antártica" loading="lazy" />
         <div class="foto-overlay">
-          <span class="foto-titulo-hover">Boto cor de rosa</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="agua"
-        data-loja=""
-        data-id="1jjBEVsbCiHvGzPjhyMiwrxv0YABO2peX"
-        data-titulo="Flutuante"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1jjBEVsbCiHvGzPjhyMiwrxv0YABO2peX&sz=w800" alt="Flutuante" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Flutuante</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="agua"
-        data-loja=""
-        data-id="1M2NHHetS6QyuZ3cxdgVnoYOl9iJy6a_R"
-        data-titulo="Lençóis Maranhenses 2"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1M2NHHetS6QyuZ3cxdgVnoYOl9iJy6a_R&sz=w800" alt="Lençóis Maranhenses 2" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Lençóis Maranhenses 2</span>
+          <span class="foto-titulo-hover">Flutuando na Antártica</span>
           <div class="foto-badges"></div>
         </div>
       </div>
@@ -543,17 +596,17 @@
       <div class="foto-item"
         data-cat="fogo"
         data-loja=""
-        data-id="19WO8EbrxmqjUAIV5zlaqvMfh5imwpIa2"
-        data-titulo="São Luís"
+        data-id="1v6FEv01FrBx-ybzYZmtHUDwHwI8Vi5mz"
+        data-titulo="Por do sol em Bonito"
         data-descricao=""
         data-na-loja="nao"
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=19WO8EbrxmqjUAIV5zlaqvMfh5imwpIa2&sz=w800" alt="São Luís" loading="lazy" />
+        <img src="https://drive.google.com/thumbnail?id=1v6FEv01FrBx-ybzYZmtHUDwHwI8Vi5mz&sz=w800" alt="Por do sol em Bonito" loading="lazy" />
         <div class="foto-overlay">
-          <span class="foto-titulo-hover">São Luís</span>
+          <span class="foto-titulo-hover">Por do sol em Bonito</span>
           <div class="foto-badges"></div>
         </div>
       </div>
@@ -577,17 +630,34 @@
       <div class="foto-item"
         data-cat="fogo"
         data-loja=""
-        data-id="1v6FEv01FrBx-ybzYZmtHUDwHwI8Vi5mz"
-        data-titulo="Por do sol em Bonito"
+        data-id="19WO8EbrxmqjUAIV5zlaqvMfh5imwpIa2"
+        data-titulo="São Luís"
         data-descricao=""
         data-na-loja="nao"
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1v6FEv01FrBx-ybzYZmtHUDwHwI8Vi5mz&sz=w800" alt="Por do sol em Bonito" loading="lazy" />
+        <img src="https://drive.google.com/thumbnail?id=19WO8EbrxmqjUAIV5zlaqvMfh5imwpIa2&sz=w800" alt="São Luís" loading="lazy" />
         <div class="foto-overlay">
-          <span class="foto-titulo-hover">Por do sol em Bonito</span>
+          <span class="foto-titulo-hover">São Luís</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="fogo"
+        data-loja=""
+        data-id="1tFtefpHYD5-4fMIljf27BtcgjunXVtF0"
+        data-titulo="Por do sol nos Lençóis Maranhenses 2"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1tFtefpHYD5-4fMIljf27BtcgjunXVtF0&sz=w800" alt="Por do sol nos Lençóis Maranhenses 2" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Por do sol nos Lençóis Maranhenses 2</span>
           <div class="foto-badges"></div>
         </div>
       </div>
@@ -622,23 +692,6 @@
         <img src="https://drive.google.com/thumbnail?id=1zs42IThg5C8TtG4s6o1iIn1WxaDA7Cdf&sz=w800" alt="Por do sol em Chefchaouen" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Por do sol em Chefchaouen</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="fogo"
-        data-loja=""
-        data-id="1tFtefpHYD5-4fMIljf27BtcgjunXVtF0"
-        data-titulo="Por do sol nos Lençóis Maranhenses 2"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1tFtefpHYD5-4fMIljf27BtcgjunXVtF0&sz=w800" alt="Por do sol nos Lençóis Maranhenses 2" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Por do sol nos Lençóis Maranhenses 2</span>
           <div class="foto-badges"></div>
         </div>
       </div>
@@ -688,57 +741,6 @@
       <div class="foto-item"
         data-cat="ar"
         data-loja=""
-        data-id="1qVNlKBof-WYn7WdM5NCRK2Sti7AR8wtk"
-        data-titulo="Mar de montanhas"
-        data-descricao="Uma das vistas mais incríveis no primeiro parque nacional brasileiro, Parque Nacional do Itatiaia. Chegar até a base das Prateleiras e avistar todo o Vale do Paraíba, com mar de nuvens e montanhas se misturando"
-        data-na-loja="nao"
-        data-preco-digital="50"
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1qVNlKBof-WYn7WdM5NCRK2Sti7AR8wtk&sz=w800" alt="Mar de montanhas" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Mar de montanhas</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="ar"
-        data-loja=""
-        data-id="1Ow26Wy4oMHGDmMSeS5Ggjjlepw7VXeC-"
-        data-titulo="Nascer do sol nas Prateleiras"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital="50"
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1Ow26Wy4oMHGDmMSeS5Ggjjlepw7VXeC-&sz=w800" alt="Nascer do sol nas Prateleiras" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Nascer do sol nas Prateleiras</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="ar"
-        data-loja=""
-        data-id="1tJJUrMEsqj3bR2VAuAmu3mCaNy-HMLRr"
-        data-titulo="Mar de nuvens"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital="50"
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1tJJUrMEsqj3bR2VAuAmu3mCaNy-HMLRr&sz=w800" alt="Mar de nuvens" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Mar de nuvens</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="ar"
-        data-loja=""
         data-id="1XX0xTb_39o_lClXkaKBmfdkg0ob0voKi"
         data-titulo="Dunas e o vento"
         data-descricao=""
@@ -770,6 +772,57 @@
           <div class="foto-badges"></div>
         </div>
       </div>
+      <div class="foto-item"
+        data-cat="ar"
+        data-loja=""
+        data-id="1tJJUrMEsqj3bR2VAuAmu3mCaNy-HMLRr"
+        data-titulo="Mar de nuvens"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital="50"
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1tJJUrMEsqj3bR2VAuAmu3mCaNy-HMLRr&sz=w800" alt="Mar de nuvens" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Mar de nuvens</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="ar"
+        data-loja=""
+        data-id="1Ow26Wy4oMHGDmMSeS5Ggjjlepw7VXeC-"
+        data-titulo="Nascer do sol nas Prateleiras"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital="50"
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1Ow26Wy4oMHGDmMSeS5Ggjjlepw7VXeC-&sz=w800" alt="Nascer do sol nas Prateleiras" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Nascer do sol nas Prateleiras</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="ar"
+        data-loja=""
+        data-id="1qVNlKBof-WYn7WdM5NCRK2Sti7AR8wtk"
+        data-titulo="Mar de montanhas"
+        data-descricao="Uma das vistas mais incríveis no primeiro parque nacional brasileiro, Parque Nacional do Itatiaia. Chegar até a base das Prateleiras e avistar todo o Vale do Paraíba, com mar de nuvens e montanhas se misturando"
+        data-na-loja="nao"
+        data-preco-digital="50"
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1qVNlKBof-WYn7WdM5NCRK2Sti7AR8wtk&sz=w800" alt="Mar de montanhas" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Mar de montanhas</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
     </div>
   </section>
   <section class="categoria-secao" id="cat-vida" data-slug="vida">
@@ -782,17 +835,170 @@
       <div class="foto-item"
         data-cat="vida"
         data-loja=""
-        data-id="1MRUL_-q_k6PHCOdiSldpPdI_dNx7HDDQ"
-        data-titulo="Pinguim na neve"
+        data-id="1fzfzbqlUBJC1QKWj0RLz57dwC9QFj7Cn"
+        data-titulo="Fez, Marrocos 4"
         data-descricao=""
         data-na-loja="nao"
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1MRUL_-q_k6PHCOdiSldpPdI_dNx7HDDQ&sz=w800" alt="Pinguim na neve" loading="lazy" />
+        <img src="https://drive.google.com/thumbnail?id=1fzfzbqlUBJC1QKWj0RLz57dwC9QFj7Cn&sz=w800" alt="Fez, Marrocos 4" loading="lazy" />
         <div class="foto-overlay">
-          <span class="foto-titulo-hover">Pinguim na neve</span>
+          <span class="foto-titulo-hover">Fez, Marrocos 4</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="vida"
+        data-loja=""
+        data-id="1O2sZ1QzONESCDluI32DxZOqlv7oMeQ6Z"
+        data-titulo="Interferencia humana 3"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1O2sZ1QzONESCDluI32DxZOqlv7oMeQ6Z&sz=w800" alt="Interferencia humana 3" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Interferencia humana 3</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="vida"
+        data-loja=""
+        data-id="1FoZwUuOrtyQKzeC8jaNWmAZi7n5DXj8t"
+        data-titulo="Fez, Marrocos 2"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1FoZwUuOrtyQKzeC8jaNWmAZi7n5DXj8t&sz=w800" alt="Fez, Marrocos 2" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Fez, Marrocos 2</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="vida"
+        data-loja=""
+        data-id="11H-daIyfjblyTXkJsGAgPOlwpsu4I7bz"
+        data-titulo="Descansando 2"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=11H-daIyfjblyTXkJsGAgPOlwpsu4I7bz&sz=w800" alt="Descansando 2" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Descansando 2</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="vida"
+        data-loja=""
+        data-id="1MOtV6ISrWG7T1p0GpJvdV_tSx8WrdZEG"
+        data-titulo="Vida selvagem em Marrocos"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1MOtV6ISrWG7T1p0GpJvdV_tSx8WrdZEG&sz=w800" alt="Vida selvagem em Marrocos" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Vida selvagem em Marrocos</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="vida"
+        data-loja=""
+        data-id="1eNE_nryv_hzf9NxOEH1mtMolrggJkPtM"
+        data-titulo="Fez, Marrocos 3"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1eNE_nryv_hzf9NxOEH1mtMolrggJkPtM&sz=w800" alt="Fez, Marrocos 3" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Fez, Marrocos 3</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="vida"
+        data-loja=""
+        data-id="1i_LMy6jJsS2E2MSU72FegYOopkQDBPu2"
+        data-titulo="interferencia humana 4"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1i_LMy6jJsS2E2MSU72FegYOopkQDBPu2&sz=w800" alt="interferencia humana 4" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">interferencia humana 4</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="vida"
+        data-loja=""
+        data-id="1A5XzXBrsUAzO0nf6Z8NXB88tno13s54a"
+        data-titulo="Antártica 2"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1A5XzXBrsUAzO0nf6Z8NXB88tno13s54a&sz=w800" alt="Antártica 2" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Antártica 2</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="vida"
+        data-loja=""
+        data-id="1Zr4I-IchZCAx9XwLwljq_AgAM96EjJhN"
+        data-titulo="Fez, Marrocos 5"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1Zr4I-IchZCAx9XwLwljq_AgAM96EjJhN&sz=w800" alt="Fez, Marrocos 5" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Fez, Marrocos 5</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="vida"
+        data-loja=""
+        data-id="18Zrcey7oMRxW9kvYZ0WaBiQgkNfAWd1q"
+        data-titulo="Pinguins"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=18Zrcey7oMRxW9kvYZ0WaBiQgkNfAWd1q&sz=w800" alt="Pinguins" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Pinguins</span>
           <div class="foto-badges"></div>
         </div>
       </div>
@@ -850,17 +1056,17 @@
       <div class="foto-item"
         data-cat="vida"
         data-loja=""
-        data-id="1TO9eR7YYYRM6lfuG4JVPwCXvdK2L3kHo"
-        data-titulo="Interferencia humana"
+        data-id="1fcGSM1pp4b6q0K1JTQl7YLJHyBbZvxbW"
+        data-titulo="Pinguim"
         data-descricao=""
         data-na-loja="nao"
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1TO9eR7YYYRM6lfuG4JVPwCXvdK2L3kHo&sz=w800" alt="Interferencia humana" loading="lazy" />
+        <img src="https://drive.google.com/thumbnail?id=1fcGSM1pp4b6q0K1JTQl7YLJHyBbZvxbW&sz=w800" alt="Pinguim" loading="lazy" />
         <div class="foto-overlay">
-          <span class="foto-titulo-hover">Interferencia humana</span>
+          <span class="foto-titulo-hover">Pinguim</span>
           <div class="foto-badges"></div>
         </div>
       </div>
@@ -884,17 +1090,34 @@
       <div class="foto-item"
         data-cat="vida"
         data-loja=""
-        data-id="1fcGSM1pp4b6q0K1JTQl7YLJHyBbZvxbW"
-        data-titulo="Pinguim"
+        data-id="1TO9eR7YYYRM6lfuG4JVPwCXvdK2L3kHo"
+        data-titulo="Interferencia humana"
         data-descricao=""
         data-na-loja="nao"
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1fcGSM1pp4b6q0K1JTQl7YLJHyBbZvxbW&sz=w800" alt="Pinguim" loading="lazy" />
+        <img src="https://drive.google.com/thumbnail?id=1TO9eR7YYYRM6lfuG4JVPwCXvdK2L3kHo&sz=w800" alt="Interferencia humana" loading="lazy" />
         <div class="foto-overlay">
-          <span class="foto-titulo-hover">Pinguim</span>
+          <span class="foto-titulo-hover">Interferencia humana</span>
+          <div class="foto-badges"></div>
+        </div>
+      </div>
+      <div class="foto-item"
+        data-cat="vida"
+        data-loja=""
+        data-id="1MRUL_-q_k6PHCOdiSldpPdI_dNx7HDDQ"
+        data-titulo="Pinguim na neve"
+        data-descricao=""
+        data-na-loja="nao"
+        data-preco-digital=""
+        data-link-gumroad=""
+        data-link-shopify=""
+        onclick="abrirLightbox(this)">
+        <img src="https://drive.google.com/thumbnail?id=1MRUL_-q_k6PHCOdiSldpPdI_dNx7HDDQ&sz=w800" alt="Pinguim na neve" loading="lazy" />
+        <div class="foto-overlay">
+          <span class="foto-titulo-hover">Pinguim na neve</span>
           <div class="foto-badges"></div>
         </div>
       </div>
@@ -912,176 +1135,6 @@
         <img src="https://drive.google.com/thumbnail?id=13Wo8lZMJV_DpM8v_N33rvC8HnAzDollE&sz=w800" alt="Vida selvagem no Lençóis Maranhenses" loading="lazy" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Vida selvagem no Lençóis Maranhenses</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="vida"
-        data-loja=""
-        data-id="1O2sZ1QzONESCDluI32DxZOqlv7oMeQ6Z"
-        data-titulo="Interferencia humana 3"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1O2sZ1QzONESCDluI32DxZOqlv7oMeQ6Z&sz=w800" alt="Interferencia humana 3" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Interferencia humana 3</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="vida"
-        data-loja=""
-        data-id="18Zrcey7oMRxW9kvYZ0WaBiQgkNfAWd1q"
-        data-titulo="Pinguins"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=18Zrcey7oMRxW9kvYZ0WaBiQgkNfAWd1q&sz=w800" alt="Pinguins" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Pinguins</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="vida"
-        data-loja=""
-        data-id="1FoZwUuOrtyQKzeC8jaNWmAZi7n5DXj8t"
-        data-titulo="Fez, Marrocos 2"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1FoZwUuOrtyQKzeC8jaNWmAZi7n5DXj8t&sz=w800" alt="Fez, Marrocos 2" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Fez, Marrocos 2</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="vida"
-        data-loja=""
-        data-id="1eNE_nryv_hzf9NxOEH1mtMolrggJkPtM"
-        data-titulo="Fez, Marrocos 3"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1eNE_nryv_hzf9NxOEH1mtMolrggJkPtM&sz=w800" alt="Fez, Marrocos 3" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Fez, Marrocos 3</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="vida"
-        data-loja=""
-        data-id="1fzfzbqlUBJC1QKWj0RLz57dwC9QFj7Cn"
-        data-titulo="Fez, Marrocos 4"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1fzfzbqlUBJC1QKWj0RLz57dwC9QFj7Cn&sz=w800" alt="Fez, Marrocos 4" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Fez, Marrocos 4</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="vida"
-        data-loja=""
-        data-id="1MOtV6ISrWG7T1p0GpJvdV_tSx8WrdZEG"
-        data-titulo="Vida selvagem em Marrocos"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1MOtV6ISrWG7T1p0GpJvdV_tSx8WrdZEG&sz=w800" alt="Vida selvagem em Marrocos" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Vida selvagem em Marrocos</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="vida"
-        data-loja=""
-        data-id="1Zr4I-IchZCAx9XwLwljq_AgAM96EjJhN"
-        data-titulo="Fez, Marrocos 5"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1Zr4I-IchZCAx9XwLwljq_AgAM96EjJhN&sz=w800" alt="Fez, Marrocos 5" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Fez, Marrocos 5</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="vida"
-        data-loja=""
-        data-id="1i_LMy6jJsS2E2MSU72FegYOopkQDBPu2"
-        data-titulo="interferencia humana 4"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1i_LMy6jJsS2E2MSU72FegYOopkQDBPu2&sz=w800" alt="interferencia humana 4" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">interferencia humana 4</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="vida"
-        data-loja=""
-        data-id="1A5XzXBrsUAzO0nf6Z8NXB88tno13s54a"
-        data-titulo="Antártica 2"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1A5XzXBrsUAzO0nf6Z8NXB88tno13s54a&sz=w800" alt="Antártica 2" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Antártica 2</span>
-          <div class="foto-badges"></div>
-        </div>
-      </div>
-      <div class="foto-item"
-        data-cat="vida"
-        data-loja=""
-        data-id="11H-daIyfjblyTXkJsGAgPOlwpsu4I7bz"
-        data-titulo="Descansando 2"
-        data-descricao=""
-        data-na-loja="nao"
-        data-preco-digital=""
-        data-link-gumroad=""
-        data-link-shopify=""
-        onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=11H-daIyfjblyTXkJsGAgPOlwpsu4I7bz&sz=w800" alt="Descansando 2" loading="lazy" />
-        <div class="foto-overlay">
-          <span class="foto-titulo-hover">Descansando 2</span>
           <div class="foto-badges"></div>
         </div>
       </div>
@@ -1122,7 +1175,7 @@
     <span>© 2025 — atualizado via Google Drive + Sheets</span>
   </footer>
   <script>
-    /* ── Nav — some ao rolar para baixo, volta ao rolar para cima ── */
+    /* ── Nav — some ao rolar para baixo, volta ao rolar para cima (C) ── */
     const _nav = document.getElementById('nav');
     const _filtros = document.querySelector('.filtros-sticky');
     let _ultimoScroll = 0;
@@ -1130,50 +1183,24 @@
     window.addEventListener('scroll', () => {
       const atual = window.scrollY;
       const navAltura = _nav.offsetHeight;
+
+      // Rolando para baixo e passou do topo
       if (atual > _ultimoScroll && atual > navAltura) {
         _nav.classList.add('oculta-nav');
         _filtros.style.top = '0';
       } else {
+        // Rolando para cima — mostra a nav
         _nav.classList.remove('oculta-nav');
         _filtros.style.top = navAltura + 'px';
       }
+
       _nav.classList.toggle('rolada', atual > 50);
       _ultimoScroll = atual;
     });
 
+    // Posição inicial dos filtros abaixo da nav
     window.addEventListener('load', () => {
       _filtros.style.top = _nav.offsetHeight + 'px';
-      aplicarMasonry();
-    });
-
-    /* ── Masonry por linha ──────────────────────────────────────────
-       Agrupa os itens visíveis em linhas de N colunas e alinha a
-       altura de cada item dentro da mesma linha pela maior altura.
-       Isso mantém a ordem esquerda→direita E a proporção original.
-    ──────────────────────────────────────────────────────────────── */
-    function aplicarMasonry() {
-      document.querySelectorAll('.fotos-grid').forEach(grid => {
-        const cols = window.innerWidth <= 768 ? 2 : 3;
-        const itens = Array.from(grid.children).filter(el => !el.classList.contains('oculta'));
-
-        // Reset de alturas para medir naturalmente
-        itens.forEach(el => el.style.height = '');
-
-        // Agrupa em linhas e iguala a altura de cada linha
-        for (let i = 0; i < itens.length; i += cols) {
-          const linha = itens.slice(i, i + cols);
-          const maxH  = Math.max(...linha.map(el => el.getBoundingClientRect().height));
-          // só aplica altura mínima na linha — não força altura máxima nas fotos
-          // pois fotos verticais naturalmente já têm altura maior
-        }
-      });
-    }
-
-    // Recalcula ao redimensionar a janela
-    let _resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(_resizeTimer);
-      _resizeTimer = setTimeout(aplicarMasonry, 100);
     });
 
     document.getElementById('navToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('aberto'));
@@ -1244,7 +1271,6 @@
         }
       });
       atualizarVisiveisLightbox();
-      aplicarMasonry();
     }
 
     /* ── Lightbox ── */
