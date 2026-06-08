@@ -9,10 +9,6 @@
     /* ── Topo da página — removido ── */
     .pagina-topo{display:none}
 
-    /* ── Espaço para compensar nav fixa + filtros ── */
-    body { padding-top: 0; }
-    .portfolio-spacer { height: 0; }
-
     /* ── Filtros sticky — sempre visíveis, top dinâmico via JS ── */
     .filtros-sticky{position:sticky;top:0;z-index:90;background:rgba(13,13,13,.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--borda);padding:.7rem 3rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
     .filtros-sep{width:1px;height:1.1rem;background:var(--borda);flex-shrink:0}
@@ -1138,7 +1134,6 @@
       const filtrosH = _filtros.offsetHeight;
       const navOculta = _nav.classList.contains('oculta-nav');
       _filtros.style.top = navOculta ? '0' : navH + 'px';
-      // Espaçador = altura da nav + altura dos filtros, para o conteúdo não ficar escondido
       _spacer.style.height = (navH + filtrosH) + 'px';
     }
 
