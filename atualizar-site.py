@@ -336,6 +336,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
       <button class="btn-filtro" data-loja="fisica" onclick="filtrarLoja(this)">Impressão</button>
     </div>
   </div>
+  <div class="portfolio-spacer" id="portfolioSpacer"></div>
 
 {secoes_html}
 
@@ -373,7 +374,16 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     /* ── Nav — some ao rolar para baixo, volta ao rolar para cima ── */
     const _nav = document.getElementById('nav');
     const _filtros = document.querySelector('.filtros-sticky');
+    const _spacer = document.getElementById('portfolioSpacer');
     let _ultimoScroll = 0;
+
+    function ajustarLayout() {{
+      const navH = _nav.offsetHeight;
+      const filtrosH = _filtros.offsetHeight;
+      const navOculta = _nav.classList.contains('oculta-nav');
+      _filtros.style.top = navOculta ? '0' : navH + 'px';
+      _spacer.style.height = (navH + filtrosH) + 'px';
+    }}
 
     window.addEventListener('scroll', () => {{
       const atual = window.scrollY;
@@ -383,16 +393,18 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
         _filtros.style.top = '0';
       }} else {{
         _nav.classList.remove('oculta-nav');
-        _filtros.style.top = navAltura + 'px';
+        _filtros.style.top = _nav.offsetHeight + 'px';
       }}
       _nav.classList.toggle('rolada', atual > 50);
       _ultimoScroll = atual;
     }});
 
     window.addEventListener('load', () => {{
-      _filtros.style.top = _nav.offsetHeight + 'px';
+      ajustarLayout();
       aplicarMasonry();
     }});
+
+    window.addEventListener('resize', ajustarLayout);
 
     /* ── Masonry por linha ──────────────────────────────────────────
        Agrupa os itens visíveis em linhas de N colunas e alinha a

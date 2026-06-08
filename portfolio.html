@@ -9,6 +9,10 @@
     /* ── Topo da página — removido ── */
     .pagina-topo{display:none}
 
+    /* ── Espaço para compensar nav fixa + filtros ── */
+    body { padding-top: 0; }
+    .portfolio-spacer { height: 0; }
+
     /* ── Filtros sticky — sempre visíveis, top dinâmico via JS ── */
     .filtros-sticky{position:sticky;top:0;z-index:90;background:rgba(13,13,13,.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--borda);padding:.7rem 3rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
     .filtros-sep{width:1px;height:1.1rem;background:var(--borda);flex-shrink:0}
@@ -139,6 +143,7 @@
       <button class="btn-filtro" data-loja="fisica" onclick="filtrarLoja(this)">Impressão</button>
     </div>
   </div>
+  <div class="portfolio-spacer" id="portfolioSpacer"></div>
 
 
   <section class="categoria-secao" id="cat-terra" data-slug="terra">
@@ -1125,7 +1130,17 @@
     /* ── Nav — some ao rolar para baixo, volta ao rolar para cima ── */
     const _nav = document.getElementById('nav');
     const _filtros = document.querySelector('.filtros-sticky');
+    const _spacer = document.getElementById('portfolioSpacer');
     let _ultimoScroll = 0;
+
+    function ajustarLayout() {
+      const navH = _nav.offsetHeight;
+      const filtrosH = _filtros.offsetHeight;
+      const navOculta = _nav.classList.contains('oculta-nav');
+      _filtros.style.top = navOculta ? '0' : navH + 'px';
+      // Espaçador = altura da nav + altura dos filtros, para o conteúdo não ficar escondido
+      _spacer.style.height = (navH + filtrosH) + 'px';
+    }
 
     window.addEventListener('scroll', () => {
       const atual = window.scrollY;
@@ -1135,16 +1150,18 @@
         _filtros.style.top = '0';
       } else {
         _nav.classList.remove('oculta-nav');
-        _filtros.style.top = navAltura + 'px';
+        _filtros.style.top = _nav.offsetHeight + 'px';
       }
       _nav.classList.toggle('rolada', atual > 50);
       _ultimoScroll = atual;
     });
 
     window.addEventListener('load', () => {
-      _filtros.style.top = _nav.offsetHeight + 'px';
+      ajustarLayout();
       aplicarMasonry();
     });
+
+    window.addEventListener('resize', ajustarLayout);
 
     /* ── Masonry por linha ──────────────────────────────────────────
        Agrupa os itens visíveis em linhas de N colunas e alinha a
