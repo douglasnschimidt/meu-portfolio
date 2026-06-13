@@ -38,10 +38,10 @@ PASTAS = {
 }
 
 INFO_CATEGORIA = {
-    "terra": {"nome": "Terra", "sub": "Onde tudo começa."},
-    "agua":  {"nome": "Água",  "sub": "Meu habitat."},
+    "terra": {"nome": "Terra", "sub": "Gigante e magnífica."},
+    "agua":  {"nome": "Água",  "sub": "Aqui estou em casa."},
     "fogo":  {"nome": "Fogo",  "sub": "Impossível ignorar."},
-    "ar":    {"nome": "Ar",    "sub": "O que você não vê."},
+    "ar":    {"nome": "Ar",    "sub": "Sempre presente."},
     "vida":  {"nome": "Vida",  "sub": "Seja cotidiana ou selvagem."},
 }
 
@@ -139,7 +139,7 @@ def nav_html(ativa_portfolio=False, ativa_loja=False):
 
 RODAPE = """  <footer>
     <span class="footer-logo">Douglas N. Schimidt</span>
-    <span>© 2025 — atualizado via Google Drive + Sheets</span>
+    <span>© 2026</span>
   </footer>"""
 
 def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
@@ -674,7 +674,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
 
 
 def main():
-    print("Atualizando site via Google Drive + Sheets...\n")
+    print("Atualizando site...\n")
     if not API_KEY:
         print("ERRO: variavel GOOGLE_API_KEY nao encontrada.")
         return
