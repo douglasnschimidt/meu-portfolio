@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>if(localStorage.getItem('tema')==='claro'){document.documentElement.setAttribute('data-tema','claro');}</script>
   <title>Loja — Douglas N. Schimidt</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -199,6 +200,7 @@
 
   <footer>
     <span class="footer-logo">Douglas N. Schimidt</span>
+    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Modo claro</button>
     <span>© 2025</span>
   </footer>
 
@@ -214,6 +216,19 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visivel'); obs.unobserve(e.target); } });
     }, { threshold: 0.08 });
     reveals.forEach(el => obs.observe(el));
+
+    // Alternância de tema claro/escuro
+    function toggleTema() {
+      const claro = document.documentElement.getAttribute('data-tema') === 'claro';
+      if (claro) { document.documentElement.removeAttribute('data-tema'); localStorage.setItem('tema','escuro'); }
+      else       { document.documentElement.setAttribute('data-tema','claro'); localStorage.setItem('tema','claro'); }
+      atualizarBotaoTema();
+    }
+    function atualizarBotaoTema() {
+      const btn = document.getElementById('temaToggle');
+      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Modo escuro' : 'Modo claro';
+    }
+    atualizarBotaoTema();
   </script>
 
 </body>

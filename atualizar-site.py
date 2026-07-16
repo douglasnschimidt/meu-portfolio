@@ -139,8 +139,23 @@ def nav_html(ativa_portfolio=False, ativa_loja=False):
 
 RODAPE = """  <footer>
     <span class="footer-logo">Douglas N. Schimidt</span>
+    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Modo claro</button>
     <span>© 2026</span>
   </footer>"""
+
+TEMA_INIT = """  <script>if(localStorage.getItem('tema')==='claro'){document.documentElement.setAttribute('data-tema','claro');}</script>"""
+
+TEMA_SCRIPT = """    function toggleTema() {
+      const claro = document.documentElement.getAttribute('data-tema') === 'claro';
+      if (claro) { document.documentElement.removeAttribute('data-tema'); localStorage.setItem('tema','escuro'); }
+      else       { document.documentElement.setAttribute('data-tema','claro'); localStorage.setItem('tema','claro'); }
+      atualizarBotaoTema();
+    }
+    function atualizarBotaoTema() {
+      const btn = document.getElementById('temaToggle');
+      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Modo escuro' : 'Modo claro';
+    }
+    atualizarBotaoTema();"""
 
 def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     """
@@ -195,16 +210,15 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
       </div>""")
 
         grid = "\n".join(itens)
-        # Card de categoria entra como primeiro item do grid (A ciano)
-        cat_card = f"""      <div class="cat-card">
-        <p class="cat-card-label">{slug}</p>
-        <h2 class="cat-card-titulo">{info['nome']}</h2>
-        <p class="cat-card-sub">{info['sub']}</p>
-      </div>"""
+        # Faixa de categoria — divisor de largura total acima das fotos
+        cat_faixa = f"""    <div class="cat-faixa">
+      <h2 class="cat-faixa-titulo">{info['nome']}</h2>
+      <p class="cat-faixa-sub">{info['sub']}</p>
+    </div>"""
         secoes_html += f"""
   <section class="categoria-secao" id="cat-{slug}" data-slug="{slug}">
+{cat_faixa}
     <div class="fotos-grid">
-{cat_card}
 {grid}
     </div>
   </section>"""
@@ -213,6 +227,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+{TEMA_INIT}
   <title>Portfólio — Douglas N. Schimidt</title>
   {FONTES}
   <link rel="stylesheet" href="estilo.css" />
@@ -221,7 +236,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     .pagina-topo{{display:none}}
 
     /* ── Filtros sticky — sempre visíveis, top dinâmico via JS ── */
-    .filtros-sticky{{position:sticky;top:0;z-index:90;background:rgba(13,13,13,.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--borda);padding:.7rem 3rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}}
+    .filtros-sticky{{position:sticky;top:0;z-index:90;background:rgba(var(--fundo-rgb),.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--borda);padding:.7rem 3rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}}
     .filtros-sep{{width:1px;height:1.1rem;background:var(--borda);flex-shrink:0}}
     .filtros-grupo{{display:flex;gap:.3rem;flex-wrap:wrap;align-items:center}}
     .filtros-label-inline{{font-family:var(--detalhe);font-size:.7rem;color:var(--texto2);letter-spacing:.15em;text-transform:uppercase;opacity:.5;white-space:nowrap}}
@@ -233,9 +248,12 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     .categoria-secao{{padding:0;border-bottom:none}}
     .categoria-secao.oculta{{display:none}}
 
-    /* ── Grade — ordem por linha, proporção original de cada foto ── */
-    .fotos-grid{{display:flex;flex-wrap:wrap;gap:6px;padding:0 6px 6px;align-items:flex-start;}}
-    .foto-item{{position:relative;overflow:hidden;cursor:pointer;background:#1a1a1a;flex:0 0 calc(33.333% - 4px);-webkit-user-select:none;user-select:none;}}
+    /* ── Grade — colunas CSS (column-count), sequência vertical por bloco ──
+       Cada foto entra na coluna atual e empilha por cima da anterior,
+       sem depender de JavaScript — é o navegador quem distribui as fotos
+       nas colunas, preenchendo de cima para baixo, sem buracos. */
+    .fotos-grid{{column-count:3;column-gap:6px;padding:0 6px 6px;}}
+    .foto-item{{position:relative;overflow:hidden;cursor:pointer;background:#1a1a1a;break-inside:avoid;margin-bottom:6px;-webkit-user-select:none;user-select:none;--texto:#f0ece4;--texto2:#8a8378;--borda:#222;}}
     .foto-item img{{width:100%;height:auto;display:block;transition:transform .5s ease;pointer-events:none;-webkit-user-drag:none;}}
     .foto-item:hover img{{transform:scale(1.04)}}
     .foto-overlay{{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;background:rgba(13,13,13,0);transition:background var(--transicao)}}
@@ -252,23 +270,17 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     /* Proteção de imagem */
     .foto-item::after{{content:'';position:absolute;inset:0;z-index:1;cursor:pointer}}
 
-    /* ── Card de categoria — mesma largura das fotos, altura mínima ── */
-    .cat-card{{flex:0 0 calc(33.333% - 4px);background:#111;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem 1.6rem 1.8rem;min-height:200px;position:relative;border:1px solid #1e1e1e;}}
-    .cat-card-label{{font-family:var(--detalhe);font-size:.75rem;color:var(--destaque);letter-spacing:.25em;text-transform:uppercase;margin-bottom:.4rem;opacity:.8;}}
-    .cat-card-titulo{{font-family:var(--titulo);font-size:clamp(1.6rem,3vw,2.4rem);color:var(--texto);line-height:1;margin-bottom:.8rem;}}
-    .cat-card-sub{{font-family:var(--detalhe);font-size:clamp(.9rem,1.5vw,1.05rem);color:var(--texto2);font-style:italic;border-left:2px solid var(--destaque);padding-left:.8rem;line-height:1.4;}}
+    /* ── Faixa de categoria — divisor de largura total acima das fotos ── */
+    .cat-faixa{{padding:2.4rem 3rem 1.2rem;border-top:1px solid var(--borda);}}
+    .categoria-secao:first-of-type .cat-faixa{{border-top:none;padding-top:1.4rem;}}
+    .cat-faixa-titulo{{font-family:var(--titulo);font-size:clamp(1.6rem,3vw,2.2rem);color:var(--texto);line-height:1;margin-bottom:.6rem;}}
+    .cat-faixa-sub{{font-family:var(--detalhe);font-size:clamp(.9rem,1.5vw,1.05rem);color:var(--texto2);font-style:italic;border-left:2px solid var(--destaque);padding-left:.8rem;line-height:1.4;}}
 
-    /* ── Lightbox ── */
-    .lightbox{{position:fixed;inset:0;z-index:1000;display:flex;background:rgba(10,10,10,.97);opacity:0;pointer-events:none;transition:opacity .3s ease}}
+    /* ── Lightbox — acompanha o tema do site (claro/escuro) ── */
+    .lightbox{{position:fixed;inset:0;z-index:1000;display:flex;background:rgba(var(--fundo-rgb),.97);opacity:0;pointer-events:none;transition:opacity .3s ease}}
     .lightbox.aberto{{opacity:1;pointer-events:all}}
     .lb-esquerda{{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem 2rem;min-width:0;gap:0}}
     .lb-foto{{max-width:100%;max-height:75vh;object-fit:contain;pointer-events:none;-webkit-user-drag:none;user-drag:none;-webkit-user-select:none;user-select:none}}
-    .lb-titulo-painel{{width:100%;max-width:800px;display:flex;align-items:center;justify-content:space-between;padding:.6rem 0 0;gap:.5rem;cursor:pointer;}}
-    .lb-titulo-nome{{font-family:var(--titulo);font-size:1.1rem;color:var(--texto);line-height:1.2}}
-    .lb-titulo-seta{{font-size:.7rem;color:var(--destaque);transition:transform .3s ease;flex-shrink:0;user-select:none;padding:.2rem .4rem;border:1px solid rgba(224,123,57,.3);border-radius:2px;}}
-    .lb-desc-inline{{width:100%;max-width:800px;max-height:0;overflow:hidden;transition:max-height .35s ease;}}
-    .lb-desc-inline.aberto{{max-height:200px}}
-    .lb-desc-inline p{{font-size:.85rem;color:var(--texto2);line-height:1.7;padding:.5rem 0}}
     .lb-direita{{width:340px;flex-shrink:0;border-left:1px solid var(--borda);display:flex;flex-direction:column;padding:6rem 2rem 2rem;overflow-y:auto}}
     .lb-fechar{{position:absolute;top:1.5rem;right:2rem;font-size:1.8rem;color:var(--texto2);cursor:pointer;background:none;border:none;transition:color var(--transicao);z-index:10}}
     .lb-fechar:hover{{color:var(--texto)}}
@@ -278,7 +290,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     .lb-next{{right:360px}}
     .lb-cat{{font-family:var(--detalhe);font-size:.8rem;color:var(--destaque);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem}}
     .lb-titulo{{font-family:var(--titulo);font-size:1.5rem;color:var(--texto);line-height:1.2;margin-bottom:1rem}}
-    .lb-desc{{font-size:.9rem;color:var(--texto2);line-height:1.8;margin-bottom:2rem;flex:1}}
+    .lb-desc{{font-size:.9rem;color:var(--texto2);line-height:1.8;margin-bottom:2rem}}
     .lb-sem-venda{{font-family:var(--detalhe);font-size:.9rem;color:var(--texto2);opacity:.5;margin-top:auto}}
     .lb-secao-compra{{border-top:1px solid var(--borda);padding-top:1.5rem;margin-top:auto}}
     .lb-preco-label{{font-family:var(--detalhe);font-size:.8rem;color:var(--texto2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}}
@@ -290,7 +302,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     .lb-opcoes{{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem}}
     .lb-opcao-grupo{{display:flex;flex-direction:column;gap:.2rem}}
     .lb-opcao-grupo label{{font-family:var(--detalhe);font-size:.75rem;color:var(--texto2);letter-spacing:.08em}}
-    .lb-opcao-grupo select{{background:#1a1a1a;border:1px solid var(--borda);color:var(--texto);font-family:var(--corpo);font-size:.85rem;padding:.35rem .5rem;outline:none;cursor:pointer;width:100%}}
+    .lb-opcao-grupo select{{background:var(--painel);border:1px solid var(--borda);color:var(--texto);font-family:var(--corpo);font-size:.85rem;padding:.35rem .5rem;outline:none;cursor:pointer;width:100%}}
     .lb-opcao-grupo select:focus{{border-color:var(--destaque)}}
     .lb-tabs{{display:flex;gap:0;margin-bottom:1.5rem}}
     .lb-tab{{flex:1;font-family:var(--detalhe);font-size:.8rem;letter-spacing:.08em;padding:.4rem;border:1px solid var(--borda);background:transparent;color:var(--texto2);cursor:pointer;transition:all var(--transicao);text-align:center}}
@@ -304,14 +316,11 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
       .lightbox{{flex-direction:column}}
       .lb-esquerda{{padding:4.5rem 1rem 0;flex:none;width:100%;justify-content:flex-start}}
       .lb-foto{{max-height:52vh}}
-      .lb-titulo-painel{{padding:.5rem 0 0}}
       .lb-direita{{width:100%;border-left:none;border-top:1px solid var(--borda);padding:1.2rem 1.2rem 1.5rem;flex:1;overflow-y:auto}}
-      .lb-direita .lb-cat,.lb-direita .lb-titulo,.lb-direita .lb-desc{{display:none}}
       .lb-nav.lb-prev{{left:.3rem}}
       .lb-nav.lb-next{{right:.3rem}}
-      .fotos-grid{{gap:6px;padding:0 6px 6px}}
-      .foto-item{{flex:0 0 calc(50% - 3px);}}
-      .cat-card{{flex:0 0 calc(50% - 3px);min-height:140px;padding:1.2rem 1rem;}}
+      .fotos-grid{{column-count:2;padding:0 6px 6px}}
+      .cat-faixa{{padding:1.6rem 1.2rem .8rem;}}
       .filtros-sticky{{padding:.45rem 1rem;gap:.5rem}}
       .filtros-sep{{display:none}}
     }}
@@ -348,13 +357,6 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
 
     <div class="lb-esquerda">
       <img class="lb-foto" id="lb-img" src="" alt="" />
-      <div class="lb-titulo-painel" onclick="toggleLbDesc()">
-        <span class="lb-titulo-nome" id="lb-titulo-inline"></span>
-        <span class="lb-titulo-seta" id="lb-seta-inline">&#9650;</span>
-      </div>
-      <div class="lb-desc-inline" id="lb-desc-inline">
-        <p id="lb-desc-inline-texto"></p>
-      </div>
     </div>
 
     <div class="lb-direita">
@@ -399,57 +401,16 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
       _ultimoScroll = atual;
     }});
 
-    window.addEventListener('load', () => {{
-      ajustarLayout();
-      aplicarMasonry();
-    }});
-
+    window.addEventListener('load', ajustarLayout);
     window.addEventListener('resize', ajustarLayout);
 
-    /* ── Masonry por linha ──────────────────────────────────────────
-       Agrupa os itens visíveis em linhas de N colunas e alinha a
-       altura de cada item dentro da mesma linha pela maior altura.
-       Isso mantém a ordem esquerda→direita E a proporção original.
-    ──────────────────────────────────────────────────────────────── */
-    function aplicarMasonry() {{
-      document.querySelectorAll('.fotos-grid').forEach(grid => {{
-        const cols = window.innerWidth <= 768 ? 2 : 3;
-        const itens = Array.from(grid.children).filter(el => !el.classList.contains('oculta'));
-
-        // Reset de alturas para medir naturalmente
-        itens.forEach(el => el.style.height = '');
-
-        // Agrupa em linhas e iguala a altura de cada linha
-        for (let i = 0; i < itens.length; i += cols) {{
-          const linha = itens.slice(i, i + cols);
-          const maxH  = Math.max(...linha.map(el => el.getBoundingClientRect().height));
-          // só aplica altura mínima na linha — não força altura máxima nas fotos
-          // pois fotos verticais naturalmente já têm altura maior
-        }}
-      }});
-    }}
-
-    // Recalcula ao redimensionar a janela
-    let _resizeTimer;
-    window.addEventListener('resize', () => {{
-      clearTimeout(_resizeTimer);
-      _resizeTimer = setTimeout(aplicarMasonry, 100);
-    }});
+{TEMA_SCRIPT}
 
     document.getElementById('navToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('aberto'));
     function fecharMenu() {{ document.getElementById('navLinks').classList.remove('aberto'); }}
     document.querySelectorAll('.reveal').forEach(el => {{
       new IntersectionObserver(([e],o) => {{ if(e.isIntersecting){{ el.classList.add('visivel'); o.unobserve(el); }} }},{{threshold:.08}}).observe(el);
     }});
-
-    /* ── Toggle descrição no lightbox ── */
-    function toggleLbDesc() {{
-      const desc = document.getElementById('lb-desc-inline');
-      const seta = document.getElementById('lb-seta-inline');
-      const estaAberto = desc.classList.contains('aberto');
-      desc.classList.toggle('aberto', !estaAberto);
-      seta.style.transform = estaAberto ? '' : 'rotate(180deg)';
-    }}
 
     /* ── Proteção de imagem ── */
     document.addEventListener('contextmenu', e => {{ if(e.target.tagName==='IMG') e.preventDefault(); }});
@@ -504,7 +465,6 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
         }}
       }});
       atualizarVisiveisLightbox();
-      aplicarMasonry();
     }}
 
     /* ── Lightbox ── */
@@ -545,21 +505,12 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
       document.getElementById('lb-cat').textContent    = cat.toUpperCase();
       document.getElementById('lb-contador').textContent = `${{idx+1}} / ${{itensVisiveis.length}}`;
 
-      // Painel título+seta embaixo da foto
-      document.getElementById('lb-titulo-inline').textContent = titulo;
-      document.getElementById('lb-desc-inline-texto').textContent = desc || '';
-      const descInline = document.getElementById('lb-desc-inline');
-      const setaInline = document.getElementById('lb-seta-inline');
-      descInline.classList.remove('aberto');
-      setaInline.style.transform = '';
-      setaInline.style.display = (desc && desc.trim()) ? '' : 'none';
-
       const compra = document.getElementById('lb-compra');
       const temDigital = naLoja === 'digital' || naLoja === 'ambos';
       const temFisica  = naLoja === 'fisica'  || naLoja === 'ambos';
 
       if(!temDigital && !temFisica) {{
-        compra.innerHTML = '<p class="lb-sem-venda">Esta foto não está à venda.</p>';
+        compra.innerHTML = '<p class="lb-sem-venda">Entre em contato caso queira comprar essa foto</p>';
         return;
       }}
 

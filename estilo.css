@@ -16,6 +16,8 @@
    ════════════════════════════════════════════════════════════ */
 :root {
   --fundo:        #0d0d0d;   /* cor de fundo — quase preto        */
+  --fundo-rgb:    13,13,13;  /* mesma cor de fundo, em números (uso em transparências) */
+  --painel:       #111;      /* fundo de painéis (menu celular, etc)  */
   --destaque:     #e07b39;   /* laranja âmbar — cor dos detalhes  */
   --destaque2:    #b85e25;   /* laranja escuro — usado no hover   */
   --texto:        #f0ece4;   /* texto principal — off-white morno */
@@ -28,6 +30,19 @@
   --corpo:    "dunbar-low", sans-serif;    /* textos corridos       */
 
   --transicao: 0.35s ease;
+}
+
+/* ── Modo claro — mesmas cores, invertidas ──
+   Ativado via atributo data-tema="claro" na tag <html>, controlado
+   pelo botão de alternância no rodapé (ver tema-toggle no rodapé de cada página) */
+:root[data-tema="claro"] {
+  --fundo:        #f0ece4;   /* era a cor do texto no modo escuro */
+  --fundo-rgb:    240,236,228;
+  --painel:       #e4dfd2;
+  --texto:        #0d0d0d;   /* era a cor do fundo no modo escuro */
+  --texto2:       #5c5c5c;   /* cinza neutro, mais escuro pra legibilidade */
+  --borda:        #dcdcdc;
+  /* --destaque e --destaque2 continuam os mesmos */
 }
 
 /* ── Reset básico (zera espaçamentos padrão do navegador) ── */
@@ -53,10 +68,10 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 1.6rem 3rem;
-  background: linear-gradient(to bottom, rgba(13,13,13,0.9), transparent);
+  background: linear-gradient(to bottom, rgba(var(--fundo-rgb),0.9), transparent);
   transition: background var(--transicao);
 }
-nav.rolada { background: rgba(13,13,13,0.97); }
+nav.rolada { background: rgba(var(--fundo-rgb),0.97); }
 
 .nav-logo {
   font-family: 'LapisDeArtista', var(--detalhe);
@@ -140,6 +155,23 @@ footer span {
   opacity: 0.7 !important;
 }
 
+/* ── Alternância de tema (claro/escuro) ── */
+.tema-toggle {
+  font-family: var(--detalhe);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  color: var(--texto2);
+  background: none;
+  border: 1px solid var(--borda);
+  padding: 0.35rem 0.9rem;
+  cursor: pointer;
+  transition: all var(--transicao);
+}
+.tema-toggle:hover {
+  color: var(--destaque);
+  border-color: var(--destaque);
+}
+
 /* ── Animações de entrada ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
@@ -168,7 +200,7 @@ footer span {
     height: 100vh;
     width: 72vw;
     max-width: 300px;
-    background: #111;
+    background: var(--painel);
     flex-direction: column;
     align-items: center;
     justify-content: center;

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>if(localStorage.getItem('tema')==='claro'){document.documentElement.setAttribute('data-tema','claro');}</script>
   <title>Douglas N. Schimidt — Adventure Photography</title>
   <meta name="description" content="Fotografia de aventura e natureza — surf, trilhas, escalada." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -183,6 +184,7 @@
   <!-- ═══ RODAPÉ ═══════════════════════════════════════ -->
   <footer>
     <span class="footer-logo">Douglas N. Schimidt</span>
+    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Modo claro</button>
     <span>© 2026 — Adventure Photography</span>
   </footer>
 
@@ -200,8 +202,23 @@
     // Abre e fecha o menu no celular
     const toggle   = document.getElementById('navToggle');
     const navLinks = document.getElementById('navLinks');
-    toggle.addEventListener('click', () => navLinks.classList.toggle('aberto'));
-    function fecharMenu() { navLinks.classList.remove('aberto'); }
+    if (toggle && navLinks) {
+      toggle.addEventListener('click', () => navLinks.classList.toggle('aberto'));
+    }
+    function fecharMenu() { navLinks?.classList.remove('aberto'); }
+
+    // Alternância de tema claro/escuro
+    function toggleTema() {
+      const claro = document.documentElement.getAttribute('data-tema') === 'claro';
+      if (claro) { document.documentElement.removeAttribute('data-tema'); localStorage.setItem('tema','escuro'); }
+      else       { document.documentElement.setAttribute('data-tema','claro'); localStorage.setItem('tema','claro'); }
+      atualizarBotaoTema();
+    }
+    function atualizarBotaoTema() {
+      const btn = document.getElementById('temaToggle');
+      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Modo escuro' : 'Modo claro';
+    }
+    atualizarBotaoTema();
   </script>
 
 </body>
