@@ -107,7 +107,6 @@
   </style>
 </head>
 <body>
-  <a href="portfolio.html" class="lang-toggle">PT</a>
   <nav id="nav">
     <a href="index-en.html" class="nav-logo">Douglas N. Schimidt<small>adventure photography</small></a>
     <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -1162,7 +1161,10 @@
 
   <footer>
     <span class="footer-logo">Douglas N. Schimidt</span>
-    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Light mode</button>
+    <div class="footer-acoes">
+      <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Light mode</button>
+      <a href="portfolio.html" class="tema-toggle lang-toggle">PT</a>
+    </div>
     <span>© 2026</span>
   </footer>
   <script>
@@ -1313,7 +1315,7 @@
       const temFisica  = naLoja === 'fisica'  || naLoja === 'ambos';
 
       if(!temDigital && !temFisica) {
-        compra.innerHTML = '<p class="lb-sem-venda">Get in <a href="https://ig.me/m/douglasnanes" target="_blank" rel="noopener">touch</a> if you'd like to buy this photo</p>';
+        compra.innerHTML = `<p class="lb-sem-venda">Get in <a href="https://ig.me/m/douglasnanes" target="_blank" rel="noopener">touch</a> if you'd like to buy this photo</p>`;
         return;
       }
 
