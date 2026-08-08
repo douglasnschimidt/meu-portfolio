@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script>if(localStorage.getItem('tema')==='claro'){document.documentElement.setAttribute('data-tema','claro');}</script>
   <title>Douglas N. Schimidt — Adventure Photography</title>
-  <meta name="description" content="Fotografia de aventura e natureza — surf, trilhas, escalada." />
+  <meta name="description" content="Adventure and nature photography — surf, hiking, climbing." />
   <link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/index.html" />
   <link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/index-en.html" />
   <link rel="alternate" hreflang="x-default" href="https://douglasnschimidt.com/index.html" />
@@ -16,7 +16,7 @@
 
   <style>
     /* ══════════════════════════════════════════════════
-       HERO — foto ocupando a tela inteira
+       HERO — full-screen photo
     ══════════════════════════════════════════════════ */
     .hero {
       position: relative;
@@ -27,29 +27,23 @@
       justify-content: center;
     }
 
-    /* A FOTO DE FUNDO */
+    /* BACKGROUND PHOTO */
     .hero-foto {
       position: absolute;
       inset: 0;
-      /*
-        ══ COMO TROCAR A FOTO ══════════════════════════
-        Troque o endereço abaixo pela sua foto.
-        Exemplo com foto local: url('fotos/hero.jpg')
-        A foto ideal é horizontal, 1920×1080px ou maior.
-        ═════════════════════════════════════════════ */
       background-image: url('DNS09559.jpg');
       background-size: cover;
       background-position: center;
     }
 
-    /* Escurecimento leve — foto fica bem visível */
+    /* Light darkening — photo stays clearly visible */
     .hero-escuro {
       position: absolute;
       inset: 0;
       background: rgba(13,13,13,0.32);
     }
 
-    /* Área do texto — centralizada na landing page */
+    /* Text area — centered on the landing page */
     .hero-texto {
       position: relative;
       z-index: 10;
@@ -64,7 +58,7 @@
     .hero-nome { display: none; }
     .hero-descricao { display: none; }
 
-    /* Menu horizontal — fonte caligrafia, cor branca, sem fundo */
+    /* Horizontal menu — handwriting font, white, no background */
     .hero-menu {
       display: flex;
       flex-direction: row;
@@ -88,7 +82,7 @@
 
     .hero-menu a:hover { color: var(--destaque); }
 
-    /* Separador | */
+    /* | separator */
     .hero-sep {
       color: var(--destaque);
       font-size: 1.2rem;
@@ -96,7 +90,7 @@
       user-select: none;
     }
 
-    /* Indicador de scroll */
+    /* Scroll hint */
     .scroll-dica {
       position: absolute;
       bottom: 2rem;
@@ -121,11 +115,10 @@
       background: linear-gradient(to bottom, var(--destaque), transparent);
     }
 
-    /* ══ Responsivo celular ══ */
+    /* ══ Mobile responsive ══ */
     @media (max-width: 768px) {
       .hero-texto { padding: 0 1.5rem; }
 
-      /* Menu vertical empilhado com linhas separadoras (B mobile) */
       .hero-menu {
         flex-direction: column;
         gap: 0;
@@ -155,56 +148,52 @@
 </head>
 <body>
 
-  <a href="index-en.html" class="lang-toggle">EN</a>
+  <a href="index.html" class="lang-toggle">PT</a>
 
-  <!-- ═══ BARRA DE TOPO — centralizada na landing page (C) ════ -->
+  <!-- ═══ TOP BAR — centered on the landing page ════ -->
   <nav id="nav" style="justify-content: center;">
-    <a href="index.html" class="nav-logo" style="text-align: center;">
+    <a href="index-en.html" class="nav-logo" style="text-align: center;">
       Douglas N. Schimidt
       <small>adventure photography</small>
     </a>
   </nav>
 
-  <!-- ═══ HERO — FOTO + MENU GRANDE ══════════════════ -->
+  <!-- ═══ HERO — PHOTO + BIG MENU ══════════════════ -->
   <section class="hero">
     <div class="hero-foto"></div>
     <div class="hero-escuro"></div>
 
     <div class="hero-texto">
       <h1 class="hero-nome">Adventure<br/>Photography</h1>
-      <p class="hero-descricao">Natureza vista de dentro.</p>
+      <p class="hero-descricao">Nature seen from within.</p>
 
       <nav class="hero-menu">
-        <a href="portfolio.html">Portfólio</a>
+        <a href="portfolio-en.html">Portfolio</a>
         <span class="hero-sep">|</span>
-        <a href="portfolio.html?loja=1">Loja</a>
+        <a href="portfolio-en.html?loja=1">Shop</a>
         <span class="hero-sep">|</span>
-        <a href="expedicoes.html">Expedições</a>
+        <a href="expedicoes-en.html">Expeditions</a>
       </nav>
     </div>
 
     <div class="scroll-dica">scroll</div>
   </section>
 
-  <!-- ═══ RODAPÉ ═══════════════════════════════════════ -->
+  <!-- ═══ FOOTER ═══════════════════════════════════════ -->
   <footer>
     <span class="footer-logo">Douglas N. Schimidt</span>
-    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Modo claro</button>
+    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Light mode</button>
     <span>© 2026 — Adventure Photography</span>
   </footer>
 
-  <!-- ═══ COMPORTAMENTOS (JavaScript) ═════════════════
-       (JavaScript = parte que faz as coisas se moverem
-        e reagirem ao clique ou rolagem)
-  ════════════════════════════════════════════════════ -->
   <script>
-    // Escurece a barra do topo quando a pessoa rola a página
+    // Darkens the top bar as the person scrolls
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('rolada', window.scrollY > 50);
     });
 
-    // Abre e fecha o menu no celular
+    // Opens and closes the mobile menu
     const toggle   = document.getElementById('navToggle');
     const navLinks = document.getElementById('navLinks');
     if (toggle && navLinks) {
@@ -212,7 +201,7 @@
     }
     function fecharMenu() { navLinks?.classList.remove('aberto'); }
 
-    // Alternância de tema claro/escuro
+    // Light/dark theme toggle
     function toggleTema() {
       const claro = document.documentElement.getAttribute('data-tema') === 'claro';
       if (claro) { document.documentElement.removeAttribute('data-tema'); localStorage.setItem('tema','escuro'); }
@@ -221,7 +210,7 @@
     }
     function atualizarBotaoTema() {
       const btn = document.getElementById('temaToggle');
-      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Modo escuro' : 'Modo claro';
+      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Dark mode' : 'Light mode';
     }
     atualizarBotaoTema();
   </script>

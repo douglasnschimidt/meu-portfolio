@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script>if(localStorage.getItem('tema')==='claro'){document.documentElement.setAttribute('data-tema','claro');}</script>
-  <title>Expedições — Douglas N. Schimidt</title>
+  <title>Expeditions — Douglas N. Schimidt</title>
   <link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/expedicoes.html" />
   <link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/expedicoes-en.html" />
   <link rel="alternate" hreflang="x-default" href="https://douglasnschimidt.com/expedicoes.html" />
@@ -34,7 +34,7 @@
       margin-bottom: 0.3rem;
     }
 
-    /* Layout em duas colunas: foto + texto */
+    /* Two-column layout: photo + text */
     .sobre-inner {
       display: grid;
       grid-template-columns: 1fr 1.4fr;
@@ -44,7 +44,7 @@
       max-width: 1100px;
     }
 
-    /* Foto horizontal, proporção original sem corte */
+    /* Horizontal photo, original ratio, no crop */
     .sobre-foto {
       aspect-ratio: 3/2;
       overflow: hidden;
@@ -56,7 +56,7 @@
       object-fit: contain;
     }
 
-    /* Texto do sobre */
+    /* Bio text */
     .sobre-bio {
       color: var(--texto2);
       font-size: 0.95rem;
@@ -64,7 +64,7 @@
       margin-bottom: 1.5rem;
     }
 
-    /* Tags — esportes e interesses */
+    /* Tags — sports and interests */
     .tags {
       display: flex;
       flex-wrap: wrap;
@@ -80,7 +80,7 @@
       letter-spacing: 0.05em;
     }
 
-    /* Números — continentes, fotos, etc */
+    /* Numbers — continents, photos, etc */
     .numeros {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -107,7 +107,7 @@
       letter-spacing: 0.1em;
     }
 
-    /* Link do Instagram */
+    /* Instagram link */
     .sobre-instagram {
       font-family: var(--detalhe);
       font-size: 1.05rem;
@@ -133,10 +133,10 @@
 </head>
 <body>
 
-  <a href="expedicoes-en.html" class="lang-toggle">EN</a>
+  <a href="expedicoes.html" class="lang-toggle">PT</a>
 
   <nav id="nav">
-    <a href="index.html" class="nav-logo">
+    <a href="index-en.html" class="nav-logo">
       Douglas N. Schimidt
       <small>adventure photography</small>
     </a>
@@ -144,16 +144,16 @@
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="portfolio.html"  onclick="fecharMenu()">Portfólio</a></li>
-      <li><a href="portfolio.html?loja=1" onclick="fecharMenu()">Loja</a></li>
-      <li><a href="expedicoes.html" class="ativa" onclick="fecharMenu()">Expedições</a></li>
-      <li><a href="contato.html"    onclick="fecharMenu()">Contato</a></li>
+      <li><a href="portfolio-en.html"  onclick="fecharMenu()">Portfolio</a></li>
+      <li><a href="portfolio-en.html?loja=1" onclick="fecharMenu()">Shop</a></li>
+      <li><a href="expedicoes-en.html" class="ativa" onclick="fecharMenu()">Expeditions</a></li>
+      <li><a href="contato-en.html"    onclick="fecharMenu()">Contact</a></li>
     </ul>
   </nav>
 
   <div class="sobre-inner reveal">
 
-    <!-- FOTO: troque o src pelo caminho da sua foto pessoal -->
+    <!-- PHOTO -->
     <div class="sobre-foto-wrap">
       <div class="sobre-foto">
         <img
@@ -165,19 +165,15 @@
     </div>
 
     <div>
-      <!--
-        BIO: edite o texto abaixo com suas palavras.
-        Dica: direto, sem papo de portfólio corporativo.
-      -->
       <p class="sobre-bio">
-        Fotógrafo de aventura baseado em São Paulo. Surfista, artista,
-        viajante — na ordem que você quiser. Em movimento quando possível,
-        mas sempre com a câmera na mão. 
+        Adventure photographer based in São Paulo. Surfer, artist,
+        traveler — in whatever order you like. Moving whenever possible,
+        but always with the camera in hand.
       </p>
       <p class="sobre-bio">
-        Meu trabalho está na natureza, mostrando que ela é 
-        maior que qualquer coisa: na trilha até a montanha, 
-        na onda mais desejada, no acampamento debaixo de um céu estrelado.
+        My work lives in nature, showing that it is
+        bigger than anything: on the trail up the mountain,
+        on the wave you've been chasing, camping under a sky full of stars.
       </p>
       <p class="sobre-bio">
         |||
@@ -189,7 +185,7 @@
 
   <footer>
     <span class="footer-logo">Douglas N. Schimidt</span>
-    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Modo claro</button>
+    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Light mode</button>
     <span>© 2026</span>
   </footer>
 
@@ -206,7 +202,7 @@
     }, { threshold: 0.08 });
     reveals.forEach(el => obs.observe(el));
 
-    // Alternância de tema claro/escuro
+    // Light/dark theme toggle
     function toggleTema() {
       const claro = document.documentElement.getAttribute('data-tema') === 'claro';
       if (claro) { document.documentElement.removeAttribute('data-tema'); localStorage.setItem('tema','escuro'); }
@@ -215,7 +211,7 @@
     }
     function atualizarBotaoTema() {
       const btn = document.getElementById('temaToggle');
-      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Modo escuro' : 'Modo claro';
+      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Dark mode' : 'Light mode';
     }
     atualizarBotaoTema();
   </script>

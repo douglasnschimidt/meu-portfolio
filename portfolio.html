@@ -67,6 +67,8 @@
     .lb-titulo{font-family:var(--titulo);font-size:1.5rem;color:var(--texto);line-height:1.2;margin-bottom:1rem}
     .lb-desc{font-size:.9rem;color:var(--texto2);line-height:1.8;margin-bottom:2rem}
     .lb-sem-venda{font-family:var(--detalhe);font-size:.9rem;color:var(--texto2);opacity:.5;margin-top:auto}
+    .lb-sem-venda a{color:var(--destaque);opacity:1;text-decoration:underline}
+    .lb-sem-venda a:hover{opacity:.8}
     .lb-secao-compra{border-top:1px solid var(--borda);padding-top:1.5rem;margin-top:auto}
     .lb-preco-label{font-family:var(--detalhe);font-size:.8rem;color:var(--texto2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
     .lb-preco{font-family:var(--detalhe);font-size:1.6rem;color:var(--destaque);font-weight:600;margin-bottom:1.2rem}
@@ -1254,7 +1256,7 @@
       const temFisica  = naLoja === 'fisica'  || naLoja === 'ambos';
 
       if(!temDigital && !temFisica) {
-        compra.innerHTML = '<p class="lb-sem-venda">Entre em contato caso queira comprar essa foto</p>';
+        compra.innerHTML = '<p class="lb-sem-venda">Entre em <a href="https://ig.me/m/douglasnanes" target="_blank" rel="noopener">contato</a> caso queira comprar essa foto</p>';
         return;
       }
 

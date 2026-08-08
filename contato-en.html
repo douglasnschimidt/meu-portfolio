@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script>if(localStorage.getItem('tema')==='claro'){document.documentElement.setAttribute('data-tema','claro');}</script>
-  <title>Contato — Douglas N. Schimidt</title>
+  <title>Contact — Douglas N. Schimidt</title>
   <link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/contato.html" />
   <link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/contato-en.html" />
   <link rel="alternate" hreflang="x-default" href="https://douglasnschimidt.com/contato.html" />
@@ -106,7 +106,7 @@
       .contato-wrap { padding: 7rem 1.5rem 3rem; }
     }
 
-    /* ── Pop-up de manutenção ── */
+    /* ── Maintenance pop-up ── */
     .popup-overlay {
       position: fixed;
       inset: 0;
@@ -180,10 +180,10 @@
 </head>
 <body>
 
-  <a href="contato-en.html" class="lang-toggle">EN</a>
+  <a href="contato.html" class="lang-toggle">PT</a>
 
   <nav id="nav">
-    <a href="index.html" class="nav-logo">
+    <a href="index-en.html" class="nav-logo">
       Douglas N. Schimidt
       <small>adventure photography</small>
     </a>
@@ -191,22 +191,22 @@
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="portfolio.html"  onclick="fecharMenu()">Portfólio</a></li>
-      <li><a href="portfolio.html?loja=1" onclick="fecharMenu()">Loja</a></li>
-      <li><a href="expedicoes.html" onclick="fecharMenu()">Expedições</a></li>
-      <li><a href="contato.html" class="ativa" onclick="fecharMenu()">Contato</a></li>
+      <li><a href="portfolio-en.html"  onclick="fecharMenu()">Portfolio</a></li>
+      <li><a href="portfolio-en.html?loja=1" onclick="fecharMenu()">Shop</a></li>
+      <li><a href="expedicoes-en.html" onclick="fecharMenu()">Expeditions</a></li>
+      <li><a href="contato-en.html" class="ativa" onclick="fecharMenu()">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- ── Pop-up de manutenção ── -->
+  <!-- ── Maintenance pop-up ── -->
   <div class="popup-overlay" id="popupOverlay">
     <div class="popup-caixa">
-      <button class="popup-fechar" onclick="fecharPopup()" aria-label="Fechar">&#215;</button>
-      <p class="popup-label">aviso</p>
-      <h2 class="popup-titulo">Formulário em manutenção</h2>
+      <button class="popup-fechar" onclick="fecharPopup()" aria-label="Close">&#215;</button>
+      <p class="popup-label">notice</p>
+      <h2 class="popup-titulo">Form under maintenance</h2>
       <p class="popup-texto">
-        O formulário de contato ainda não está ativo.<br/>
-        Por enquanto, me chama pelo instagram — a gente conversa por lá.
+        The contact form isn't active yet.<br/>
+        For now, message me on Instagram — let's chat there.
       </p>
       <a href="https://instagram.com/douglasnanes" target="_blank" rel="noopener" class="popup-instagram">
         @douglasnanes
@@ -221,19 +221,19 @@
         <p style="display:none"><input name="bot-field" /></p>
 
         <div class="form-grupo">
-          <label for="nome">Nome</label>
-          <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
+          <label for="nome">Name</label>
+          <input type="text" id="nome" name="nome" placeholder="Your name" required />
         </div>
         <div class="form-grupo">
-          <label for="email">E-mail</label>
-          <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@email.com" required />
         </div>
         <div class="form-grupo">
-          <label for="msg">Mensagem</label>
-          <textarea id="msg" name="mensagem" placeholder="Oi Douglas..." required></textarea>
+          <label for="msg">Message</label>
+          <textarea id="msg" name="mensagem" placeholder="Hi Douglas..." required></textarea>
         </div>
-        <button type="submit" class="form-btn" disabled style="opacity: 0.4; cursor: not-allowed;">Enviar</button>
-      <!--  <button type="submit" class="form-btn">Enviar</button>  -->
+        <button type="submit" class="form-btn" disabled style="opacity: 0.4; cursor: not-allowed;">Send</button>
+      <!--  <button type="submit" class="form-btn">Send</button>  -->
       </form>
 
       <div class="contato-extra">
@@ -244,7 +244,7 @@
 
   <footer>
     <span class="footer-logo">Douglas N. Schimidt</span>
-    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Modo claro</button>
+    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Light mode</button>
     <span>© 2026</span>
   </footer>
 
@@ -252,7 +252,7 @@
     function fecharPopup() {
       document.getElementById('popupOverlay').style.display = 'none';
     }
-    // Fecha também ao clicar fora da caixa
+    // Also closes when clicking outside the box
     document.getElementById('popupOverlay').addEventListener('click', function(e) {
       if (e.target === this) fecharPopup();
     });
@@ -269,7 +269,7 @@
     }, { threshold: 0.08 });
     reveals.forEach(el => obs.observe(el));
 
-    // Alternância de tema claro/escuro
+    // Light/dark theme toggle
     function toggleTema() {
       const claro = document.documentElement.getAttribute('data-tema') === 'claro';
       if (claro) { document.documentElement.removeAttribute('data-tema'); localStorage.setItem('tema','escuro'); }
@@ -278,7 +278,7 @@
     }
     function atualizarBotaoTema() {
       const btn = document.getElementById('temaToggle');
-      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Modo escuro' : 'Modo claro';
+      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Dark mode' : 'Light mode';
     }
     atualizarBotaoTema();
   </script>

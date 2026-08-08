@@ -30,7 +30,7 @@ jobs:
         run: |
           git config user.name  "Bot do site"
           git config user.email "bot@douglasnschimidt.com"
-          git add portfolio.html
+          git add portfolio.html portfolio-en.html
           git add -u categoria-*.html loja.html 2>/dev/null || true
           git diff --staged --quiet || git commit -m "Portfólio atualizado via Google Drive"
           git push

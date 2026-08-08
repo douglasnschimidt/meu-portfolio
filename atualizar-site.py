@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
-atualizar-site.py — versão 2.0 portfólio unificado
+atualizar-site.py — versão 3.0 portfólio unificado + bilíngue (PT/EN)
 ────────────────────────────────────────────────────────────────────
 O que este script faz:
 
   1. Lê sua planilha "douglasnschimidt-fotos" no Google Sheets
   2. Lê as 5 pastas do Google Drive (terra, agua, fogo, ar, vida)
-  3. Gera UMA única portfolio.html com todas as fotos em seções
+  3. Gera DUAS páginas de portfólio — portfolio.html (português) e
+     portfolio-en.html (inglês) — com todas as fotos em seções
      — filtros por categoria e por disponibilidade na loja
      — lightbox com descrição + opção de compra ao clicar
      — quem vem pelo link "Loja" chega com filtros de venda ativos
@@ -18,6 +19,11 @@ O que este script faz:
      digital  → venda de download (Gumroad)
      fisica   → venda de impressão (Shopify)
      ambos    → tanto digital quanto física
+
+  COLUNAS titulo_en / descricao_en na planilha (opcionais):
+     Preencha com a tradução em inglês do título e da descrição de
+     cada foto. Se ficarem vazias, o portfolio-en.html usa o texto em
+     português mesmo, até você preencher.
 
   Você nunca precisa mexer neste arquivo.
   Tudo que você controla fica na planilha e nas pastas do Drive.
@@ -38,11 +44,77 @@ PASTAS = {
 }
 
 INFO_CATEGORIA = {
-    "terra": {"nome": "Terra", "sub": "Gigante e magnífica."},
-    "agua":  {"nome": "Água",  "sub": "Aqui estou em casa."},
-    "fogo":  {"nome": "Fogo",  "sub": "Impossível ignorar."},
-    "ar":    {"nome": "Ar",    "sub": "Sempre presente."},
-    "vida":  {"nome": "Vida",  "sub": "Seja cotidiana ou selvagem."},
+    "terra": {"nome": {"pt": "Terra", "en": "Earth"}, "sub": {"pt": "Gigante e magnífica.",        "en": "Giant and magnificent."}},
+    "agua":  {"nome": {"pt": "Água",  "en": "Water"}, "sub": {"pt": "Aqui estou em casa.",          "en": "Where I feel at home."}},
+    "fogo":  {"nome": {"pt": "Fogo",  "en": "Fire"},  "sub": {"pt": "Impossível ignorar.",          "en": "Impossible to ignore."}},
+    "ar":    {"nome": {"pt": "Ar",    "en": "Air"},   "sub": {"pt": "Sempre presente.",             "en": "Always present."}},
+    "vida":  {"nome": {"pt": "Vida",  "en": "Life"},  "sub": {"pt": "Seja cotidiana ou selvagem.",  "en": "Everyday or wild."}},
+}
+
+# Todos os textos fixos da interface do portfólio, em português e inglês.
+TEXTOS = {
+    "pt": {
+        "titulo_pagina":        "Portfólio — Douglas N. Schimidt",
+        "lang_code":            "pt-BR",
+        "nav_portfolio":        "Portfólio",
+        "nav_loja":             "Loja",
+        "nav_expedicoes":       "Expedições",
+        "nav_contato":          "Contato",
+        "filtro_cat":           "Cat.",
+        "filtro_loja":          "Loja",
+        "loja_digital":         "Digital",
+        "loja_impressao":       "Impressão",
+        "tab_digital":          "Download Digital",
+        "tab_fisica":           "Impressão Física",
+        "preco_label":          "Preço",
+        "total_label":          "Total",
+        "tam_label":            "Tamanho",
+        "papel_label":          "Papel",
+        "moldura_label":        "Moldura",
+        "btn_comprar_download": "Comprar download",
+        "btn_comprar_impressao":"Comprar impressão",
+        "desc_digital":         "JPEG alta resolução — download imediato via Gumroad",
+        "sem_venda_pre":        "Entre em ",
+        "sem_venda_link":       "contato",
+        "sem_venda_pos":        " caso queira comprar essa foto",
+        "modo_claro":           "Modo claro",
+        "modo_escuro":          "Modo escuro",
+        "lang_toggle_label":    "EN",
+        "arquivo":              "portfolio.html",
+        "arquivo_outro":        "portfolio-en.html",
+        "sufixo":               "",
+    },
+    "en": {
+        "titulo_pagina":        "Portfolio — Douglas N. Schimidt",
+        "lang_code":            "en",
+        "nav_portfolio":        "Portfolio",
+        "nav_loja":             "Shop",
+        "nav_expedicoes":       "Expeditions",
+        "nav_contato":          "Contact",
+        "filtro_cat":           "Cat.",
+        "filtro_loja":          "Shop",
+        "loja_digital":         "Digital",
+        "loja_impressao":       "Print",
+        "tab_digital":          "Digital Download",
+        "tab_fisica":           "Physical Print",
+        "preco_label":          "Price",
+        "total_label":          "Total",
+        "tam_label":            "Size",
+        "papel_label":          "Paper",
+        "moldura_label":        "Frame",
+        "btn_comprar_download": "Buy download",
+        "btn_comprar_impressao":"Buy print",
+        "desc_digital":         "High-resolution JPEG — instant download via Gumroad",
+        "sem_venda_pre":        "Get in ",
+        "sem_venda_link":       "touch",
+        "sem_venda_pos":        " if you'd like to buy this photo",
+        "modo_claro":           "Light mode",
+        "modo_escuro":          "Dark mode",
+        "lang_toggle_label":    "PT",
+        "arquivo":              "portfolio-en.html",
+        "arquivo_outro":        "portfolio.html",
+        "sufixo":               "-en",
+    },
 }
 
 API_KEY = os.environ.get("GOOGLE_API_KEY", "")
@@ -63,6 +135,8 @@ def ler_planilha():
                 "posicao":       posicao,          # ordem na planilha
                 "titulo":        linha.get("titulo",        "").strip(),
                 "descricao":     linha.get("descricao",     "").strip(),
+                "titulo_en":     linha.get("titulo_en",      "").strip(),
+                "descricao_en":  linha.get("descricao_en",   "").strip(),
                 "na_loja":       linha.get("na_loja",       "nao").strip().lower(),
                 "preco_digital": linha.get("preco_digital", "29").strip(),
                 "link_gumroad":  linha.get("link_gumroad",  "").strip(),
@@ -119,16 +193,24 @@ def titulo_fallback(name): return name.rsplit(".",1)[0].replace("-"," ").replace
 
 FONTES = '<link rel="stylesheet" href="https://use.typekit.net/zeo6kqs.css" />'
 
-def nav_html(ativa_portfolio=False, ativa_loja=False):
+def hreflang_html():
+    return """  <link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/portfolio.html" />
+  <link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/portfolio-en.html" />
+  <link rel="alternate" hreflang="x-default" href="https://douglasnschimidt.com/portfolio.html" />"""
+
+def nav_html(idioma, ativa_portfolio=False):
+    t = TEXTOS[idioma]
     p = ' class="ativa"' if ativa_portfolio else ""
-    return f"""  <nav id="nav">
-    <a href="index.html" class="nav-logo">Douglas N. Schimidt<small>adventure photography</small></a>
+    s = t["sufixo"]
+    return f"""  <a href="{t['arquivo_outro']}" class="lang-toggle">{t['lang_toggle_label']}</a>
+  <nav id="nav">
+    <a href="index{s}.html" class="nav-logo">Douglas N. Schimidt<small>adventure photography</small></a>
     <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="portfolio.html"{p} onclick="fecharMenu()">Portfólio</a></li>
-      <li><a href="portfolio.html?loja=1" onclick="fecharMenu()">Loja</a></li>
-      <li><a href="expedicoes.html" onclick="fecharMenu()">Expedições</a></li>
-      <li><a href="contato.html" onclick="fecharMenu()">Contato</a></li>
+      <li><a href="portfolio{s}.html"{p} onclick="fecharMenu()">{t['nav_portfolio']}</a></li>
+      <li><a href="portfolio{s}.html?loja=1" onclick="fecharMenu()">{t['nav_loja']}</a></li>
+      <li><a href="expedicoes{s}.html" onclick="fecharMenu()">{t['nav_expedicoes']}</a></li>
+      <li><a href="contato{s}.html" onclick="fecharMenu()">{t['nav_contato']}</a></li>
     </ul>
   </nav>
   <style>
@@ -137,32 +219,40 @@ def nav_html(ativa_portfolio=False, ativa_loja=False):
     #nav.oculta-nav {{ transform: translateY(-100%); }}
   </style>"""
 
-RODAPE = """  <footer>
+def rodape_html(idioma):
+    t = TEXTOS[idioma]
+    return f"""  <footer>
     <span class="footer-logo">Douglas N. Schimidt</span>
-    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Modo claro</button>
+    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">{t['modo_claro']}</button>
     <span>© 2026</span>
   </footer>"""
 
 TEMA_INIT = """  <script>if(localStorage.getItem('tema')==='claro'){document.documentElement.setAttribute('data-tema','claro');}</script>"""
 
-TEMA_SCRIPT = """    function toggleTema() {
+def tema_script(idioma):
+    t = TEXTOS[idioma]
+    return f"""    function toggleTema() {{
       const claro = document.documentElement.getAttribute('data-tema') === 'claro';
-      if (claro) { document.documentElement.removeAttribute('data-tema'); localStorage.setItem('tema','escuro'); }
-      else       { document.documentElement.setAttribute('data-tema','claro'); localStorage.setItem('tema','claro'); }
+      if (claro) {{ document.documentElement.removeAttribute('data-tema'); localStorage.setItem('tema','escuro'); }}
+      else       {{ document.documentElement.setAttribute('data-tema','claro'); localStorage.setItem('tema','claro'); }}
       atualizarBotaoTema();
-    }
-    function atualizarBotaoTema() {
+    }}
+    function atualizarBotaoTema() {{
       const btn = document.getElementById('temaToggle');
-      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Modo escuro' : 'Modo claro';
-    }
+      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? '{t["modo_escuro"]}' : '{t["modo_claro"]}';
+    }}
     atualizarBotaoTema();"""
 
-def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
+def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
     """
     todas_fotos: lista de dicts com keys:
-      slug, nome_cat, foto_id, foto_nome, titulo, descricao,
+      slug, nome_cat, foto_id, foto_nome, titulo, descricao, titulo_en, descricao_en,
       na_loja, preco_digital, link_gumroad, link_shopify
+    idioma: "pt" ou "en" — define qual versão da página é gerada
     """
+    t = TEXTOS[idioma]
+    campo_titulo    = "titulo" if idioma == "pt" else "titulo_en"
+    campo_descricao = "descricao" if idioma == "pt" else "descricao_en"
 
     # Monta seções por categoria
     secoes_html = ""
@@ -171,8 +261,13 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
         if not fotos_cat:
             continue
 
+        nome_cat = info["nome"][idioma]
+
         itens = []
         for i, f in enumerate(fotos_cat):
+            titulo_f    = f[campo_titulo] or f["titulo"]
+            descricao_f = f[campo_descricao] or f["descricao"]
+
             na_loja       = f["na_loja"]
             tem_digital   = na_loja in ("digital", "ambos")
             tem_fisica    = na_loja in ("fisica",  "ambos")
@@ -187,24 +282,25 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
             # badges para filtro
             badge_html = ""
             if tem_digital:
-                badge_html += '<span class="badge-tipo digital">Digital</span>'
+                badge_html += f'<span class="badge-tipo digital">{t["loja_digital"]}</span>'
             if tem_fisica:
-                badge_html += '<span class="badge-tipo fisica">Impressão</span>'
+                badge_html += f'<span class="badge-tipo fisica">{t["loja_impressao"]}</span>'
 
             itens.append(f"""      <div class="foto-item"
         data-cat="{slug}"
+        data-cat-nome="{nome_cat}"
         data-loja="{tipo_venda}"
         data-id="{f['foto_id']}"
-        data-titulo="{f['titulo']}"
-        data-descricao="{f['descricao']}"
+        data-titulo="{titulo_f}"
+        data-descricao="{descricao_f}"
         data-na-loja="{na_loja}"
         data-preco-digital="{f['preco_digital']}"
         data-link-gumroad="{f['link_gumroad']}"
         data-link-shopify="{f['link_shopify']}"
         onclick="abrirLightbox(this)">
-        <img src="{thumb(f['foto_id'])}" alt="{f['titulo']}" loading="lazy" />
+        <img src="{thumb(f['foto_id'])}" alt="{titulo_f}" loading="lazy" />
         <div class="foto-overlay">
-          <span class="foto-titulo-hover">{f['titulo']}</span>
+          <span class="foto-titulo-hover">{titulo_f}</span>
           <div class="foto-badges">{badge_html}</div>
         </div>
       </div>""")
@@ -212,8 +308,8 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
         grid = "\n".join(itens)
         # Faixa de categoria — divisor de largura total acima das fotos
         cat_faixa = f"""    <div class="cat-faixa">
-      <h2 class="cat-faixa-titulo">{info['nome']}</h2>
-      <p class="cat-faixa-sub">{info['sub']}</p>
+      <h2 class="cat-faixa-titulo">{nome_cat}</h2>
+      <p class="cat-faixa-sub">{info['sub'][idioma]}</p>
     </div>"""
         secoes_html += f"""
   <section class="categoria-secao" id="cat-{slug}" data-slug="{slug}">
@@ -223,12 +319,18 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     </div>
   </section>"""
 
+    filtros_cat_botoes = "\n      ".join(
+        f'<button class="btn-filtro" data-cat="{slug}" onclick="filtrarCat(this)">{info["nome"][idioma]}</button>'
+        for slug, info in INFO_CATEGORIA.items()
+    )
+
     return f"""<!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="{t['lang_code']}">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
 {TEMA_INIT}
-  <title>Portfólio — Douglas N. Schimidt</title>
+  <title>{t['titulo_pagina']}</title>
+{hreflang_html()}
   {FONTES}
   <link rel="stylesheet" href="estilo.css" />
   <style>
@@ -292,6 +394,8 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     .lb-titulo{{font-family:var(--titulo);font-size:1.5rem;color:var(--texto);line-height:1.2;margin-bottom:1rem}}
     .lb-desc{{font-size:.9rem;color:var(--texto2);line-height:1.8;margin-bottom:2rem}}
     .lb-sem-venda{{font-family:var(--detalhe);font-size:.9rem;color:var(--texto2);opacity:.5;margin-top:auto}}
+    .lb-sem-venda a{{color:var(--destaque);opacity:1;text-decoration:underline}}
+    .lb-sem-venda a:hover{{opacity:.8}}
     .lb-secao-compra{{border-top:1px solid var(--borda);padding-top:1.5rem;margin-top:auto}}
     .lb-preco-label{{font-family:var(--detalhe);font-size:.8rem;color:var(--texto2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}}
     .lb-preco{{font-family:var(--detalhe);font-size:1.6rem;color:var(--destaque);font-weight:600;margin-bottom:1.2rem}}
@@ -327,22 +431,18 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
   </style>
 </head>
 <body>
-{nav_html(ativa_portfolio=True)}
+{nav_html(idioma, ativa_portfolio=True)}
 
   <div class="filtros-sticky">
-    <span class="filtros-label-inline">Cat.</span>
+    <span class="filtros-label-inline">{t['filtro_cat']}</span>
     <div class="filtros-grupo" id="filtros-cat">
-      <button class="btn-filtro" data-cat="terra" onclick="filtrarCat(this)">Terra</button>
-      <button class="btn-filtro" data-cat="agua" onclick="filtrarCat(this)">Água</button>
-      <button class="btn-filtro" data-cat="fogo" onclick="filtrarCat(this)">Fogo</button>
-      <button class="btn-filtro" data-cat="ar" onclick="filtrarCat(this)">Ar</button>
-      <button class="btn-filtro" data-cat="vida" onclick="filtrarCat(this)">Vida</button>
+      {filtros_cat_botoes}
     </div>
     <div class="filtros-sep"></div>
-    <span class="filtros-label-inline">Loja</span>
+    <span class="filtros-label-inline">{t['filtro_loja']}</span>
     <div class="filtros-grupo" id="filtros-loja">
-      <button class="btn-filtro" data-loja="digital" onclick="filtrarLoja(this)">Digital</button>
-      <button class="btn-filtro" data-loja="fisica" onclick="filtrarLoja(this)">Impressão</button>
+      <button class="btn-filtro" data-loja="digital" onclick="filtrarLoja(this)">{t['loja_digital']}</button>
+      <button class="btn-filtro" data-loja="fisica" onclick="filtrarLoja(this)">{t['loja_impressao']}</button>
     </div>
   </div>
   <div class="portfolio-spacer" id="portfolioSpacer"></div>
@@ -371,7 +471,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     </div>
   </div>
 
-{RODAPE}
+{rodape_html(idioma)}
   <script>
     /* ── Nav — some ao rolar para baixo, volta ao rolar para cima ── */
     const _nav = document.getElementById('nav');
@@ -404,7 +504,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
     window.addEventListener('load', ajustarLayout);
     window.addEventListener('resize', ajustarLayout);
 
-{TEMA_SCRIPT}
+{tema_script(idioma)}
 
     document.getElementById('navToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('aberto'));
     function fecharMenu() {{ document.getElementById('navLinks').classList.remove('aberto'); }}
@@ -493,7 +593,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
       const titulo  = el.dataset.titulo;
       const desc    = el.dataset.descricao;
       const naLoja  = el.dataset.naLoja;
-      const cat     = el.dataset.cat;
+      const catNome = el.dataset.catNome;
       const precoD  = el.dataset.precoDigital;
       const gumroad = el.dataset.linkGumroad;
       const shopify = el.dataset.linkShopify;
@@ -502,7 +602,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
       document.getElementById('lb-img').alt    = titulo;
       document.getElementById('lb-titulo').textContent = titulo;
       document.getElementById('lb-desc').textContent   = desc || '';
-      document.getElementById('lb-cat').textContent    = cat.toUpperCase();
+      document.getElementById('lb-cat').textContent    = catNome.toUpperCase();
       document.getElementById('lb-contador').textContent = `${{idx+1}} / ${{itensVisiveis.length}}`;
 
       const compra = document.getElementById('lb-compra');
@@ -510,7 +610,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
       const temFisica  = naLoja === 'fisica'  || naLoja === 'ambos';
 
       if(!temDigital && !temFisica) {{
-        compra.innerHTML = '<p class="lb-sem-venda">Entre em contato caso queira comprar essa foto</p>';
+        compra.innerHTML = '<p class="lb-sem-venda">{t["sem_venda_pre"]}<a href="https://ig.me/m/douglasnanes" target="_blank" rel="noopener">{t["sem_venda_link"]}</a>{t["sem_venda_pos"]}</p>';
         return;
       }}
 
@@ -518,18 +618,18 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
 
       if(temDigital && temFisica) {{
         tabs = `<div class="lb-tabs">
-          <button class="lb-tab ativo" onclick="trocarTab('digital',this)">Download Digital</button>
-          <button class="lb-tab"       onclick="trocarTab('fisica',this)">Impressão Física</button>
+          <button class="lb-tab ativo" onclick="trocarTab('digital',this)">{t['tab_digital']}</button>
+          <button class="lb-tab"       onclick="trocarTab('fisica',this)">{t['tab_fisica']}</button>
         </div>`;
       }}
 
       if(temDigital) {{
         const ativo = !temFisica ? 'ativo' : 'ativo';
         conteudos += `<div class="lb-tab-content ${{ativo}}" id="tab-digital">
-          <p class="lb-preco-label">Preço</p>
+          <p class="lb-preco-label">{t['preco_label']}</p>
           <p class="lb-preco">R$ ${{precoD}}</p>
-          <p style="font-size:.8rem;color:var(--texto2);margin-bottom:1rem;line-height:1.6">JPEG alta resolução — download imediato via Gumroad</p>
-          <a class="lb-btn" href="${{gumroad}}" target="_blank" rel="noopener">Comprar download</a>
+          <p style="font-size:.8rem;color:var(--texto2);margin-bottom:1rem;line-height:1.6">{t['desc_digital']}</p>
+          <a class="lb-btn" href="${{gumroad}}" target="_blank" rel="noopener">{t['btn_comprar_download']}</a>
         </div>`;
       }}
 
@@ -541,21 +641,21 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras):
         conteudos += `<div class="lb-tab-content ${{ativo}}" id="tab-fisica">
           <div class="lb-opcoes">
             <div class="lb-opcao-grupo">
-              <label>Tamanho</label>
+              <label>{t['tam_label']}</label>
               <select id="lb-tam" onchange="calcLbPreco('${{fid}}','${{shopify}}')">${{opcoesTam}}</select>
             </div>
             <div class="lb-opcao-grupo">
-              <label>Papel</label>
+              <label>{t['papel_label']}</label>
               <select id="lb-papel" onchange="calcLbPreco('${{fid}}','${{shopify}}')">${{opcoesPapel}}</select>
             </div>
             <div class="lb-opcao-grupo">
-              <label>Moldura</label>
+              <label>{t['moldura_label']}</label>
               <select id="lb-moldura" onchange="calcLbPreco('${{fid}}','${{shopify}}')">${{opcoesMold}}</select>
             </div>
           </div>
-          <p class="lb-preco-label">Total</p>
+          <p class="lb-preco-label">{t['total_label']}</p>
           <p class="lb-preco" id="lb-preco-fisica">R$ 0</p>
-          <a class="lb-btn" id="lb-btn-shopify" href="${{shopify}}" target="_blank" rel="noopener">Comprar impressão</a>
+          <a class="lb-btn" id="lb-btn-shopify" href="${{shopify}}" target="_blank" rel="noopener">{t['btn_comprar_impressao']}</a>
         </div>`;
       }}
 
@@ -636,19 +736,23 @@ def main():
 
     for slug in PASTAS:
         info  = INFO_CATEGORIA[slug]
-        print(f"{info['nome']}: lendo Drive...")
+        print(f"{info['nome']['pt']}: lendo Drive...")
         fotos = listar_drive(PASTAS[slug])
         print(f"  {len(fotos)} foto(s)")
 
         for f in fotos:
             c = ctx.get(f["name"], {})
+            titulo_pt = c.get("titulo") or titulo_fallback(f["name"])
             todas_fotos.append({
                 "slug":          slug,
-                "nome_cat":      info["nome"],
+                "nome_cat":      info["nome"]["pt"],
                 "foto_id":       f["id"],
                 "foto_nome":     f["name"],
-                "titulo":        c.get("titulo") or titulo_fallback(f["name"]),
+                "titulo":        titulo_pt,
                 "descricao":     c.get("descricao", ""),
+                # se não tiver tradução em inglês, usa o texto em português mesmo
+                "titulo_en":     c.get("titulo_en") or titulo_pt,
+                "descricao_en":  c.get("descricao_en") or c.get("descricao", ""),
                 "na_loja":       c.get("na_loja", "nao"),
                 "preco_digital": c.get("preco_digital", "29"),
                 "link_gumroad":  c.get("link_gumroad", ""),
@@ -662,9 +766,14 @@ def main():
     todas_fotos.sort(key=lambda f: (f["slug"], f["posicao"]))
 
     print(f"\nTotal: {len(todas_fotos)} foto(s)")
+
     with open("portfolio.html", "w", encoding="utf-8") as fh:
-        fh.write(gerar_portfolio(todas_fotos, tamanhos, papeis, molduras))
-    print("  portfolio.html gerado\n")
+        fh.write(gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, "pt"))
+    print("  portfolio.html gerado")
+
+    with open("portfolio-en.html", "w", encoding="utf-8") as fh:
+        fh.write(gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, "en"))
+    print("  portfolio-en.html gerado\n")
 
     # Remove arquivos antigos que não são mais usados
     import os as _os
