@@ -55,6 +55,9 @@ INFO_CATEGORIA = {
 TEXTOS = {
     "pt": {
         "titulo_pagina":        "Portfólio — Douglas N. Schimidt",
+        "meta_descricao":       "Portfólio de fotografias de aventura e natureza de Douglas N. Schimidt — Terra, Água, Fogo, Ar e Vida. Fotos disponíveis para download digital ou impressão.",
+        "og_locale":            "pt_BR",
+        "og_locale_alt":        "en_US",
         "lang_code":            "pt-BR",
         "nav_portfolio":        "Portfólio",
         "nav_loja":             "Loja",
@@ -86,6 +89,9 @@ TEXTOS = {
     },
     "en": {
         "titulo_pagina":        "Portfolio — Douglas N. Schimidt",
+        "meta_descricao":       "Adventure and nature photography portfolio by Douglas N. Schimidt — Earth, Water, Fire, Air and Life. Available as digital downloads or fine art prints.",
+        "og_locale":            "en_US",
+        "og_locale_alt":        "pt_BR",
         "lang_code":            "en",
         "nav_portfolio":        "Portfolio",
         "nav_loja":             "Shop",
@@ -118,6 +124,16 @@ TEXTOS = {
 }
 
 API_KEY = os.environ.get("GOOGLE_API_KEY", "")
+
+GA_ID = "G-ZXDQ4DE199"
+GA_HTML = f"""  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', '{GA_ID}');
+  </script>"""
 
 def ler_planilha():
     url  = f"https://docs.google.com/spreadsheets/d/{PLANILHA_ID}/export"
@@ -193,10 +209,26 @@ def titulo_fallback(name): return name.rsplit(".",1)[0].replace("-"," ").replace
 
 FONTES = '<link rel="stylesheet" href="https://use.typekit.net/zeo6kqs.css" />'
 
-def hreflang_html():
-    return """  <link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/portfolio.html" />
+def seo_head_html(idioma):
+    t = TEXTOS[idioma]
+    return f"""  <meta name="description" content="{t['meta_descricao']}" />
+  <link rel="canonical" href="https://douglasnschimidt.com/{t['arquivo']}" />
+  <link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/portfolio.html" />
   <link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/portfolio-en.html" />
-  <link rel="alternate" hreflang="x-default" href="https://douglasnschimidt.com/portfolio.html" />"""
+  <link rel="alternate" hreflang="x-default" href="https://douglasnschimidt.com/portfolio.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Douglas N. Schimidt — Adventure Photography" />
+  <meta property="og:locale" content="{t['og_locale']}" />
+  <meta property="og:locale:alternate" content="{t['og_locale_alt']}" />
+  <meta property="og:title" content="{t['titulo_pagina']}" />
+  <meta property="og:description" content="{t['meta_descricao']}" />
+  <meta property="og:url" content="https://douglasnschimidt.com/{t['arquivo']}" />
+  <meta property="og:image" content="https://douglasnschimidt.com/DNS09559.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{t['titulo_pagina']}" />
+  <meta name="twitter:description" content="{t['meta_descricao']}" />
+  <meta name="twitter:image" content="https://douglasnschimidt.com/DNS09559.jpg" />"""
 
 def nav_html(idioma, ativa_portfolio=False):
     t = TEXTOS[idioma]
@@ -330,9 +362,10 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
 <html lang="{t['lang_code']}">
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+{GA_HTML}
 {TEMA_INIT}
   <title>{t['titulo_pagina']}</title>
-{hreflang_html()}
+{seo_head_html(idioma)}
   {FONTES}
   <link rel="stylesheet" href="estilo.css" />
   <style>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://douglasnschimidt.com/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/index-en.html" />
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://douglasnschimidt.com/index-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/index-en.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://douglasnschimidt.com/portfolio.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/portfolio.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/portfolio-en.html" />
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://douglasnschimidt.com/portfolio-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/portfolio.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/portfolio-en.html" />
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://douglasnschimidt.com/expedicoes.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/expedicoes.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/expedicoes-en.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://douglasnschimidt.com/expedicoes-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/expedicoes.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/expedicoes-en.html" />
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://douglasnschimidt.com/contato.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/contato.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/contato-en.html" />
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://douglasnschimidt.com/contato-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/contato.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/contato-en.html" />
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+</urlset>
