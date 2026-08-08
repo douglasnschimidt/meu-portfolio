@@ -202,8 +202,7 @@ def nav_html(idioma, ativa_portfolio=False):
     t = TEXTOS[idioma]
     p = ' class="ativa"' if ativa_portfolio else ""
     s = t["sufixo"]
-    return f"""  <a href="{t['arquivo_outro']}" class="lang-toggle">{t['lang_toggle_label']}</a>
-  <nav id="nav">
+    return f"""  <nav id="nav">
     <a href="index{s}.html" class="nav-logo">Douglas N. Schimidt<small>adventure photography</small></a>
     <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
     <ul class="nav-links" id="navLinks">
@@ -223,7 +222,10 @@ def rodape_html(idioma):
     t = TEXTOS[idioma]
     return f"""  <footer>
     <span class="footer-logo">Douglas N. Schimidt</span>
-    <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">{t['modo_claro']}</button>
+    <div class="footer-acoes">
+      <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">{t['modo_claro']}</button>
+      <a href="{t['arquivo_outro']}" class="tema-toggle lang-toggle">{t['lang_toggle_label']}</a>
+    </div>
     <span>© 2026</span>
   </footer>"""
 
@@ -610,7 +612,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
       const temFisica  = naLoja === 'fisica'  || naLoja === 'ambos';
 
       if(!temDigital && !temFisica) {{
-        compra.innerHTML = '<p class="lb-sem-venda">{t["sem_venda_pre"]}<a href="https://ig.me/m/douglasnanes" target="_blank" rel="noopener">{t["sem_venda_link"]}</a>{t["sem_venda_pos"]}</p>';
+        compra.innerHTML = `<p class="lb-sem-venda">{t["sem_venda_pre"]}<a href="https://ig.me/m/douglasnanes" target="_blank" rel="noopener">{t["sem_venda_link"]}</a>{t["sem_venda_pos"]}</p>`;
         return;
       }}
 

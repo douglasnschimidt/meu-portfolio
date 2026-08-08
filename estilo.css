@@ -155,29 +155,17 @@ footer span {
   opacity: 0.7 !important;
 }
 
-/* ── Alternância de idioma (PT/EN) — botão fixo no canto superior direito, em todas as páginas ── */
-.lang-toggle {
-  position: fixed;
-  top: 1.6rem;
-  right: 3rem;
-  z-index: 110;
-  font-family: var(--detalhe);
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
-  color: var(--texto2);
-  border: 1px solid var(--borda);
-  padding: 0.3rem 0.8rem;
-  background: rgba(var(--fundo-rgb), 0.4);
-  backdrop-filter: blur(4px);
-  transition: all var(--transicao);
-}
-.lang-toggle:hover { color: var(--destaque); border-color: var(--destaque); }
-@media (max-width: 768px) {
-  .lang-toggle { top: 1rem; right: 1rem; padding: 0.25rem 0.6rem; font-size: 0.75rem; }
+/* ── Agrupa os botões de tema e idioma no rodapé, lado a lado ── */
+.footer-acoes {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
 }
 
-/* ── Alternância de tema (claro/escuro) ── */
+/* ── Alternância de tema (claro/escuro) e de idioma (PT/EN) — mesmo estilo de botão ── */
 .tema-toggle {
+  display: inline-block;
   font-family: var(--detalhe);
   font-size: 0.78rem;
   letter-spacing: 0.05em;
