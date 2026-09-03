@@ -13,6 +13,7 @@
   <script>if(localStorage.getItem('tema')==='claro'){document.documentElement.setAttribute('data-tema','claro');}</script>
   <title>Portfólio — Douglas N. Schimidt</title>
   <meta name="description" content="Portfólio de fotografias de aventura e natureza de Douglas N. Schimidt — Terra, Água, Fogo, Ar e Vida. Fotos disponíveis para download digital ou impressão." />
+  <meta name="robots" content="index, follow, noai, noimageai" />
   <link rel="canonical" href="https://douglasnschimidt.com/portfolio.html" />
   <link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/portfolio.html" />
   <link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/portfolio-en.html" />
@@ -1179,6 +1180,7 @@
       <div class="lb-secao-compra" id="lb-compra">
         <!-- preenchido via JS -->
       </div>
+      <p class="lb-licenca">Ao comprar uma fotografia neste site, você recebe uma licença de uso pessoal e não comercial. Isso significa que você pode imprimir e exibir a foto em sua casa ou usá-la como papel de parede pessoal, mas não pode revender, redistribuir, sublicenciar, usar em produtos para venda, campanhas publicitárias, redes sociais de empresas, ou expor em galerias, mostras ou exposições — públicas ou comerciais — sem autorização prévia e por escrito do fotógrafo. Todos os direitos autorais permanecem com Douglas N. Schimidt. Para uso comercial ou licenciamento estendido, entre em contato.</p>
     </div>
   </div>
 
@@ -1190,6 +1192,7 @@
     </div>
     <span>© 2026</span>
   </footer>
+  <p class="aviso-direitos">Todas as fotografias deste site são de autoria de Douglas N. Schimidt e protegidas por direitos autorais (Lei 9.610/98). É proibido copiar, baixar, redistribuir, exibir publicamente ou usar essas imagens para qualquer fim comercial sem autorização prévia e por escrito do autor.</p>
   <script>
     /* ── Nav — some ao rolar para baixo, volta ao rolar para cima ── */
     const _nav = document.getElementById('nav');
@@ -1332,6 +1335,15 @@
       document.getElementById('lb-desc').textContent   = desc || '';
       document.getElementById('lb-cat').textContent    = catNome.toUpperCase();
       document.getElementById('lb-contador').textContent = `${idx+1} / ${itensVisiveis.length}`;
+
+      /* Google Analytics — registra qual foto foi aberta/visualizada no lightbox */
+      if (typeof gtag === 'function') {
+        gtag('event', 'visualizacao_foto', {
+          foto_titulo: titulo,
+          foto_categoria: catNome,
+          foto_id: fid
+        });
+      }
 
       const compra = document.getElementById('lb-compra');
       const temDigital = naLoja === 'digital' || naLoja === 'ambos';
