@@ -16,6 +16,7 @@
   <script>if(localStorage.getItem('tema')==='claro'){document.documentElement.setAttribute('data-tema','claro');}</script>
   <title>Douglas N. Schimidt — Adventure Photography</title>
   <meta name="description" content="Adventure and nature photography — surf, hiking, climbing." />
+  <meta name="robots" content="index, follow, noai, noimageai" />
   <link rel="canonical" href="https://douglasnschimidt.com/index-en.html" />
   <link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/index.html" />
   <link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/index-en.html" />
@@ -179,6 +180,10 @@
       Douglas N. Schimidt
       <small>adventure photography</small>
     </a>
+    <div class="nav-acoes">
+      <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Light mode</button>
+      <a href="index.html" class="tema-toggle lang-toggle">PT</a>
+    </div>
   </nav>
 
   <!-- ═══ HERO — PHOTO + BIG MENU ══════════════════ -->
@@ -204,13 +209,9 @@
 
   <!-- ═══ FOOTER ═══════════════════════════════════════ -->
   <footer>
-    <span class="footer-logo">Douglas N. Schimidt</span>
-    <div class="footer-acoes">
-      <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Light mode</button>
-      <a href="index.html" class="tema-toggle lang-toggle">PT</a>
-    </div>
     <span>© 2026 — Adventure Photography</span>
   </footer>
+  <p class="aviso-direitos">All photographs on this site are the work of Douglas N. Schimidt and are protected by copyright under Brazilian law (Lei 9.610/98). Copying, downloading, redistributing, publicly displaying, or using these images for any commercial purpose without the photographer's prior written permission is prohibited.</p>
 
   <script>
     // Darkens the top bar as the person scrolls

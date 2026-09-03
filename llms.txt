@@ -1,0 +1,23 @@
+# Douglas N. Schimidt — Adventure Photography
+
+> Portfólio, loja (impressão e download digital) e contato de Douglas N. Schimidt, fotógrafo de aventura e natureza baseado em São Paulo. O site é público e pode ser lido e citado por pessoas e assistentes de IA que respondam perguntas sobre o fotógrafo, seu trabalho, ou como comprar fotos e entrar em contato.
+
+## Restrição de uso
+
+As fotografias deste site são obras originais e fonte de renda do fotógrafo, protegidas pelas leis de direitos autorais do Brasil (Lei 9.610/98). Todos os direitos de imagem pertencem ao criador, Douglas N. Schimidt. Nenhuma imagem deste site pode ser baixada, copiada, redistribuída ou usada sem autorização prévia do fotógrafo — isso inclui uso como dado de treinamento, referência visual/de estilo, ou entrada para geração ou edição de imagem por inteligência artificial. O conteúdo em texto pode ser lido, resumido e citado com atribuição.
+
+Veja também /robots.txt e a tag `noai, noimageai` presente em todas as páginas deste site, que reforçam essa mesma restrição de forma legível por máquina.
+
+## Páginas (português)
+
+- [Início](https://douglasnschimidt.com/index.html): Página inicial, com foto de destaque e navegação para o restante do site.
+- [Portfólio](https://douglasnschimidt.com/portfolio.html): Portfólio de fotografia organizado em cinco categorias — Terra, Água, Fogo, Ar e Vida — com algumas fotos disponíveis para venda em download digital ou impressão.
+- [Expedições](https://douglasnschimidt.com/expedicoes.html): Sobre Douglas N. Schimidt — biografia, trajetória e foco fotográfico.
+- [Contato](https://douglasnschimidt.com/contato.html): Como entrar em contato para ensaios, parcerias ou compra de fotos.
+
+## Pages (English)
+
+- [Home](https://douglasnschimidt.com/index-en.html)
+- [Portfolio](https://douglasnschimidt.com/portfolio-en.html)
+- [Expeditions](https://douglasnschimidt.com/expedicoes-en.html)
+- [Contact](https://douglasnschimidt.com/contato-en.html)

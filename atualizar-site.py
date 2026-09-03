@@ -86,6 +86,8 @@ TEXTOS = {
         "arquivo":              "portfolio.html",
         "arquivo_outro":        "portfolio-en.html",
         "sufixo":               "",
+        "aviso_direitos":       "Todas as fotografias deste site são de autoria de Douglas N. Schimidt e protegidas por direitos autorais (Lei 9.610/98). É proibido copiar, baixar, redistribuir, exibir publicamente ou usar essas imagens para qualquer fim comercial sem autorização prévia e por escrito do autor.",
+        "licenca_texto":        "Ao comprar uma fotografia neste site, você recebe uma licença de uso pessoal e não comercial. Isso significa que você pode imprimir e exibir a foto em sua casa ou usá-la como papel de parede pessoal, mas não pode revender, redistribuir, sublicenciar, usar em produtos para venda, campanhas publicitárias, redes sociais de empresas, ou expor em galerias, mostras ou exposições — públicas ou comerciais — sem autorização prévia e por escrito do fotógrafo. Todos os direitos autorais permanecem com Douglas N. Schimidt. Para uso comercial ou licenciamento estendido, entre em contato.",
     },
     "en": {
         "titulo_pagina":        "Portfolio — Douglas N. Schimidt",
@@ -120,6 +122,8 @@ TEXTOS = {
         "arquivo":              "portfolio-en.html",
         "arquivo_outro":        "portfolio.html",
         "sufixo":               "-en",
+        "aviso_direitos":       "All photographs on this site are the work of Douglas N. Schimidt and are protected by copyright under Brazilian law (Lei 9.610/98). Copying, downloading, redistributing, publicly displaying, or using these images for any commercial purpose without the photographer's prior written permission is prohibited.",
+        "licenca_texto":        "By purchasing a photograph from this site, you receive a personal, non-commercial use license. This means you may print and display the photo in your home or use it as a personal wallpaper, but you may not resell, redistribute, sublicense, use it in products for sale, advertising campaigns, corporate social media, or display it in galleries, shows, or exhibitions — public or commercial — without the photographer's prior written permission. All copyright remains with Douglas N. Schimidt. For commercial use or extended licensing, please get in touch.",
     },
 }
 
@@ -212,6 +216,7 @@ FONTES = '<link rel="stylesheet" href="https://use.typekit.net/zeo6kqs.css" />'
 def seo_head_html(idioma):
     t = TEXTOS[idioma]
     return f"""  <meta name="description" content="{t['meta_descricao']}" />
+  <meta name="robots" content="index, follow, noai, noimageai" />
   <link rel="canonical" href="https://douglasnschimidt.com/{t['arquivo']}" />
   <link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/portfolio.html" />
   <link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/portfolio-en.html" />
@@ -259,7 +264,8 @@ def rodape_html(idioma):
       <a href="{t['arquivo_outro']}" class="tema-toggle lang-toggle">{t['lang_toggle_label']}</a>
     </div>
     <span>© 2026</span>
-  </footer>"""
+  </footer>
+  <p class="aviso-direitos">{t['aviso_direitos']}</p>"""
 
 TEMA_INIT = """  <script>if(localStorage.getItem('tema')==='claro'){document.documentElement.setAttribute('data-tema','claro');}</script>"""
 
@@ -503,6 +509,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
       <div class="lb-secao-compra" id="lb-compra">
         <!-- preenchido via JS -->
       </div>
+      <p class="lb-licenca">{t['licenca_texto']}</p>
     </div>
   </div>
 
@@ -639,6 +646,15 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
       document.getElementById('lb-desc').textContent   = desc || '';
       document.getElementById('lb-cat').textContent    = catNome.toUpperCase();
       document.getElementById('lb-contador').textContent = `${{idx+1}} / ${{itensVisiveis.length}}`;
+
+      /* Google Analytics — registra qual foto foi aberta/visualizada no lightbox */
+      if (typeof gtag === 'function') {{
+        gtag('event', 'visualizacao_foto', {{
+          foto_titulo: titulo,
+          foto_categoria: catNome,
+          foto_id: fid
+        }});
+      }}
 
       const compra = document.getElementById('lb-compra');
       const temDigital = naLoja === 'digital' || naLoja === 'ambos';

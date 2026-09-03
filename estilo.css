@@ -133,6 +133,29 @@ nav.rolada { background: rgba(var(--fundo-rgb),0.97); }
   transition: all var(--transicao);
 }
 
+/* ── Botões de tema/idioma dentro da barra do topo (página inicial) —
+     ficam visíveis sem precisar rolar a página ── */
+.nav-acoes {
+  position: absolute;
+  right: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 10;
+}
+@media (max-width: 768px) {
+  .nav-acoes {
+    right: 1rem;
+    gap: 0.4rem;
+  }
+  .nav-acoes .tema-toggle {
+    font-size: 0.68rem;
+    padding: 0.28rem 0.6rem;
+  }
+}
+
 /* ── Rodapé ── */
 footer {
   padding: 2rem 3rem;
@@ -179,6 +202,31 @@ footer span {
 .tema-toggle:hover {
   color: var(--destaque);
   border-color: var(--destaque);
+}
+
+/* ── Aviso de direitos autorais — linha fina abaixo do rodapé, em todas as páginas ── */
+.aviso-direitos {
+  padding: 0 3rem 1.6rem;
+  font-size: 0.72rem;
+  color: var(--texto2);
+  opacity: 0.55;
+  line-height: 1.6;
+  max-width: 900px;
+}
+@media (max-width: 768px) {
+  .aviso-direitos { padding: 0 1.5rem 1.3rem; text-align: center; max-width: none; }
+}
+
+/* ── Licença de uso — aparece junto das opções de compra no lightbox ── */
+.lb-licenca {
+  font-family: var(--detalhe);
+  font-size: 0.72rem;
+  color: var(--texto2);
+  opacity: 0.6;
+  line-height: 1.6;
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--borda);
 }
 
 /* ── Animações de entrada ── */
