@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXDQ4DE199"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZXDQ4DE199');
+  </script>
+
+  <script>if(localStorage.getItem('tema')==='claro'){document.documentElement.setAttribute('data-tema','claro');}</script>
+  <title>Contact — Douglas N. Schimidt</title>
+  <meta name="description" content="Get in touch with Douglas N. Schimidt to book shoots, discuss partnerships, or purchase adventure and nature photography." />
+  <meta name="robots" content="index, follow, noai, noimageai" />
+  <link rel="canonical" href="https://douglasnschimidt.com/contato-en.html" />
+  <link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/contato.html" />
+  <link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/contato-en.html" />
+  <link rel="alternate" hreflang="x-default" href="https://douglasnschimidt.com/contato.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Douglas N. Schimidt — Adventure Photography" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="pt_BR" />
+  <meta property="og:title" content="Contact — Douglas N. Schimidt" />
+  <meta property="og:description" content="Get in touch with Douglas N. Schimidt to book shoots, discuss partnerships, or purchase adventure and nature photography." />
+  <meta property="og:url" content="https://douglasnschimidt.com/contato-en.html" />
+  <meta property="og:image" content="https://douglasnschimidt.com/DNS09559.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact — Douglas N. Schimidt" />
+  <meta name="twitter:description" content="Get in touch with Douglas N. Schimidt to book shoots, discuss partnerships, or purchase adventure and nature photography." />
+  <meta name="twitter:image" content="https://douglasnschimidt.com/DNS09559.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="estilo.css" />
+
+  <style>
+    .contato-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+    }
+    .contato-inner {
+      max-width: 520px;
+      width: 100%;
+    }
+    .pagina-label {
+      font-family: var(--detalhe);
+      font-size: 0.9rem;
+      color: var(--destaque);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .pagina-titulo {
+      font-family: var(--titulo);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--texto);
+      line-height: 1.1;
+      margin-bottom: 2.5rem;
+    }
+
+    .form-grupo {
+      margin-bottom: 1.2rem;
+    }
+    .form-grupo label {
+      display: block;
+      font-family: var(--detalhe);
+      font-size: 1.1rem;
+      color: var(--texto2);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+    .form-grupo input,
+    .form-grupo textarea {
+      width: 100%;
+      background: #111;
+      border: 1px solid var(--borda);
+      color: var(--texto);
+      font-family: var(--corpo);
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color var(--transicao);
+    }
+    .form-grupo input:focus,
+    .form-grupo textarea:focus {
+      border-color: var(--destaque);
+    }
+    .form-grupo textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    .form-btn {
+      font-family: var(--detalhe);
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      color: #0d0d0d;
+      background: var(--destaque);
+      border: none;
+      padding: 0.85rem 2.5rem;
+      cursor: pointer;
+      transition: background var(--transicao);
+      margin-top: 0.5rem;
+    }
+    .form-btn:hover { background: var(--destaque2); }
+
+    .contato-extra {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--borda);
+    }
+    .contato-extra p {
+      font-family: var(--detalhe);
+      font-size: 0.95rem;
+      color: var(--texto2);
+      margin-bottom: 0.5rem;
+    }
+    .contato-extra a {
+      color: var(--destaque);
+      transition: opacity var(--transicao);
+    }
+    .contato-extra a:hover { opacity: 0.7; }
+
+    @media (max-width: 600px) {
+      .contato-wrap { padding: 7rem 1.5rem 3rem; }
+    }
+
+    /* ── Maintenance pop-up ── */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(13,13,13,0.85);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      backdrop-filter: blur(4px);
+      animation: fadeIn 0.4s ease forwards;
+    }
+    .popup-caixa {
+      background: #111;
+      border: 1px solid var(--borda);
+      max-width: 420px;
+      width: 100%;
+      padding: 2.5rem 2rem 2rem;
+      position: relative;
+      animation: fadeUp 0.4s ease forwards;
+    }
+    .popup-label {
+      font-family: var(--detalhe);
+      font-size: 0.75rem;
+      color: var(--destaque);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      opacity: 0.8;
+    }
+    .popup-titulo {
+      font-family: var(--titulo);
+      font-size: 1.5rem;
+      color: var(--texto);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .popup-texto {
+      font-family: var(--detalhe);
+      font-size: 1rem;
+      color: var(--texto2);
+      line-height: 1.7;
+      margin-bottom: 1.6rem;
+    }
+    .popup-instagram {
+      display: inline-block;
+      font-family: var(--detalhe);
+      font-size: 1rem;
+      color: #0d0d0d;
+      background: var(--destaque);
+      padding: 0.65rem 1.6rem;
+      text-decoration: none;
+      transition: background var(--transicao);
+      letter-spacing: 0.05em;
+    }
+    .popup-instagram:hover { background: var(--destaque2); }
+    .popup-fechar {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      color: var(--texto2);
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: color var(--transicao);
+      line-height: 1;
+    }
+    .popup-fechar:hover { color: var(--texto); }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a href="index-en.html" class="nav-logo">
+      Douglas N. Schimidt
+      <small>adventure photography</small>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="portfolio-en.html"  onclick="fecharMenu()">Portfolio</a></li>
+      <li><a href="portfolio-en.html?loja=1" onclick="fecharMenu()">Shop</a></li>
+      <li><a href="expedicoes-en.html" onclick="fecharMenu()">Expeditions</a></li>
+      <li><a href="contato-en.html" class="ativa" onclick="fecharMenu()">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Maintenance pop-up ── -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-caixa">
+      <button class="popup-fechar" onclick="fecharPopup()" aria-label="Close">&#215;</button>
+      <p class="popup-label">notice</p>
+      <h2 class="popup-titulo">Form under maintenance</h2>
+      <p class="popup-texto">
+        The contact form isn't active yet.<br/>
+        For now, message me on Instagram — let's chat there.
+      </p>
+      <a href="https://instagram.com/douglasnanes" target="_blank" rel="noopener" class="popup-instagram">
+        @douglasnanes
+      </a>
+    </div>
+  </div>
+
+  <div class="contato-wrap">
+    <div class="contato-inner reveal">
+      <form name="contato" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contato" />
+        <p style="display:none"><input name="bot-field" /></p>
+
+        <div class="form-grupo">
+          <label for="nome">Name</label>
+          <input type="text" id="nome" name="nome" placeholder="Your name" required />
+        </div>
+        <div class="form-grupo">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@email.com" required />
+        </div>
+        <div class="form-grupo">
+          <label for="msg">Message</label>
+          <textarea id="msg" name="mensagem" placeholder="Hi Douglas..." required></textarea>
+        </div>
+        <button type="submit" class="form-btn" disabled style="opacity: 0.4; cursor: not-allowed;">Send</button>
+      <!--  <button type="submit" class="form-btn">Send</button>  -->
+      </form>
+
+      <div class="contato-extra">
+        <p>Instagram: <a href="https://instagram.com/douglasnanes" target="_blank" rel="noopener">@douglasnanes</a></p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="footer-logo">Douglas N. Schimidt</span>
+    <div class="footer-acoes">
+      <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Light mode</button>
+      <a href="contato.html" class="tema-toggle lang-toggle">PT</a>
+    </div>
+    <span>© 2026</span>
+  </footer>
+  <p class="aviso-direitos">All photographs on this site are the work of Douglas N. Schimidt and are protected by copyright under Brazilian law (Lei 9.610/98). Copying, downloading, redistributing, publicly displaying, or using these images for any commercial purpose without the photographer's prior written permission is prohibited.</p>
+
+  <script>
+    function fecharPopup() {
+      document.getElementById('popupOverlay').style.display = 'none';
+    }
+    // Also closes when clicking outside the box
+    document.getElementById('popupOverlay').addEventListener('click', function(e) {
+      if (e.target === this) fecharPopup();
+    });
+
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('rolada', window.scrollY > 50));
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => navLinks.classList.toggle('aberto'));
+    function fecharMenu() { navLinks.classList.remove('aberto'); }
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visivel'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => obs.observe(el));
+
+    // Light/dark theme toggle
+    function toggleTema() {
+      const claro = document.documentElement.getAttribute('data-tema') === 'claro';
+      if (claro) { document.documentElement.removeAttribute('data-tema'); localStorage.setItem('tema','escuro'); }
+      else       { document.documentElement.setAttribute('data-tema','claro'); localStorage.setItem('tema','claro'); }
+      atualizarBotaoTema();
+    }
+    function atualizarBotaoTema() {
+      const btn = document.getElementById('temaToggle');
+      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Dark mode' : 'Light mode';
+    }
+    atualizarBotaoTema();
+  </script>
+
+</body>
+</html>

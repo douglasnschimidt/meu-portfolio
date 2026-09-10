@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXDQ4DE199"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZXDQ4DE199');
+  </script>
+
+  <script>if(localStorage.getItem('tema')==='claro'){document.documentElement.setAttribute('data-tema','claro');}</script>
+  <title>Expedições — Douglas N. Schimidt</title>
+  <meta name="description" content="Conheça a trajetória de Douglas N. Schimidt, fotógrafo de aventura baseado em São Paulo — surf, trilhas e expedições pelo mundo." />
+  <meta name="robots" content="index, follow, noai, noimageai" />
+  <link rel="canonical" href="https://douglasnschimidt.com/expedicoes.html" />
+  <link rel="alternate" hreflang="pt-BR" href="https://douglasnschimidt.com/expedicoes.html" />
+  <link rel="alternate" hreflang="en" href="https://douglasnschimidt.com/expedicoes-en.html" />
+  <link rel="alternate" hreflang="x-default" href="https://douglasnschimidt.com/expedicoes.html" />
+
+  <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="Douglas N. Schimidt — Adventure Photography" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:title" content="Expedições — Douglas N. Schimidt" />
+  <meta property="og:description" content="Conheça a trajetória de Douglas N. Schimidt, fotógrafo de aventura baseado em São Paulo — surf, trilhas e expedições pelo mundo." />
+  <meta property="og:url" content="https://douglasnschimidt.com/expedicoes.html" />
+  <meta property="og:image" content="https://douglasnschimidt.com/Dvns-bio.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Expedições — Douglas N. Schimidt" />
+  <meta name="twitter:description" content="Conheça a trajetória de Douglas N. Schimidt, fotógrafo de aventura baseado em São Paulo — surf, trilhas e expedições pelo mundo." />
+  <meta name="twitter:image" content="https://douglasnschimidt.com/Dvns-bio.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Caveat:wght@400;600&family=Karla:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="estilo.css" />
+
+  <style>
+    .pagina-topo {
+      padding: 10rem 3rem 4rem;
+      max-width: 900px;
+    }
+    .pagina-label {
+      font-family: var(--detalhe);
+      font-size: 0.9rem;
+      color: var(--destaque);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .pagina-titulo {
+      font-family: var(--titulo);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--texto);
+      line-height: 1.1;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Layout em duas colunas: foto + texto */
+    .sobre-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      padding: 8rem 3rem 6rem;
+      align-items: start;
+      max-width: 1100px;
+    }
+
+    /* Foto horizontal, proporção original sem corte */
+    .sobre-foto {
+      aspect-ratio: 3/2;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+    .sobre-foto img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Texto do sobre */
+    .sobre-bio {
+      color: var(--texto2);
+      font-size: 0.95rem;
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Tags — esportes e interesses */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 2rem 0;
+    }
+    .tag {
+      font-family: var(--detalhe);
+      font-size: 0.9rem;
+      color: var(--destaque);
+      border: 1px solid rgba(224,123,57,0.35);
+      padding: 0.3rem 0.9rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Números — continentes, fotos, etc */
+    .numeros {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--borda);
+      border: 1px solid var(--borda);
+      margin: 2rem 0;
+    }
+    .numero-item {
+      background: var(--fundo);
+      padding: 1.2rem 1rem;
+      text-align: center;
+    }
+    .numero-val {
+      font-family: var(--titulo);
+      font-size: 2rem;
+      color: var(--destaque);
+      display: block;
+    }
+    .numero-label {
+      font-family: var(--detalhe);
+      font-size: 0.75rem;
+      color: var(--texto2);
+      letter-spacing: 0.1em;
+    }
+
+    /* Link do Instagram */
+    .sobre-instagram {
+      font-family: var(--detalhe);
+      font-size: 1.05rem;
+      color: var(--texto2);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      transition: color var(--transicao);
+    }
+    .sobre-instagram:hover { color: var(--destaque); }
+
+    @media (max-width: 768px) {
+      .sobre-inner {
+        grid-template-columns: 1fr;
+        padding: 6rem 1.5rem 4rem;
+        gap: 2rem;
+      }
+      .sobre-foto { aspect-ratio: 3/2; }
+      .numeros { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a href="index.html" class="nav-logo">
+      Douglas N. Schimidt
+      <small>adventure photography</small>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="portfolio.html"  onclick="fecharMenu()">Portfólio</a></li>
+      <li><a href="portfolio.html?loja=1" onclick="fecharMenu()">Loja</a></li>
+      <li><a href="expedicoes.html" class="ativa" onclick="fecharMenu()">Expedições</a></li>
+      <li><a href="contato.html"    onclick="fecharMenu()">Contato</a></li>
+    </ul>
+  </nav>
+
+  <div class="sobre-inner reveal">
+
+    <!-- FOTO: troque o src pelo caminho da sua foto pessoal -->
+    <div class="sobre-foto-wrap">
+      <div class="sobre-foto">
+        <img
+          src="Dvns-bio.jpg"
+          alt="Douglas N. Schimidt"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <div>
+      <!--
+        BIO: edite o texto abaixo com suas palavras.
+        Dica: direto, sem papo de portfólio corporativo.
+      -->
+      <p class="sobre-bio">
+        Fotógrafo de aventura baseado em São Paulo. Surfista, artista,
+        viajante — na ordem que você quiser. Em movimento quando possível,
+        mas sempre com a câmera na mão. 
+      </p>
+      <p class="sobre-bio">
+        Meu trabalho está na natureza, mostrando que ela é 
+        maior que qualquer coisa: na trilha até a montanha, 
+        na onda mais desejada, no acampamento debaixo de um céu estrelado.
+      </p>
+      <p class="sobre-bio">
+        |||
+      </p>
+
+    </div>
+
+  </div>
+
+  <footer>
+    <span class="footer-logo">Douglas N. Schimidt</span>
+    <div class="footer-acoes">
+      <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Modo claro</button>
+      <a href="expedicoes-en.html" class="tema-toggle lang-toggle">EN</a>
+    </div>
+    <span>© 2026</span>
+  </footer>
+  <p class="aviso-direitos">Todas as fotografias deste site são de autoria de Douglas N. Schimidt e protegidas por direitos autorais (Lei 9.610/98). É proibido copiar, baixar, redistribuir, exibir publicamente ou usar essas imagens para qualquer fim comercial sem autorização prévia e por escrito do autor.</p>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('rolada', window.scrollY > 50));
+    const toggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => navLinks.classList.toggle('aberto'));
+    function fecharMenu() { navLinks.classList.remove('aberto'); }
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visivel'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => obs.observe(el));
+
+    // Alternância de tema claro/escuro
+    function toggleTema() {
+      const claro = document.documentElement.getAttribute('data-tema') === 'claro';
+      if (claro) { document.documentElement.removeAttribute('data-tema'); localStorage.setItem('tema','escuro'); }
+      else       { document.documentElement.setAttribute('data-tema','claro'); localStorage.setItem('tema','claro'); }
+      atualizarBotaoTema();
+    }
+    function atualizarBotaoTema() {
+      const btn = document.getElementById('temaToggle');
+      if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Modo escuro' : 'Modo claro';
+    }
+    atualizarBotaoTema();
+  </script>
+
+</body>
+</html>
