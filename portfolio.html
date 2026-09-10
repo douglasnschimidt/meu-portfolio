@@ -50,13 +50,17 @@
     .categoria-secao{padding:0;border-bottom:none}
     .categoria-secao.oculta{display:none}
 
-    /* ── Grade — colunas CSS (column-count), sequência vertical por bloco ──
-       Cada foto entra na coluna atual e empilha por cima da anterior,
-       sem depender de JavaScript — é o navegador quem distribui as fotos
-       nas colunas, preenchendo de cima para baixo, sem buracos. */
-    .fotos-grid{column-count:3;column-gap:6px;padding:0 6px 6px;}
-    .foto-item{position:relative;overflow:hidden;cursor:pointer;background:#1a1a1a;break-inside:avoid;margin-bottom:6px;-webkit-user-select:none;user-select:none;--texto:#f0ece4;--texto2:#8a8378;--borda:#222;}
-    .foto-item img{width:100%;height:auto;display:block;transition:transform .5s ease;pointer-events:none;-webkit-user-drag:none;}
+    /* ── Grade — linhas da esquerda pra direita, altura fixa por foto ──
+       Cada foto mantém a proporção original (largura livre) e a linha
+       quebra sozinha quando a próxima foto não cabe mais. flex-wrap +
+       justify-content:center deixa cada linha centralizada, com o
+       mesmo espaço vazio dos dois lados — sem esticar fotos pra
+       preencher a borda. Como a ordem visual passa a bater com a
+       ordem lógica das fotos, a navegação da foto ampliada (setas)
+       segue sempre a foto certa. */
+    .fotos-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:0 6px 6px;}
+    .foto-item{position:relative;overflow:hidden;cursor:pointer;background:#1a1a1a;height:60vh;-webkit-user-select:none;user-select:none;--texto:#f0ece4;--texto2:#8a8378;--borda:#222;}
+    .foto-item img{height:100%;width:auto;display:block;transition:transform .5s ease;pointer-events:none;-webkit-user-drag:none;}
     .foto-item:hover img{transform:scale(1.04)}
     .foto-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;background:rgba(13,13,13,0);transition:background var(--transicao)}
     .foto-item:hover .foto-overlay{background:rgba(13,13,13,.65)}
@@ -123,7 +127,7 @@
       .lb-direita{width:100%;border-left:none;border-top:1px solid var(--borda);padding:1.2rem 1.2rem 1.5rem;flex:1;overflow-y:auto}
       .lb-nav.lb-prev{left:.3rem}
       .lb-nav.lb-next{right:.3rem}
-      .fotos-grid{column-count:2;padding:0 6px 6px}
+      .foto-item{height:45vh}
       .cat-faixa{padding:1.6rem 1.2rem .8rem;}
       .filtros-sticky{padding:.45rem 1rem;gap:.5rem}
       .filtros-sep{display:none}
@@ -183,8 +187,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1wSxsdlGyszoy5gyKDZSEYdKzx-0wWloL"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1wSxsdlGyszoy5gyKDZSEYdKzx-0wWloL&sz=w800" alt="Mar de montanhas na Nova Zelândia" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1wSxsdlGyszoy5gyKDZSEYdKzx-0wWloL" alt="Mar de montanhas na Nova Zelândia" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Mar de montanhas na Nova Zelândia</span>
           <div class="foto-badges"></div>
@@ -201,8 +206,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1HbJ-pNjQUs-2tVct-Hek0sKo34zLpCWr"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1HbJ-pNjQUs-2tVct-Hek0sKo34zLpCWr&sz=w800" alt="Tempestade na Nova Zelândia" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1HbJ-pNjQUs-2tVct-Hek0sKo34zLpCWr" alt="Tempestade na Nova Zelândia" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Tempestade na Nova Zelândia</span>
           <div class="foto-badges"></div>
@@ -219,8 +225,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1semJ5AJ5PnK0Z8yzAF4o2Uub1Ka3714V"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1semJ5AJ5PnK0Z8yzAF4o2Uub1Ka3714V&sz=w800" alt="Antártica" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1semJ5AJ5PnK0Z8yzAF4o2Uub1Ka3714V" alt="Antártica" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Antártica</span>
           <div class="foto-badges"></div>
@@ -237,8 +244,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1jfvOgOI-Xs2HxiWdLKPBZCnpmloP42xq"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1jfvOgOI-Xs2HxiWdLKPBZCnpmloP42xq&sz=w800" alt="Praia do Sono" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1jfvOgOI-Xs2HxiWdLKPBZCnpmloP42xq" alt="Praia do Sono" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Praia do Sono</span>
           <div class="foto-badges"></div>
@@ -255,8 +263,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1FYfMOBchc3Ou-Xs5lyssVPxPGsE5HDv6"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1FYfMOBchc3Ou-Xs5lyssVPxPGsE5HDv6&sz=w800" alt="A névoa" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1FYfMOBchc3Ou-Xs5lyssVPxPGsE5HDv6" alt="A névoa" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">A névoa</span>
           <div class="foto-badges"></div>
@@ -273,8 +282,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/11to-w0CTwpt-d0c7EIUBd1gVi4rpeRlc"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=11to-w0CTwpt-d0c7EIUBd1gVi4rpeRlc&sz=w800" alt="Marrocos" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/11to-w0CTwpt-d0c7EIUBd1gVi4rpeRlc" alt="Marrocos" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Marrocos</span>
           <div class="foto-badges"></div>
@@ -291,8 +301,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/11-GvakInfg6w-q6hf0U24Tg0KZ4I3WfV"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=11-GvakInfg6w-q6hf0U24Tg0KZ4I3WfV&sz=w800" alt="Solitude" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/11-GvakInfg6w-q6hf0U24Tg0KZ4I3WfV" alt="Solitude" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Solitude</span>
           <div class="foto-badges"></div>
@@ -309,8 +320,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1Z7Ym12h8Rw50X7m1TojCYMTwQomZNJCo"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1Z7Ym12h8Rw50X7m1TojCYMTwQomZNJCo&sz=w800" alt="Pinguins" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1Z7Ym12h8Rw50X7m1TojCYMTwQomZNJCo" alt="Pinguins" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Pinguins</span>
           <div class="foto-badges"></div>
@@ -327,8 +339,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1KJ38npLW9xh4mxovgD2zY7ktN1WZrZ_a"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1KJ38npLW9xh4mxovgD2zY7ktN1WZrZ_a&sz=w800" alt="Pinguins 2" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1KJ38npLW9xh4mxovgD2zY7ktN1WZrZ_a" alt="Pinguins 2" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Pinguins 2</span>
           <div class="foto-badges"></div>
@@ -345,8 +358,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1COsTDtpwxSf-GT77HB8Fk4wB8CEiLasZ"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1COsTDtpwxSf-GT77HB8Fk4wB8CEiLasZ&sz=w800" alt="Lençóis Maranhenses" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1COsTDtpwxSf-GT77HB8Fk4wB8CEiLasZ" alt="Lençóis Maranhenses" loading="lazy" width="1365" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Lençóis Maranhenses</span>
           <div class="foto-badges"></div>
@@ -371,8 +385,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1-SoAqLoSzg682DRnVm8ks0xADs2gmK75"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1-SoAqLoSzg682DRnVm8ks0xADs2gmK75&sz=w800" alt="Flutuando na Antártica" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1-SoAqLoSzg682DRnVm8ks0xADs2gmK75" alt="Flutuando na Antártica" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Flutuando na Antártica</span>
           <div class="foto-badges"></div>
@@ -389,8 +404,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1nIdSVNjIt0RuMx8KcOSVjj7o9C643-5k"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1nIdSVNjIt0RuMx8KcOSVjj7o9C643-5k&sz=w800" alt="Fernando de Noronha" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1nIdSVNjIt0RuMx8KcOSVjj7o9C643-5k" alt="Fernando de Noronha" loading="lazy" width="1365" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fernando de Noronha</span>
           <div class="foto-badges"></div>
@@ -407,8 +423,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1DHigdFrSj8Xx0Vj7e7y3oS8Ry0XdUsuK"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1DHigdFrSj8Xx0Vj7e7y3oS8Ry0XdUsuK&sz=w800" alt="Fernando de Noronha 2" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1DHigdFrSj8Xx0Vj7e7y3oS8Ry0XdUsuK" alt="Fernando de Noronha 2" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fernando de Noronha 2</span>
           <div class="foto-badges"></div>
@@ -425,8 +442,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1UW7ZzrGaMSFwz52FO6qqi75cxqlMJ6VS"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1UW7ZzrGaMSFwz52FO6qqi75cxqlMJ6VS&sz=w800" alt="Peniche, Portugal" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1UW7ZzrGaMSFwz52FO6qqi75cxqlMJ6VS" alt="Peniche, Portugal" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Peniche, Portugal</span>
           <div class="foto-badges"></div>
@@ -443,8 +461,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/16SfocLp1AKpWLBLwIMOn1vyIQAtoYxxG"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=16SfocLp1AKpWLBLwIMOn1vyIQAtoYxxG&sz=w800" alt="Chapada do Veadeiros" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/16SfocLp1AKpWLBLwIMOn1vyIQAtoYxxG" alt="Chapada do Veadeiros" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Chapada do Veadeiros</span>
           <div class="foto-badges"></div>
@@ -461,8 +480,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1invkUt0F8EYrJevTweWKpMsw-CJcQxqR"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1invkUt0F8EYrJevTweWKpMsw-CJcQxqR&sz=w800" alt="Parque Nacional do Itatiaia" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1invkUt0F8EYrJevTweWKpMsw-CJcQxqR" alt="Parque Nacional do Itatiaia" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Parque Nacional do Itatiaia</span>
           <div class="foto-badges"></div>
@@ -479,8 +499,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1ZcuXYU-WlgIG5LFgv5XPtlHOmEyzunnO"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1ZcuXYU-WlgIG5LFgv5XPtlHOmEyzunnO&sz=w800" alt="Baia dos Porcos" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1ZcuXYU-WlgIG5LFgv5XPtlHOmEyzunnO" alt="Baia dos Porcos" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Baia dos Porcos</span>
           <div class="foto-badges"></div>
@@ -497,8 +518,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1LMHzroYeuikFPZwqljMHDVnKITei_AQR"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1LMHzroYeuikFPZwqljMHDVnKITei_AQR&sz=w800" alt="Fernando de Noronha 3" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1LMHzroYeuikFPZwqljMHDVnKITei_AQR" alt="Fernando de Noronha 3" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fernando de Noronha 3</span>
           <div class="foto-badges"></div>
@@ -515,8 +537,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1m44sD60V4DMX1r2fZVsPGOoYSWydU6nC"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1m44sD60V4DMX1r2fZVsPGOoYSWydU6nC&sz=w800" alt="Conhecendo os botos" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1m44sD60V4DMX1r2fZVsPGOoYSWydU6nC" alt="Conhecendo os botos" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Conhecendo os botos</span>
           <div class="foto-badges"></div>
@@ -533,8 +556,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1iepBSv9DyEikfwl4q6ygGpd2eUsvX00u"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1iepBSv9DyEikfwl4q6ygGpd2eUsvX00u&sz=w800" alt="Boto cor de rosa" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1iepBSv9DyEikfwl4q6ygGpd2eUsvX00u" alt="Boto cor de rosa" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Boto cor de rosa</span>
           <div class="foto-badges"></div>
@@ -551,8 +575,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1jjBEVsbCiHvGzPjhyMiwrxv0YABO2peX"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1jjBEVsbCiHvGzPjhyMiwrxv0YABO2peX&sz=w800" alt="Flutuante" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1jjBEVsbCiHvGzPjhyMiwrxv0YABO2peX" alt="Flutuante" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Flutuante</span>
           <div class="foto-badges"></div>
@@ -569,8 +594,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1M2NHHetS6QyuZ3cxdgVnoYOl9iJy6a_R"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1M2NHHetS6QyuZ3cxdgVnoYOl9iJy6a_R&sz=w800" alt="Lençóis Maranhenses 2" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1M2NHHetS6QyuZ3cxdgVnoYOl9iJy6a_R" alt="Lençóis Maranhenses 2" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Lençóis Maranhenses 2</span>
           <div class="foto-badges"></div>
@@ -595,8 +621,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/19WO8EbrxmqjUAIV5zlaqvMfh5imwpIa2"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=19WO8EbrxmqjUAIV5zlaqvMfh5imwpIa2&sz=w800" alt="São Luís" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/19WO8EbrxmqjUAIV5zlaqvMfh5imwpIa2" alt="São Luís" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">São Luís</span>
           <div class="foto-badges"></div>
@@ -613,8 +640,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1qtnCmv7XExHjpTCmcMd5sNw96nFQw2hE"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1qtnCmv7XExHjpTCmcMd5sNw96nFQw2hE&sz=w800" alt="São Luís 2" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1qtnCmv7XExHjpTCmcMd5sNw96nFQw2hE" alt="São Luís 2" loading="lazy" width="1199" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">São Luís 2</span>
           <div class="foto-badges"></div>
@@ -631,8 +659,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1v6FEv01FrBx-ybzYZmtHUDwHwI8Vi5mz"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1v6FEv01FrBx-ybzYZmtHUDwHwI8Vi5mz&sz=w800" alt="Por do sol em Bonito" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1v6FEv01FrBx-ybzYZmtHUDwHwI8Vi5mz" alt="Por do sol em Bonito" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Por do sol em Bonito</span>
           <div class="foto-badges"></div>
@@ -649,8 +678,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1eprxj9TWEodsIqGAkivpKFDTGMbf8WIb"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1eprxj9TWEodsIqGAkivpKFDTGMbf8WIb&sz=w800" alt="Por do sol nos Lençóis Maranhenses" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1eprxj9TWEodsIqGAkivpKFDTGMbf8WIb" alt="Por do sol nos Lençóis Maranhenses" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Por do sol nos Lençóis Maranhenses</span>
           <div class="foto-badges"></div>
@@ -667,8 +697,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1zs42IThg5C8TtG4s6o1iIn1WxaDA7Cdf"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1zs42IThg5C8TtG4s6o1iIn1WxaDA7Cdf&sz=w800" alt="Por do sol em Chefchaouen" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1zs42IThg5C8TtG4s6o1iIn1WxaDA7Cdf" alt="Por do sol em Chefchaouen" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Por do sol em Chefchaouen</span>
           <div class="foto-badges"></div>
@@ -685,8 +716,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1tFtefpHYD5-4fMIljf27BtcgjunXVtF0"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1tFtefpHYD5-4fMIljf27BtcgjunXVtF0&sz=w800" alt="Por do sol nos Lençóis Maranhenses 2" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1tFtefpHYD5-4fMIljf27BtcgjunXVtF0" alt="Por do sol nos Lençóis Maranhenses 2" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Por do sol nos Lençóis Maranhenses 2</span>
           <div class="foto-badges"></div>
@@ -711,8 +743,9 @@
         data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/18aA0Oy2OGwa-8nNLaSEoR8M_PfFPpgyP"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=18aA0Oy2OGwa-8nNLaSEoR8M_PfFPpgyP&sz=w800" alt="Arara solitária" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/18aA0Oy2OGwa-8nNLaSEoR8M_PfFPpgyP" alt="Arara solitária" loading="lazy" width="2048" height="1365" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Arara solitária</span>
           <div class="foto-badges"></div>
@@ -729,8 +762,9 @@
         data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1ks901c86kbtFaZ39XlGco09xYDQCSNaV"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1ks901c86kbtFaZ39XlGco09xYDQCSNaV&sz=w800" alt="Dunas e o céu" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1ks901c86kbtFaZ39XlGco09xYDQCSNaV" alt="Dunas e o céu" loading="lazy" width="2048" height="1365" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Dunas e o céu</span>
           <div class="foto-badges"></div>
@@ -747,8 +781,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1gFSX_F51k_4pUr1_jyVKa0XS1IfyIblI"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1gFSX_F51k_4pUr1_jyVKa0XS1IfyIblI&sz=w800" alt="As Prateleiras" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1gFSX_F51k_4pUr1_jyVKa0XS1IfyIblI" alt="As Prateleiras" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">As Prateleiras</span>
           <div class="foto-badges"></div>
@@ -765,8 +800,9 @@
         data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1qVNlKBof-WYn7WdM5NCRK2Sti7AR8wtk"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1qVNlKBof-WYn7WdM5NCRK2Sti7AR8wtk&sz=w800" alt="Mar de montanhas" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1qVNlKBof-WYn7WdM5NCRK2Sti7AR8wtk" alt="Mar de montanhas" loading="lazy" width="2048" height="1365" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Mar de montanhas</span>
           <div class="foto-badges"></div>
@@ -783,8 +819,9 @@
         data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1Ow26Wy4oMHGDmMSeS5Ggjjlepw7VXeC-"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1Ow26Wy4oMHGDmMSeS5Ggjjlepw7VXeC-&sz=w800" alt="Nascer do sol nas Prateleiras" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1Ow26Wy4oMHGDmMSeS5Ggjjlepw7VXeC-" alt="Nascer do sol nas Prateleiras" loading="lazy" width="1365" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Nascer do sol nas Prateleiras</span>
           <div class="foto-badges"></div>
@@ -801,8 +838,9 @@
         data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1tJJUrMEsqj3bR2VAuAmu3mCaNy-HMLRr"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1tJJUrMEsqj3bR2VAuAmu3mCaNy-HMLRr&sz=w800" alt="Mar de nuvens" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1tJJUrMEsqj3bR2VAuAmu3mCaNy-HMLRr" alt="Mar de nuvens" loading="lazy" width="1365" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Mar de nuvens</span>
           <div class="foto-badges"></div>
@@ -819,8 +857,9 @@
         data-preco-digital="50"
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1XX0xTb_39o_lClXkaKBmfdkg0ob0voKi"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1XX0xTb_39o_lClXkaKBmfdkg0ob0voKi&sz=w800" alt="Dunas e o vento" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1XX0xTb_39o_lClXkaKBmfdkg0ob0voKi" alt="Dunas e o vento" loading="lazy" width="2048" height="1365" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Dunas e o vento</span>
           <div class="foto-badges"></div>
@@ -845,8 +884,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1MRUL_-q_k6PHCOdiSldpPdI_dNx7HDDQ"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1MRUL_-q_k6PHCOdiSldpPdI_dNx7HDDQ&sz=w800" alt="Pinguim na neve" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1MRUL_-q_k6PHCOdiSldpPdI_dNx7HDDQ" alt="Pinguim na neve" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Pinguim na neve</span>
           <div class="foto-badges"></div>
@@ -863,8 +903,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1pTQPAGRb9CLiqz9YnE6QVWLMMq29ed3w"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1pTQPAGRb9CLiqz9YnE6QVWLMMq29ed3w&sz=w800" alt="Descansando" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1pTQPAGRb9CLiqz9YnE6QVWLMMq29ed3w" alt="Descansando" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Descansando</span>
           <div class="foto-badges"></div>
@@ -881,8 +922,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1ueqjpS4OvBP8PORCmE2z2klt2tcEJ2Yo"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1ueqjpS4OvBP8PORCmE2z2klt2tcEJ2Yo&sz=w800" alt="Fez, Marrocos" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1ueqjpS4OvBP8PORCmE2z2klt2tcEJ2Yo" alt="Fez, Marrocos" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fez, Marrocos</span>
           <div class="foto-badges"></div>
@@ -899,8 +941,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1jLHIWqnoCyw2PmA5fQIrczTW7F1Jyn3o"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1jLHIWqnoCyw2PmA5fQIrczTW7F1Jyn3o&sz=w800" alt="Pinguim na neve 2" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1jLHIWqnoCyw2PmA5fQIrczTW7F1Jyn3o" alt="Pinguim na neve 2" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Pinguim na neve 2</span>
           <div class="foto-badges"></div>
@@ -917,8 +960,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1TO9eR7YYYRM6lfuG4JVPwCXvdK2L3kHo"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1TO9eR7YYYRM6lfuG4JVPwCXvdK2L3kHo&sz=w800" alt="Interferencia humana" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1TO9eR7YYYRM6lfuG4JVPwCXvdK2L3kHo" alt="Interferencia humana" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Interferencia humana</span>
           <div class="foto-badges"></div>
@@ -935,8 +979,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/15-Ag8EsX9C6xzKXlwnCMyBGc0xNEeqF8"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=15-Ag8EsX9C6xzKXlwnCMyBGc0xNEeqF8&sz=w800" alt="Interferencia humana 2" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/15-Ag8EsX9C6xzKXlwnCMyBGc0xNEeqF8" alt="Interferencia humana 2" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Interferencia humana 2</span>
           <div class="foto-badges"></div>
@@ -953,8 +998,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1fcGSM1pp4b6q0K1JTQl7YLJHyBbZvxbW"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1fcGSM1pp4b6q0K1JTQl7YLJHyBbZvxbW&sz=w800" alt="Pinguim" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1fcGSM1pp4b6q0K1JTQl7YLJHyBbZvxbW" alt="Pinguim" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Pinguim</span>
           <div class="foto-badges"></div>
@@ -971,8 +1017,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/13Wo8lZMJV_DpM8v_N33rvC8HnAzDollE"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=13Wo8lZMJV_DpM8v_N33rvC8HnAzDollE&sz=w800" alt="Vida selvagem no Lençóis Maranhenses" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/13Wo8lZMJV_DpM8v_N33rvC8HnAzDollE" alt="Vida selvagem no Lençóis Maranhenses" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Vida selvagem no Lençóis Maranhenses</span>
           <div class="foto-badges"></div>
@@ -989,8 +1036,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1O2sZ1QzONESCDluI32DxZOqlv7oMeQ6Z"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1O2sZ1QzONESCDluI32DxZOqlv7oMeQ6Z&sz=w800" alt="Interferencia humana 3" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1O2sZ1QzONESCDluI32DxZOqlv7oMeQ6Z" alt="Interferencia humana 3" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Interferencia humana 3</span>
           <div class="foto-badges"></div>
@@ -1007,8 +1055,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/18Zrcey7oMRxW9kvYZ0WaBiQgkNfAWd1q"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=18Zrcey7oMRxW9kvYZ0WaBiQgkNfAWd1q&sz=w800" alt="Pinguins" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/18Zrcey7oMRxW9kvYZ0WaBiQgkNfAWd1q" alt="Pinguins" loading="lazy" width="1365" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Pinguins</span>
           <div class="foto-badges"></div>
@@ -1025,8 +1074,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1FoZwUuOrtyQKzeC8jaNWmAZi7n5DXj8t"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1FoZwUuOrtyQKzeC8jaNWmAZi7n5DXj8t&sz=w800" alt="Fez, Marrocos 2" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1FoZwUuOrtyQKzeC8jaNWmAZi7n5DXj8t" alt="Fez, Marrocos 2" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fez, Marrocos 2</span>
           <div class="foto-badges"></div>
@@ -1043,8 +1093,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1eNE_nryv_hzf9NxOEH1mtMolrggJkPtM"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1eNE_nryv_hzf9NxOEH1mtMolrggJkPtM&sz=w800" alt="Fez, Marrocos 3" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1eNE_nryv_hzf9NxOEH1mtMolrggJkPtM" alt="Fez, Marrocos 3" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fez, Marrocos 3</span>
           <div class="foto-badges"></div>
@@ -1061,8 +1112,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1fzfzbqlUBJC1QKWj0RLz57dwC9QFj7Cn"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1fzfzbqlUBJC1QKWj0RLz57dwC9QFj7Cn&sz=w800" alt="Fez, Marrocos 4" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1fzfzbqlUBJC1QKWj0RLz57dwC9QFj7Cn" alt="Fez, Marrocos 4" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fez, Marrocos 4</span>
           <div class="foto-badges"></div>
@@ -1079,8 +1131,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1MOtV6ISrWG7T1p0GpJvdV_tSx8WrdZEG"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1MOtV6ISrWG7T1p0GpJvdV_tSx8WrdZEG&sz=w800" alt="Vida selvagem em Marrocos" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1MOtV6ISrWG7T1p0GpJvdV_tSx8WrdZEG" alt="Vida selvagem em Marrocos" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Vida selvagem em Marrocos</span>
           <div class="foto-badges"></div>
@@ -1097,8 +1150,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1Zr4I-IchZCAx9XwLwljq_AgAM96EjJhN"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1Zr4I-IchZCAx9XwLwljq_AgAM96EjJhN&sz=w800" alt="Fez, Marrocos 5" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1Zr4I-IchZCAx9XwLwljq_AgAM96EjJhN" alt="Fez, Marrocos 5" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Fez, Marrocos 5</span>
           <div class="foto-badges"></div>
@@ -1115,8 +1169,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1i_LMy6jJsS2E2MSU72FegYOopkQDBPu2"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1i_LMy6jJsS2E2MSU72FegYOopkQDBPu2&sz=w800" alt="interferencia humana 4" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1i_LMy6jJsS2E2MSU72FegYOopkQDBPu2" alt="interferencia humana 4" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">interferencia humana 4</span>
           <div class="foto-badges"></div>
@@ -1133,8 +1188,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1A5XzXBrsUAzO0nf6Z8NXB88tno13s54a"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=1A5XzXBrsUAzO0nf6Z8NXB88tno13s54a&sz=w800" alt="Antártica 2" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/1A5XzXBrsUAzO0nf6Z8NXB88tno13s54a" alt="Antártica 2" loading="lazy" width="1366" height="2048" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Antártica 2</span>
           <div class="foto-badges"></div>
@@ -1151,8 +1207,9 @@
         data-preco-digital=""
         data-link-gumroad=""
         data-link-shopify=""
+        data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/11H-daIyfjblyTXkJsGAgPOlwpsu4I7bz"
         onclick="abrirLightbox(this)">
-        <img src="https://drive.google.com/thumbnail?id=11H-daIyfjblyTXkJsGAgPOlwpsu4I7bz&sz=w800" alt="Descansando 2" loading="lazy" />
+        <img src="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,h_1200,c_limit/douglasnschimidt/11H-daIyfjblyTXkJsGAgPOlwpsu4I7bz" alt="Descansando 2" loading="lazy" width="2048" height="1366" />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">Descansando 2</span>
           <div class="foto-badges"></div>
@@ -1185,7 +1242,6 @@
   </div>
 
   <footer>
-    <span class="footer-logo">Douglas N. Schimidt</span>
     <div class="footer-acoes">
       <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">Modo claro</button>
       <a href="portfolio-en.html" class="tema-toggle lang-toggle">EN</a>
@@ -1300,7 +1356,7 @@
 
     /* ── Lightbox ── */
     const TAMANHOS = {"20x30 cm":120,"30x40 cm":270,"40x60 cm":350,"50x70 cm":500};
-    const PAPEIS   = {"Fosco":0,"Brilhante":50,"Fine art":120};
+    const PAPEIS   = {"Fosco":0,"Brilhante":120,"Fine art":120};
     const MOLDURAS = {"Sem moldura":0,"Preta":120,"Branca":120,"Natural":150};
 
     let itensVisiveis = [];
@@ -1328,8 +1384,9 @@
       const precoD  = el.dataset.precoDigital;
       const gumroad = el.dataset.linkGumroad;
       const shopify = el.dataset.linkShopify;
+      const imgExpandida = el.dataset.imgExpandida;
 
-      document.getElementById('lb-img').src    = `https://drive.google.com/thumbnail?id=${fid}&sz=w1600`;
+      document.getElementById('lb-img').src    = imgExpandida;
       document.getElementById('lb-img').alt    = titulo;
       document.getElementById('lb-titulo').textContent = titulo;
       document.getElementById('lb-desc').textContent   = desc || '';
