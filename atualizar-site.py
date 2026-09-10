@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
 """
-atualizar-site.py — versão 3.0 portfólio unificado + bilíngue (PT/EN)
+atualizar-site.py — versão 3.1 portfólio unificado + bilíngue (PT/EN) + Cloudinary
 ────────────────────────────────────────────────────────────────────
 O que este script faz:
 
   1. Lê sua planilha "douglasnschimidt-fotos" no Google Sheets
   2. Lê as 5 pastas do Google Drive (terra, agua, fogo, ar, vida)
-  3. Gera DUAS páginas de portfólio — portfolio.html (português) e
+  3. Envia cada foto pro Cloudinary (hospedagem rápida das imagens do site —
+     ver seção CLOUDINARY logo abaixo) e gera duas versões de cada uma:
+     uma limitada por ALTURA (grade do portfólio) e outra limitada por
+     LARGURA (foto ampliada). Se os secrets do Cloudinary não estiverem
+     configurados, o script cai de volta pro link direto do Google Drive,
+     pra nunca travar a atualização do site.
+  4. Gera DUAS páginas de portfólio — portfolio.html (português) e
      portfolio-en.html (inglês) — com todas as fotos em seções
      — filtros por categoria e por disponibilidade na loja
      — lightbox com descrição + opção de compra ao clicar
      — quem vem pelo link "Loja" chega com filtros de venda ativos
-  4. Remove as páginas categoria-*.html antigas (não são mais usadas)
-  5. Remove a loja.html antiga (a loja está integrada no portfólio)
+  5. Remove as páginas categoria-*.html antigas (não são mais usadas)
+  6. Remove a loja.html antiga (a loja está integrada no portfólio)
 
   COLUNA na_loja na planilha — valores possíveis:
      nao      → só no portfólio, sem botão de venda
@@ -25,12 +31,24 @@ O que este script faz:
      cada foto. Se ficarem vazias, o portfolio-en.html usa o texto em
      português mesmo, até você preencher.
 
+  CLOUDINARY — hospedagem das fotos do site:
+     Antes, as imagens do portfólio eram servidas direto de um link do
+     Google Drive — isso deixava o site lento, expunha o link do Drive
+     e permitia baixar uma versão maior da foto do que o pretendido.
+     Agora, cada foto é enviada uma vez pro Cloudinary (usando os
+     secrets CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY e
+     CLOUDINARY_API_SECRET) e o site passa a usar o link do Cloudinary.
+     O "envio" é idêntico ao ID da foto no Drive, então rodar o script
+     de novo NÃO reenvia fotos que já estão lá — só as novas. Você não
+     precisa fazer nada além do de sempre: subir a foto no Drive e
+     preencher a planilha.
+
   Você nunca precisa mexer neste arquivo.
   Tudo que você controla fica na planilha e nas pastas do Drive.
 ────────────────────────────────────────────────────────────────────
 """
 
-import os, csv, io, requests
+import os, csv, io, hashlib, time, requests
 
 PLANILHA_ID  = "1DnSWBiIMxd-BqfgUQkcHa-58IeZ85hcquxwGlNvDC80"
 PLANILHA_GID = "1134133275"  # Página2 — tabela de preços
@@ -129,6 +147,14 @@ TEXTOS = {
 
 API_KEY = os.environ.get("GOOGLE_API_KEY", "")
 
+# ── Cloudinary — hospeda as fotos publicadas no site ──────────────────
+# Mais rápido que servir direto do Drive, esconde o link original do
+# Drive e evita que alguém baixe uma versão maior da foto do que a
+# pretendida (o site só serve as versões redimensionadas abaixo).
+CLOUD_NAME   = os.environ.get("CLOUDINARY_CLOUD_NAME", "")
+CLOUD_KEY    = os.environ.get("CLOUDINARY_API_KEY", "")
+CLOUD_SECRET = os.environ.get("CLOUDINARY_API_SECRET", "")
+
 GA_ID = "G-ZXDQ4DE199"
 GA_HTML = f"""  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
@@ -203,13 +229,58 @@ def ler_precos():
 def listar_drive(pasta_id):
     r = requests.get("https://www.googleapis.com/drive/v3/files", params={
         "q": f"'{pasta_id}' in parents and trashed=false and (mimeType='image/jpeg' or mimeType='image/png')",
-        "fields": "files(id,name)", "orderBy": "name", "key": API_KEY,
+        "fields": "files(id,name,imageMediaMetadata(width,height))", "orderBy": "name", "key": API_KEY,
     })
     return r.json().get("files", []) if r.ok else []
 
 def thumb(fid):  return f"https://drive.google.com/thumbnail?id={fid}&sz=w800"
 def grande(fid): return f"https://drive.google.com/thumbnail?id={fid}&sz=w1600"
 def titulo_fallback(name): return name.rsplit(".",1)[0].replace("-"," ").replace("_"," ").title()
+
+def cloudinary_public_id(foto_id):
+    return f"douglasnschimidt/{foto_id}"
+
+def cloudinary_upload(foto_id):
+    """
+    Envia a foto pro Cloudinary a partir do Google Drive.
+    O public_id usado é sempre o ID da foto no Drive — então rodar o
+    script de novo NÃO reenvia a foto: como overwrite=false, se ela já
+    estiver lá o Cloudinary só devolve os dados dela, sem gastar cota
+    de novo. Só fotos novas (ID novo no Drive) geram upload de verdade.
+    Retorna True se a foto está (ou ficou) disponível no Cloudinary.
+    """
+    if not (CLOUD_NAME and CLOUD_KEY and CLOUD_SECRET):
+        return False
+    public_id = cloudinary_public_id(foto_id)
+    origem = f"https://www.googleapis.com/drive/v3/files/{foto_id}?alt=media&key={API_KEY}"
+    timestamp = str(int(time.time()))
+    parametros = {"overwrite": "false", "public_id": public_id, "timestamp": timestamp}
+    a_assinar = "&".join(f"{k}={v}" for k, v in sorted(parametros.items()))
+    assinatura = hashlib.sha1((a_assinar + CLOUD_SECRET).encode("utf-8")).hexdigest()
+    try:
+        r = requests.post(
+            f"https://api.cloudinary.com/v1_1/{CLOUD_NAME}/image/upload",
+            data={**parametros, "api_key": CLOUD_KEY, "signature": assinatura, "file": origem},
+            timeout=60,
+        )
+        if not r.ok:
+            print(f"  aviso: Cloudinary recusou a foto {foto_id} (codigo {r.status_code})")
+        return r.ok
+    except requests.RequestException as e:
+        print(f"  aviso: falha ao enviar foto {foto_id} pro Cloudinary: {e}")
+        return False
+
+def img_galeria(foto_id, no_cloudinary):
+    """Versão limitada por ALTURA — usada nas grades do portfólio."""
+    if no_cloudinary:
+        return f"https://res.cloudinary.com/{CLOUD_NAME}/image/upload/f_auto,q_auto,h_1200,c_limit/{cloudinary_public_id(foto_id)}"
+    return thumb(foto_id)  # reserva: link direto do Drive, se o Cloudinary não estiver configurado
+
+def img_expandida(foto_id, no_cloudinary):
+    """Versão limitada por LARGURA — usada na foto ampliada (lightbox)."""
+    if no_cloudinary:
+        return f"https://res.cloudinary.com/{CLOUD_NAME}/image/upload/f_auto,q_auto,w_1800,c_limit/{cloudinary_public_id(foto_id)}"
+    return grande(foto_id)
 
 FONTES = '<link rel="stylesheet" href="https://use.typekit.net/zeo6kqs.css" />'
 
@@ -258,7 +329,6 @@ def nav_html(idioma, ativa_portfolio=False):
 def rodape_html(idioma):
     t = TEXTOS[idioma]
     return f"""  <footer>
-    <span class="footer-logo">Douglas N. Schimidt</span>
     <div class="footer-acoes">
       <button class="tema-toggle" id="temaToggle" onclick="toggleTema()">{t['modo_claro']}</button>
       <a href="{t['arquivo_outro']}" class="tema-toggle lang-toggle">{t['lang_toggle_label']}</a>
@@ -287,7 +357,8 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
     """
     todas_fotos: lista de dicts com keys:
       slug, nome_cat, foto_id, foto_nome, titulo, descricao, titulo_en, descricao_en,
-      na_loja, preco_digital, link_gumroad, link_shopify
+      na_loja, preco_digital, link_gumroad, link_shopify, largura, altura,
+      img_galeria, img_expandida
     idioma: "pt" ou "en" — define qual versão da página é gerada
     """
     t = TEXTOS[idioma]
@@ -326,6 +397,13 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
             if tem_fisica:
                 badge_html += f'<span class="badge-tipo fisica">{t["loja_impressao"]}</span>'
 
+            # atributos de largura/altura — quando o Drive informa as dimensões
+            # reais da foto, o navegador já reserva o espaço certo na linha
+            # antes da imagem carregar (evita a página "pular" durante o load)
+            dim_attrs = ""
+            if f.get("largura") and f.get("altura"):
+                dim_attrs = f' width="{f["largura"]}" height="{f["altura"]}"'
+
             itens.append(f"""      <div class="foto-item"
         data-cat="{slug}"
         data-cat-nome="{nome_cat}"
@@ -337,8 +415,9 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
         data-preco-digital="{f['preco_digital']}"
         data-link-gumroad="{f['link_gumroad']}"
         data-link-shopify="{f['link_shopify']}"
+        data-img-expandida="{f['img_expandida']}"
         onclick="abrirLightbox(this)">
-        <img src="{thumb(f['foto_id'])}" alt="{titulo_f}" loading="lazy" />
+        <img src="{f['img_galeria']}" alt="{titulo_f}" loading="lazy"{dim_attrs} />
         <div class="foto-overlay">
           <span class="foto-titulo-hover">{titulo_f}</span>
           <div class="foto-badges">{badge_html}</div>
@@ -391,13 +470,17 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
     .categoria-secao{{padding:0;border-bottom:none}}
     .categoria-secao.oculta{{display:none}}
 
-    /* ── Grade — colunas CSS (column-count), sequência vertical por bloco ──
-       Cada foto entra na coluna atual e empilha por cima da anterior,
-       sem depender de JavaScript — é o navegador quem distribui as fotos
-       nas colunas, preenchendo de cima para baixo, sem buracos. */
-    .fotos-grid{{column-count:3;column-gap:6px;padding:0 6px 6px;}}
-    .foto-item{{position:relative;overflow:hidden;cursor:pointer;background:#1a1a1a;break-inside:avoid;margin-bottom:6px;-webkit-user-select:none;user-select:none;--texto:#f0ece4;--texto2:#8a8378;--borda:#222;}}
-    .foto-item img{{width:100%;height:auto;display:block;transition:transform .5s ease;pointer-events:none;-webkit-user-drag:none;}}
+    /* ── Grade — linhas da esquerda pra direita, altura fixa por foto ──
+       Cada foto mantém a proporção original (largura livre) e a linha
+       quebra sozinha quando a próxima foto não cabe mais. flex-wrap +
+       justify-content:center deixa cada linha centralizada, com o
+       mesmo espaço vazio dos dois lados — sem esticar fotos pra
+       preencher a borda. Como a ordem visual passa a bater com a
+       ordem lógica das fotos, a navegação da foto ampliada (setas)
+       segue sempre a foto certa. */
+    .fotos-grid{{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:0 6px 6px;}}
+    .foto-item{{position:relative;overflow:hidden;cursor:pointer;background:#1a1a1a;height:60vh;-webkit-user-select:none;user-select:none;--texto:#f0ece4;--texto2:#8a8378;--borda:#222;}}
+    .foto-item img{{height:100%;width:auto;display:block;transition:transform .5s ease;pointer-events:none;-webkit-user-drag:none;}}
     .foto-item:hover img{{transform:scale(1.04)}}
     .foto-overlay{{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;background:rgba(13,13,13,0);transition:background var(--transicao)}}
     .foto-item:hover .foto-overlay{{background:rgba(13,13,13,.65)}}
@@ -464,7 +547,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
       .lb-direita{{width:100%;border-left:none;border-top:1px solid var(--borda);padding:1.2rem 1.2rem 1.5rem;flex:1;overflow-y:auto}}
       .lb-nav.lb-prev{{left:.3rem}}
       .lb-nav.lb-next{{right:.3rem}}
-      .fotos-grid{{column-count:2;padding:0 6px 6px}}
+      .foto-item{{height:45vh}}
       .cat-faixa{{padding:1.6rem 1.2rem .8rem;}}
       .filtros-sticky{{padding:.45rem 1rem;gap:.5rem}}
       .filtros-sep{{display:none}}
@@ -639,8 +722,9 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
       const precoD  = el.dataset.precoDigital;
       const gumroad = el.dataset.linkGumroad;
       const shopify = el.dataset.linkShopify;
+      const imgExpandida = el.dataset.imgExpandida;
 
-      document.getElementById('lb-img').src    = `https://drive.google.com/thumbnail?id=${{fid}}&sz=w1600`;
+      document.getElementById('lb-img').src    = imgExpandida;
       document.getElementById('lb-img').alt    = titulo;
       document.getElementById('lb-titulo').textContent = titulo;
       document.getElementById('lb-desc').textContent   = desc || '';
@@ -781,6 +865,10 @@ def main():
         print("ERRO: variavel GOOGLE_API_KEY nao encontrada.")
         return
 
+    usar_cloudinary = bool(CLOUD_NAME and CLOUD_KEY and CLOUD_SECRET)
+    if not usar_cloudinary:
+        print("  aviso: secrets do Cloudinary nao encontrados — as fotos vao continuar servidas direto do Google Drive.\n")
+
     ctx = ler_planilha()
     tamanhos, papeis, molduras = ler_precos()
     todas_fotos = []
@@ -794,6 +882,10 @@ def main():
         for f in fotos:
             c = ctx.get(f["name"], {})
             titulo_pt = c.get("titulo") or titulo_fallback(f["name"])
+
+            disponivel_cloudinary = usar_cloudinary and cloudinary_upload(f["id"])
+            meta = f.get("imageMediaMetadata") or {}
+
             todas_fotos.append({
                 "slug":          slug,
                 "nome_cat":      info["nome"]["pt"],
@@ -810,6 +902,10 @@ def main():
                 "link_shopify":  c.get("link_shopify", ""),
                 # fotos sem linha na planilha vão para o final (posição 999999)
                 "posicao":       c.get("posicao", 999999),
+                "largura":       meta.get("width"),
+                "altura":        meta.get("height"),
+                "img_galeria":   img_galeria(f["id"], disponivel_cloudinary),
+                "img_expandida": img_expandida(f["id"], disponivel_cloudinary),
             })
 
     # Ordena cada categoria pela posição na planilha

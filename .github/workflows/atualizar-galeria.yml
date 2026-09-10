@@ -24,6 +24,9 @@ jobs:
       - name: Atualizar páginas do portfólio
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
         run: python atualizar-site.py
 
       - name: Salvar páginas atualizadas

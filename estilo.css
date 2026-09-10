@@ -75,7 +75,7 @@ nav.rolada { background: rgba(var(--fundo-rgb),0.97); }
 
 .nav-logo {
   font-family: 'LapisDeArtista', var(--detalhe);
-  font-size: 2rem;
+  font-size: clamp(1.3rem, 5.5vw, 2rem); /* fluido — evita titulo grande demais no celular */
   letter-spacing: 0.06em;
   color: var(--texto);
   line-height: 1.2;
@@ -83,7 +83,7 @@ nav.rolada { background: rgba(var(--fundo-rgb),0.97); }
 .nav-logo small {
   display: block;
   font-family: 'LapisDeArtista', var(--detalhe);
-  font-size: 1.2rem;
+  font-size: clamp(0.8rem, 3vw, 1.2rem);
   color: var(--destaque);
   letter-spacing: 0.2em;
   font-weight: 400;
