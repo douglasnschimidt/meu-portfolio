@@ -42,7 +42,7 @@ jobs:
         env:
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
         run: |
-          RESPOSTA=$(curl -s -w "\n%{http_code}" -X POST "https://api.netlify.com/api/v1/sites/harmonious-crisp-ede73f/deploys" \
+          RESPOSTA=$(curl -s -w "\n%{http_code}" -X POST "https://api.netlify.com/api/v1/sites/1e91340c-ce15-4497-ad43-663475f7a3d2/deploys" \
             -H "Authorization: Bearer $NETLIFY_TOKEN" \
             -H "Content-Type: application/zip" \
             --data-binary @<(cd . && zip -r - . -x "*.git*" "*.github*" "*.py" "*.yml" "*.md" "*.bak-*" "__pycache__/*" "_to_delete/*" "Claude outputs/*" ".DS_Store"))
