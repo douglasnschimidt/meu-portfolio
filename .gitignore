@@ -1,0 +1,9 @@
+# Backups criados automaticamente antes de cada alteração
+*.bak-*
+
+# Arquivos temporários do Python
+__pycache__/
+*.pyc
+
+# Arquivos entregues pelo Claude nas conversas (não fazem parte do site)
+Claude outputs/
