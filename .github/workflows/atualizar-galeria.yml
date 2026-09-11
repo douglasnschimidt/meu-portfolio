@@ -42,8 +42,15 @@ jobs:
         env:
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
         run: |
-          curl -s -X POST "https://api.netlify.com/api/v1/sites/harmonious-crisp-ede73f/deploys" \
+          RESPOSTA=$(curl -s -w "\n%{http_code}" -X POST "https://api.netlify.com/api/v1/sites/harmonious-crisp-ede73f/deploys" \
             -H "Authorization: Bearer $NETLIFY_TOKEN" \
             -H "Content-Type: application/zip" \
-            --data-binary @<(cd . && zip -r - . -x "*.git*" "*.github*" "*.py" "*.yml" "*.md") \
-            | grep -o '"state":"[^"]*"' | head -1
+            --data-binary @<(cd . && zip -r - . -x "*.git*" "*.github*" "*.py" "*.yml" "*.md" "*.bak-*" "__pycache__/*" "_to_delete/*" "Claude outputs/*" ".DS_Store"))
+          CODIGO=$(echo "$RESPOSTA" | tail -1)
+          CORPO=$(echo "$RESPOSTA" | sed '$d')
+          echo "Codigo HTTP do Netlify: $CODIGO"
+          echo "Resposta do Netlify: $CORPO"
+          if [ "$CODIGO" -lt 200 ] || [ "$CODIGO" -ge 300 ]; then
+            echo "ERRO: o Netlify recusou o deploy (codigo $CODIGO). Verifique o secret NETLIFY_TOKEN."
+            exit 1
+          fi
