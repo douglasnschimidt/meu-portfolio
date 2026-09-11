@@ -54,18 +54,23 @@
     }
 
     /* A FOTO DE FUNDO */
+    /*
+      ══ FOTOS DO HERO (giram automaticamente) ═══════════
+      Preenchidas pelo atualizar-site.py com base na coluna
+      "Hero" da planilha. Não edite as fotos aqui — marque a
+      caixinha na planilha e rode o workflow.
+      ═════════════════════════════════════════════════ */
     .hero-foto {
       position: absolute;
       inset: 0;
-      /*
-        ══ COMO TROCAR A FOTO ══════════════════════════
-        Troque o endereço abaixo pela sua foto.
-        Exemplo com foto local: url('fotos/hero.jpg')
-        A foto ideal é horizontal, 1920×1080px ou maior.
-        ═════════════════════════════════════════════ */
-      background-image: url('DNS09559.jpg');
       background-size: cover;
       background-position: center;
+      opacity: 0;
+      transition: opacity 1.6s ease;
+    }
+    .hero-foto.ativa { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-foto { transition: none; }
     }
 
     /* Escurecimento leve — foto fica bem visível */
@@ -191,7 +196,9 @@
 
   <!-- ═══ HERO — FOTO + MENU GRANDE ══════════════════ -->
   <section class="hero">
-    <div class="hero-foto"></div>
+    <!-- HERO_FOTOS_INICIO -->
+    <div class="hero-foto ativa" style="background-image:url('DNS09559.jpg')"></div>
+    <!-- HERO_FOTOS_FIM -->
     <div class="hero-escuro"></div>
 
     <div class="hero-texto">
@@ -252,6 +259,25 @@
       if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Modo escuro' : 'Modo claro';
     }
     atualizarBotaoTema();
+
+    // Giro automático das fotos do hero (coluna "Hero" da planilha)
+    (function () {
+      const fotos = document.querySelectorAll('.hero-foto');
+      if (fotos.length < 2) return; // só 1 foto marcada (ou nenhuma) — nada a girar
+      const INTERVALO_MS = 4000;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let atual = 0;
+      let temporizador = null;
+      function proxima() {
+        fotos[atual].classList.remove('ativa');
+        atual = (atual + 1) % fotos.length;
+        fotos[atual].classList.add('ativa');
+      }
+      function iniciar() { if (!temporizador) temporizador = setInterval(proxima, INTERVALO_MS); }
+      function pausar()  { clearInterval(temporizador); temporizador = null; }
+      document.addEventListener('visibilitychange', () => { document.hidden ? pausar() : iniciar(); });
+      iniciar();
+    })();
   </script>
 
 </body>

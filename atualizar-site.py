@@ -187,6 +187,7 @@ def ler_planilha():
                 "preco_digital": linha.get("preco_digital", "29").strip(),
                 "link_gumroad":  linha.get("link_gumroad",  "").strip(),
                 "link_shopify":  linha.get("link_shopify",  "").strip(),
+                "hero":          linha.get("Hero", "").strip().upper() == "TRUE",
             }
     print(f"  planilha: {len(dados)} foto(s) com contexto")
     return dados
@@ -273,7 +274,7 @@ def cloudinary_upload(foto_id):
 def img_galeria(foto_id, no_cloudinary):
     """Versão limitada por ALTURA — usada nas grades do portfólio."""
     if no_cloudinary:
-        return f"https://res.cloudinary.com/{CLOUD_NAME}/image/upload/f_auto,q_auto,h_1200,c_limit/{cloudinary_public_id(foto_id)}"
+        return f"https://res.cloudinary.com/{CLOUD_NAME}/image/upload/f_auto,q_auto,h_800,c_limit/{cloudinary_public_id(foto_id)}"
     return thumb(foto_id)  # reserva: link direto do Drive, se o Cloudinary não estiver configurado
 
 def img_expandida(foto_id, no_cloudinary):
@@ -281,6 +282,41 @@ def img_expandida(foto_id, no_cloudinary):
     if no_cloudinary:
         return f"https://res.cloudinary.com/{CLOUD_NAME}/image/upload/f_auto,q_auto,w_1800,c_limit/{cloudinary_public_id(foto_id)}"
     return grande(foto_id)
+
+def img_hero(foto_id, no_cloudinary):
+    """Versão larga para tela cheia — usada no giro de fotos da landing page."""
+    if no_cloudinary:
+        return f"https://res.cloudinary.com/{CLOUD_NAME}/image/upload/f_auto,q_auto,w_1920,c_limit/{cloudinary_public_id(foto_id)}"
+    return grande(foto_id)
+
+def atualizar_hero(caminho, fotos_hero):
+    """
+    Substitui o bloco entre <!-- HERO_FOTOS_INICIO --> e <!-- HERO_FOTOS_FIM -->
+    em index.html / index-en.html pelas fotos marcadas com "Hero" na planilha.
+    Não mexe em mais nada do arquivo — o resto do HTML fica como está.
+    """
+    import os, re
+    if not os.path.exists(caminho):
+        print(f"  aviso: {caminho} nao encontrado, hero nao atualizado")
+        return
+    if not fotos_hero:
+        print(f"  aviso: nenhuma foto marcada como Hero — {caminho} mantido como esta")
+        return
+    with open(caminho, "r", encoding="utf-8") as fh:
+        html = fh.read()
+    divs = []
+    for i, foto in enumerate(fotos_hero):
+        classe = "hero-foto ativa" if i == 0 else "hero-foto"
+        divs.append(f"    <div class=\"{classe}\" style=\"background-image:url('{foto['img_hero']}')\"></div>")
+    bloco = "\n".join(divs)
+    padrao = re.compile(r"<!-- HERO_FOTOS_INICIO -->.*?<!-- HERO_FOTOS_FIM -->", re.DOTALL)
+    novo_html, n = padrao.subn(f"<!-- HERO_FOTOS_INICIO -->\n{bloco}\n    <!-- HERO_FOTOS_FIM -->", html)
+    if n == 0:
+        print(f"  aviso: marcadores HERO_FOTOS nao encontrados em {caminho}")
+        return
+    with open(caminho, "w", encoding="utf-8") as fh:
+        fh.write(novo_html)
+    print(f"  {caminho}: hero atualizado com {len(fotos_hero)} foto(s)")
 
 FONTES = '<link rel="stylesheet" href="https://use.typekit.net/zeo6kqs.css" />'
 
@@ -479,7 +515,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
        ordem lógica das fotos, a navegação da foto ampliada (setas)
        segue sempre a foto certa. */
     .fotos-grid{{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:0 6px 6px;}}
-    .foto-item{{position:relative;overflow:hidden;cursor:pointer;background:#1a1a1a;height:60vh;-webkit-user-select:none;user-select:none;--texto:#f0ece4;--texto2:#8a8378;--borda:#222;}}
+    .foto-item{{position:relative;overflow:hidden;cursor:pointer;background:#1a1a1a;height:40vh;-webkit-user-select:none;user-select:none;--texto:#f0ece4;--texto2:#8a8378;--borda:#222;}}
     .foto-item img{{height:100%;width:auto;display:block;transition:transform .5s ease;pointer-events:none;-webkit-user-drag:none;}}
     .foto-item:hover img{{transform:scale(1.04)}}
     .foto-overlay{{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;background:rgba(13,13,13,0);transition:background var(--transicao)}}
@@ -906,6 +942,8 @@ def main():
                 "altura":        meta.get("height"),
                 "img_galeria":   img_galeria(f["id"], disponivel_cloudinary),
                 "img_expandida": img_expandida(f["id"], disponivel_cloudinary),
+                "img_hero":      img_hero(f["id"], disponivel_cloudinary),
+                "hero":          c.get("hero", False),
             })
 
     # Ordena cada categoria pela posição na planilha
@@ -921,6 +959,11 @@ def main():
     with open("portfolio-en.html", "w", encoding="utf-8") as fh:
         fh.write(gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, "en"))
     print("  portfolio-en.html gerado\n")
+    # Fotos marcadas com "Hero" na planilha — giro na landing page (mesmo conjunto em PT e EN)
+    fotos_hero = sorted([f for f in todas_fotos if f.get("hero")], key=lambda f: f["posicao"])[:8]
+    atualizar_hero("index.html", fotos_hero)
+    atualizar_hero("index-en.html", fotos_hero)
+
 
     # Remove arquivos antigos que não são mais usados
     import os as _os

@@ -53,13 +53,24 @@
       justify-content: center;
     }
 
-    /* BACKGROUND PHOTO */
+    /*
+      ══ HERO PHOTOS (rotate automatically) ══════════════
+      Filled in automatically by atualizar-site.py based on
+      the "Hero" checkbox column in the spreadsheet. Don't
+      edit the photos here — check the box in the sheet and
+      run the workflow.
+      ═════════════════════════════════════════════════ */
     .hero-foto {
       position: absolute;
       inset: 0;
-      background-image: url('DNS09559.jpg');
       background-size: cover;
       background-position: center;
+      opacity: 0;
+      transition: opacity 1.6s ease;
+    }
+    .hero-foto.ativa { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-foto { transition: none; }
     }
 
     /* Light darkening — photo stays clearly visible */
@@ -184,7 +195,9 @@
 
   <!-- ═══ HERO — PHOTO + BIG MENU ══════════════════ -->
   <section class="hero">
-    <div class="hero-foto"></div>
+    <!-- HERO_FOTOS_INICIO -->
+    <div class="hero-foto ativa" style="background-image:url('DNS09559.jpg')"></div>
+    <!-- HERO_FOTOS_FIM -->
     <div class="hero-escuro"></div>
 
     <div class="hero-texto">
@@ -241,6 +254,25 @@
       if (btn) btn.textContent = document.documentElement.getAttribute('data-tema') === 'claro' ? 'Dark mode' : 'Light mode';
     }
     atualizarBotaoTema();
+
+    // Automatic hero photo rotation ("Hero" column in the spreadsheet)
+    (function () {
+      const fotos = document.querySelectorAll('.hero-foto');
+      if (fotos.length < 2) return;
+      const INTERVALO_MS = 4000;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let atual = 0;
+      let temporizador = null;
+      function proxima() {
+        fotos[atual].classList.remove('ativa');
+        atual = (atual + 1) % fotos.length;
+        fotos[atual].classList.add('ativa');
+      }
+      function iniciar() { if (!temporizador) temporizador = setInterval(proxima, INTERVALO_MS); }
+      function pausar()  { clearInterval(temporizador); temporizador = null; }
+      document.addEventListener('visibilitychange', () => { document.hidden ? pausar() : iniciar(); });
+      iniciar();
+    })();
   </script>
 
 </body>
