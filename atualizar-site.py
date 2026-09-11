@@ -187,7 +187,7 @@ def ler_planilha():
                 "preco_digital": linha.get("preco_digital", "29").strip(),
                 "link_gumroad":  linha.get("link_gumroad",  "").strip(),
                 "link_shopify":  linha.get("link_shopify",  "").strip(),
-                "hero":          linha.get("Hero", "").strip().upper() == "TRUE",
+                "hero":          linha.get("Hero", "").strip().upper() in ("TRUE", "VERDADEIRO", "1", "SIM", "X"),
             }
     print(f"  planilha: {len(dados)} foto(s) com contexto")
     return dados
@@ -439,8 +439,9 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
             dim_attrs = ""
             if f.get("largura") and f.get("altura"):
                 dim_attrs = f' width="{f["largura"]}" height="{f["altura"]}"'
+            classe_orientacao = " vertical" if (f.get("largura") and f.get("altura") and f["altura"] > f["largura"]) else ""
 
-            itens.append(f"""      <div class="foto-item"
+            itens.append(f"""      <div class="foto-item{classe_orientacao}"
         data-cat="{slug}"
         data-cat-nome="{nome_cat}"
         data-loja="{tipo_venda}"
@@ -583,7 +584,11 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
       .lb-direita{{width:100%;border-left:none;border-top:1px solid var(--borda);padding:1.2rem 1.2rem 1.5rem;flex:1;overflow-y:auto}}
       .lb-nav.lb-prev{{left:.3rem}}
       .lb-nav.lb-next{{right:.3rem}}
-      .foto-item{{height:45vh}}
+      .fotos-grid{{gap:2px;padding:0 2px 2px}}
+      .foto-item{{height:auto;width:100%}}
+      .foto-item img{{height:auto;width:100%}}
+      .foto-item.vertical{{width:auto;max-width:100%;margin:0 auto}}
+      .foto-item.vertical img{{height:auto;width:auto;max-height:100vw;max-width:100%}}
       .cat-faixa{{padding:1.6rem 1.2rem .8rem;}}
       .filtros-sticky{{padding:.45rem 1rem;gap:.5rem}}
       .filtros-sep{{display:none}}
@@ -906,6 +911,8 @@ def main():
         print("  aviso: secrets do Cloudinary nao encontrados — as fotos vao continuar servidas direto do Google Drive.\n")
 
     ctx = ler_planilha()
+    hero_na_planilha = [k for k, v in ctx.items() if v.get("hero")]
+    print(f"  planilha: {len(hero_na_planilha)} linha(s) marcada(s) como Hero -> {hero_na_planilha}")
     tamanhos, papeis, molduras = ler_precos()
     todas_fotos = []
 
@@ -961,6 +968,7 @@ def main():
     print("  portfolio-en.html gerado\n")
     # Fotos marcadas com "Hero" na planilha — giro na landing page (mesmo conjunto em PT e EN)
     fotos_hero = sorted([f for f in todas_fotos if f.get("hero")], key=lambda f: f["posicao"])[:8]
+    print(f"  hero: {len(fotos_hero)} foto(s) selecionada(s) -> {[f['foto_nome'] for f in fotos_hero]}")
     atualizar_hero("index.html", fotos_hero)
     atualizar_hero("index-en.html", fotos_hero)
 
