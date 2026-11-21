@@ -112,6 +112,13 @@
     .lb-opcao-grupo label{font-family:var(--detalhe);font-size:.75rem;color:var(--texto2);letter-spacing:.08em}
     .lb-opcao-grupo select{background:var(--painel);border:1px solid var(--borda);color:var(--texto);font-family:var(--corpo);font-size:.85rem;padding:.35rem .5rem;outline:none;cursor:pointer;width:100%}
     .lb-opcao-grupo select:focus{border-color:var(--destaque)}
+    .lb-pedido input,.lb-pedido textarea{background:var(--painel);border:1px solid var(--borda);color:var(--texto);font-family:var(--corpo);font-size:.85rem;padding:.45rem .5rem;outline:none;width:100%;box-sizing:border-box}
+    .lb-pedido input:focus,.lb-pedido textarea:focus{border-color:var(--destaque)}
+    .lb-pedido textarea{resize:vertical;min-height:4.5rem}
+    .lb-pedido-resumo{font-size:.85rem;color:var(--texto);line-height:1.6;margin-bottom:.4rem}
+    .lb-pedido-intro{font-size:.8rem;color:var(--texto2);line-height:1.6;margin-bottom:1rem}
+    .lb-pedido-aviso{font-size:.85rem;color:var(--destaque);line-height:1.6;margin:.4rem 0 .8rem;min-height:1em}
+    .lb-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
     .lb-tabs{display:flex;gap:0;margin-bottom:1.5rem}
     .lb-tab{flex:1;font-family:var(--detalhe);font-size:.8rem;letter-spacing:.08em;padding:.4rem;border:1px solid var(--borda);background:transparent;color:var(--texto2);cursor:pointer;transition:all var(--transicao);text-align:center}
     .lb-tab.ativo{background:var(--destaque);border-color:var(--destaque);color:#0d0d0d}
@@ -189,6 +196,7 @@
         data-descricao="Uma trilha, um pôr do sol e algumas ovelhas. Agora é só esperar a luz chegar e o momento certo para fotografar."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="TERRA-07.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1wSxsdlGyszoy5gyKDZSEYdKzx-0wWloL"
@@ -208,6 +216,7 @@
         data-descricao="Viajar dentro de uma campervan pela ilha sul da Nova Zelândia te proporciona estar atento aos sinais de que uma boa fotografia está perto."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="TERRA-04.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1HbJ-pNjQUs-2tVct-Hek0sKo34zLpCWr"
@@ -227,6 +236,7 @@
         data-descricao="Uma árvore solitária no meio das dunas e de um céu azul no único deserto úmido do mundo: os Lençóis Maranhenses"
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="TERRA-06.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1COsTDtpwxSf-GT77HB8Fk4wB8CEiLasZ"
@@ -246,6 +256,7 @@
         data-descricao="A entrada na Ilha da Decepção não foi uma tarefa fácil para o capitão nesse dia cheio de vento, mas, pelo menos, eu consegui capturar essa imagem de uma das pedras mais conhecidas da Antártica."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="TERRA-08.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1semJ5AJ5PnK0Z8yzAF4o2Uub1Ka3714V"
@@ -265,6 +276,7 @@
         data-descricao="A praia do Sono em Paraty é uma das vistas mais bonitas do litoral do sudeste do Brasil. Vale fazer a trilha pelo meio da mata."
         data-na-loja="ambos"
         data-preco-digital="100"
+        data-arquivo="TERRA-09.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1jfvOgOI-Xs2HxiWdLKPBZCnpmloP42xq"
@@ -284,6 +296,7 @@
         data-descricao="Atravessar a Transpantaneira é sinônimo de avistar a vida selvagem em cada parada."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="TERRA-11.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://drive.google.com/thumbnail?id=1Trhe9Be1UKJHEWkMf3JfoBPUJHDf1NcV&sz=w1600"
@@ -303,6 +316,7 @@
         data-descricao="Uma colônia de pinguins gigantesca subindo uma montanha na Antártica forma uma vista sem igual. Esses bichinhos levaram um tempo até chegarem ao topo."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="TERRA-02.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1Z7Ym12h8Rw50X7m1TojCYMTwQomZNJCo"
@@ -322,6 +336,7 @@
         data-descricao="Essa imagem mostra a imensidão do Parque Nacional dos Lençóis Maranhenses, além de mostrar a beleza das dunas sendo movimentadas pelo vento e do céu azul do nordeste brasileiro."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="TERRA-03.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/11-GvakInfg6w-q6hf0U24Tg0KZ4I3WfV"
@@ -341,6 +356,7 @@
         data-descricao="A volta do Parque Nacional do Itatiaia, o primeiro parque do Brasil, também tem cenas incríveis."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="TERRA-01.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1FYfMOBchc3Ou-Xs5lyssVPxPGsE5HDv6"
@@ -360,6 +376,7 @@
         data-descricao="Após dormir acampado no deserto do Saara, pude passar pela cidade de Aït Benhaddou, Marrocos, uma cidade milenar tombada como Patrimônio Mundial da UNESCO."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="TERRA-05.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/11to-w0CTwpt-d0c7EIUBd1gVi4rpeRlc"
@@ -379,6 +396,7 @@
         data-descricao="A magnitude do continente antártico é sem palavras, mas essa imagem mostra essa gigante montanha comparada com uma colônia de pinguins."
         data-na-loja="ambos"
         data-preco-digital="100"
+        data-arquivo="TERRA-10.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1KJ38npLW9xh4mxovgD2zY7ktN1WZrZ_a"
@@ -406,6 +424,7 @@
         data-descricao="A água rica em sedimentos combinada com o nado do boto cor-de-rosa faz uma das composições ideias para ser fotografada."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="AGUA-06.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1iepBSv9DyEikfwl4q6ygGpd2eUsvX00u"
@@ -425,6 +444,7 @@
         data-descricao="Toda movimentação pela região do rio Amazonas é feita por barcos, e nada muda quando você vai visitar o ser mais icônico da região: o boto-cor-de-rosa"
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="AGUA-02.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1m44sD60V4DMX1r2fZVsPGOoYSWydU6nC"
@@ -444,6 +464,7 @@
         data-descricao="Fernando de Noronha visto por cima é sensacional."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="AGUA-10.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1LMHzroYeuikFPZwqljMHDVnKITei_AQR"
@@ -463,6 +484,7 @@
         data-descricao="A quantidade de possíveis composições fotográficas que o Parque Nacional dos Lençóis Maranhenses entrega é impossível de contar. Olha essa vista com dunas, águas cristalinas e esse céu azul!"
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="AGUA-07.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1M2NHHetS6QyuZ3cxdgVnoYOl9iJy6a_R"
@@ -482,6 +504,7 @@
         data-descricao="Uma pequena colônia de pinguins flutua em um iceberg (não tão pequeno) próximo ao continente antártico."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="AGUA-08.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1jjBEVsbCiHvGzPjhyMiwrxv0YABO2peX"
@@ -501,6 +524,7 @@
         data-descricao="Todos pensam que o continente congelado é apenas neve e iceberg, mas é muito mais que isso. A Antártica possui diversas formações rochosas e a magnitude de algumas delas põem em perspectiva o nosso tamanho."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="AGUA-12.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1-SoAqLoSzg682DRnVm8ks0xADs2gmK75"
@@ -520,6 +544,7 @@
         data-descricao="As formações rochosas e as cores das águas de Fernando de Noronha podem gerar imagens e composições sem igual."
         data-na-loja="ambos"
         data-preco-digital="100"
+        data-arquivo="AGUA-05.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1DHigdFrSj8Xx0Vj7e7y3oS8Ry0XdUsuK"
@@ -539,6 +564,7 @@
         data-descricao="Fazer as trilhas do Parque Nacional Marinho de Fernando de Noronha e ver paisagens incríveis deveria estar na lista de todos. Nesse dia, as cores do mar, das pedras e dos corais pareciam que conversavam entre si."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="AGUA-03.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1nIdSVNjIt0RuMx8KcOSVjj7o9C643-5k"
@@ -558,6 +584,7 @@
         data-descricao="A trilha para o mirante da Janela no Parque Nacional da Chapada dos Veadeiros não é fácil, mas a vista vale a pena."
         data-na-loja="ambos"
         data-preco-digital="100"
+        data-arquivo="AGUA-11.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/16SfocLp1AKpWLBLwIMOn1vyIQAtoYxxG"
@@ -577,6 +604,7 @@
         data-descricao="O Parque Nacional Marinho de Fernando de Noronha entrega uma das vistas mais incríveis desse planeta! Olha as cores desse mar."
         data-na-loja="ambos"
         data-preco-digital="100"
+        data-arquivo="AGUA-09.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1ZcuXYU-WlgIG5LFgv5XPtlHOmEyzunnO"
@@ -596,6 +624,7 @@
         data-descricao="Caminhando por Peniche encontrei essa vista de uma casa de temporada ao lado de uma onda sensacional! Imagina surfar assim tão perto de casa."
         data-na-loja="digital"
         data-preco-digital="70"
+        data-arquivo="AGUA-04.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1UW7ZzrGaMSFwz52FO6qqi75cxqlMJ6VS"
@@ -615,6 +644,7 @@
         data-descricao=""
         data-na-loja="nao"
         data-preco-digital="29"
+        data-arquivo="AGUA-01.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1invkUt0F8EYrJevTweWKpMsw-CJcQxqR"
@@ -642,6 +672,7 @@
         data-descricao="Dunas, um sol gigante e um céu degradê laranja: a melhor definição de paz."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="FOGO-5.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1eprxj9TWEodsIqGAkivpKFDTGMbf8WIb"
@@ -661,6 +692,7 @@
         data-descricao="Dunas, um sol gigante e um céu degradê laranja continua sendo  a melhor definição de paz."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="FOGO-4.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1tFtefpHYD5-4fMIljf27BtcgjunXVtF0"
@@ -680,6 +712,7 @@
         data-descricao="Acertar o tempo para fotografar um bando de pássaros passando por baixo do sol em um pôr do sol não é tão simples assim."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="FOGO-2.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1qtnCmv7XExHjpTCmcMd5sNw96nFQw2hE"
@@ -699,6 +732,7 @@
         data-descricao="A maioria dos lugares em Bonito estão listados nas agências de turismo pela cidade, mas esse mirante não. Um pôr do sol depois de muita busca por um lugar único."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="FOGO-1.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1v6FEv01FrBx-ybzYZmtHUDwHwI8Vi5mz"
@@ -718,6 +752,7 @@
         data-descricao="A cidade azul com um pôr do sol amarelo. Muitas pessoas da cidade param para ver essa cena sensacional."
         data-na-loja="digital"
         data-preco-digital="70"
+        data-arquivo="FOGO-6.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1zs42IThg5C8TtG4s6o1iIn1WxaDA7Cdf"
@@ -737,6 +772,7 @@
         data-descricao="Você já assistiu o pôr do sol em São Luís do Pará? Coloque na sua lista de lugares para visitar!"
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="FOGO-3.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/19WO8EbrxmqjUAIV5zlaqvMfh5imwpIa2"
@@ -764,6 +800,7 @@
         data-descricao="Arara atravessando o Buraco das Araras em Bonito, MT."
         data-na-loja="fisica"
         data-preco-digital="100"
+        data-arquivo="AR - Bonito MT - Arara solitaria.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/18aA0Oy2OGwa-8nNLaSEoR8M_PfFPpgyP"
@@ -783,6 +820,7 @@
         data-descricao="A vida selvagem no Pantanal é sem palavras. Poder ver de perto tantos animais no seu habitat natural, onde a natureza é conservada e o homem vai apenas para apreciar, é incrível."
         data-na-loja="ambos"
         data-preco-digital="100"
+        data-arquivo="AR-8.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://drive.google.com/thumbnail?id=18bUyjGQTplX-Readq1VSZ2Ykk_FjiPZf&sz=w1600"
@@ -802,6 +840,7 @@
         data-descricao="Imagem feita durante travessia do Parque Nacional dos Lençóis Maranhenses. O trekking durou 3 dias com pernoites nas vilas locais."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="AR - Lencois MA - Dunas e o vento.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1XX0xTb_39o_lClXkaKBmfdkg0ob0voKi"
@@ -821,6 +860,7 @@
         data-descricao="Acordar no camping do Parque Nacional do Itatiaia e escalar até a base dos Prateleiras para dar de cara com uma vista de mar de nuvens e raios de sol alaranjados."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="AR - PNI - Nascer do sol.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1Ow26Wy4oMHGDmMSeS5Ggjjlepw7VXeC-"
@@ -840,6 +880,7 @@
         data-descricao="Uma das vistas mais incríveis no primeiro parque nacional brasileiro, Parque Nacional do Itatiaia. Chegar até a base das Prateleiras e avistar todo o Vale do Paraíba, com mar de nuvens e montanhas se misturando."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="AR - PNI - Vista das Prateleiras.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1qVNlKBof-WYn7WdM5NCRK2Sti7AR8wtk"
@@ -859,6 +900,7 @@
         data-descricao="A forma que a naturaze se integra é incrível, as nuvens alinhadas com as pedras centenárias formam uma composição de tirar o fôlego."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="AR - PNI - As Prateleiras.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1gFSX_F51k_4pUr1_jyVKa0XS1IfyIblI"
@@ -878,6 +920,7 @@
         data-descricao="Nuvens imponentes sobre um mar de areia no Parque Nacional dos Lençóis Maranhenses."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="AR - Lencois MA - Dunas e o ceu.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1ks901c86kbtFaZ39XlGco09xYDQCSNaV"
@@ -897,6 +940,7 @@
         data-descricao=""
         data-na-loja="nao"
         data-preco-digital="29"
+        data-arquivo="AR - PNI - Mar de nuvens.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1tJJUrMEsqj3bR2VAuAmu3mCaNy-HMLRr"
@@ -924,6 +968,7 @@
         data-descricao="Parece até uma dança ver essas garças juntas próximo de uma poça que ainda resta na época de seca ao lado da Transpantaneira."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="VIDA-19.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://drive.google.com/thumbnail?id=1Gm8QZ7fX72HTefPKxMq5PM_eRQs47cGe&sz=w1600"
@@ -943,6 +988,7 @@
         data-descricao="Essa era uma base da marinha argentina abandonada, mas foi um dos destinos que conheci navegando pela Antártica. Durante a exploração, pude avistar esse pinguim passando ao fundo, entre das duas casas vermelhas, pelo tapete de neve que se formou durante todos os dias de nevasca."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="VIDA-16.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1TO9eR7YYYRM6lfuG4JVPwCXvdK2L3kHo"
@@ -962,6 +1008,7 @@
         data-descricao="Nesse momento, em que uma onça me encarou fixamente, eu só pude pensar em fotografar."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="VIDA-21.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://drive.google.com/thumbnail?id=18iMeivcYrbo9-uCKbcLEIbpZYfF5dQYg&sz=w1600"
@@ -981,6 +1028,7 @@
         data-descricao="O contraste da neve, do céu e de uma foca descansando parece a combinação perfeita."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="VIDA-04.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/11H-daIyfjblyTXkJsGAgPOlwpsu4I7bz"
@@ -1000,6 +1048,7 @@
         data-descricao="Circular pelos mares antárticos nos botes zodiacs e ver a vida selvagem caçando, circulando e descansando."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="VIDA-11.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1pTQPAGRb9CLiqz9YnE6QVWLMMq29ed3w"
@@ -1019,6 +1068,7 @@
         data-descricao="Estar no Pantanal, a maior planície alagada do mundo, e poder ver uma onça caçando foi umas das sensações mais incríveis que já vivenciei."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="VIDA-20.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://drive.google.com/thumbnail?id=11Pm2tIOlA_uYlMxTHXYSpFIwTXHqR3Gc&sz=w1600"
@@ -1038,6 +1088,7 @@
         data-descricao="Uma colônia massiva de pinguins logo a frente de um bote zodiac cheio de turistas no continente antártico."
         data-na-loja="ambos"
         data-preco-digital="100"
+        data-arquivo="VIDA-07.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1i_LMy6jJsS2E2MSU72FegYOopkQDBPu2"
@@ -1057,6 +1108,7 @@
         data-descricao="Uma base marinha tomada por completo por uma colônia de pinguins na península antártica."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="VIDA-02.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1O2sZ1QzONESCDluI32DxZOqlv7oMeQ6Z"
@@ -1076,6 +1128,7 @@
         data-descricao="Eu acho que esse pinguim queria um tempo só pra ele durante essa nevasca."
         data-na-loja="ambos"
         data-preco-digital="100"
+        data-arquivo="VIDA-17.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1MRUL_-q_k6PHCOdiSldpPdI_dNx7HDDQ"
@@ -1095,6 +1148,7 @@
         data-descricao="A neve caindo sobre esse pinguim solitário com sua colônia ao fundo traz uma paz, não é mesmo?"
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="VIDA-13.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1jLHIWqnoCyw2PmA5fQIrczTW7F1Jyn3o"
@@ -1114,6 +1168,7 @@
         data-descricao="É incrível ver a vida selvagem se adaptando ao ambiente que, em algum momento, foi alterado pelo ser humano."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="VIDA-15.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/15-Ag8EsX9C6xzKXlwnCMyBGc0xNEeqF8"
@@ -1133,6 +1188,7 @@
         data-descricao="Nesse close, é possível os detalhes das asas e penas dos pinguins que moram na Antártica."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="VIDA-14.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1fcGSM1pp4b6q0K1JTQl7YLJHyBbZvxbW"
@@ -1152,6 +1208,7 @@
         data-descricao="Por um momento, pode-se pensar que é uma imagem em preto e branco, mas é apenas a natureza da Antártica, com suas montanhas escuras e a neve branca, assim como os pinguins."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="VIDA-10.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/18Zrcey7oMRxW9kvYZ0WaBiQgkNfAWd1q"
@@ -1171,6 +1228,7 @@
         data-descricao="Acompanhar a vida selvagem na Antártica não cansa, cada momento traz uma lembrança indescritível."
         data-na-loja="ambos"
         data-preco-digital="100"
+        data-arquivo="VIDA-08.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1A5XzXBrsUAzO0nf6Z8NXB88tno13s54a"
@@ -1190,6 +1248,7 @@
         data-descricao="Um porco selvagem caminhando solitário pelo Parque Nacional dos Lençóis Maranhenses, com as dunas e as lagoas de água cristalina logo abaixo dele."
         data-na-loja="fisica"
         data-preco-digital="70"
+        data-arquivo="VIDA-18.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/13Wo8lZMJV_DpM8v_N33rvC8HnAzDollE"
@@ -1209,6 +1268,7 @@
         data-descricao="As tinturarias de couro de Fez possuem diversos tipos de composições fotográficas."
         data-na-loja="digital"
         data-preco-digital="70"
+        data-arquivo="VIDA-03.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1FoZwUuOrtyQKzeC8jaNWmAZi7n5DXj8t"
@@ -1228,6 +1288,7 @@
         data-descricao="Couros tingidos de amarelo, coberturas das casas e a vida cotidiana acontecendo em Fez"
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="VIDA-06.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1eNE_nryv_hzf9NxOEH1mtMolrggJkPtM"
@@ -1247,6 +1308,7 @@
         data-descricao="Os diversos tanques de tintura de couro pelo centro da cidade de Fez."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="VIDA-01.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1fzfzbqlUBJC1QKWj0RLz57dwC9QFj7Cn"
@@ -1266,6 +1328,7 @@
         data-descricao="Apenas um macaco caminhando tranquilamente pelo meio de turistas durante uma trilha em Marrocos."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="VIDA-05.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1MOtV6ISrWG7T1p0GpJvdV_tSx8WrdZEG"
@@ -1285,6 +1348,7 @@
         data-descricao="As cores das tinturarias de couro em Fez são incríveis."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="VIDA-09.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1Zr4I-IchZCAx9XwLwljq_AgAM96EjJhN"
@@ -1304,6 +1368,7 @@
         data-descricao="Conhecer as tinturarias de couro em Fez e fotografar as cenas cotidianas do lugar é muito bom."
         data-na-loja="ambos"
         data-preco-digital="70"
+        data-arquivo="VIDA-12.jpg"
         data-link-gumroad=""
         data-link-shopify=""
         data-img-expandida="https://res.cloudinary.com/kyzo7du6/image/upload/f_auto,q_auto,w_1800,c_limit/douglasnschimidt/1ueqjpS4OvBP8PORCmE2z2klt2tcEJ2Yo"
@@ -1454,7 +1519,7 @@
     }
 
     /* ── Lightbox ── */
-    const TAMANHOS = {};
+    const TAMANHOS = {"28x42 cm":300,"42x63cm":600,"56x84cm":900};
     const PAPEIS   = {"Papel Photo Rag® 308 (Fosco)":0};
     const MOLDURAS = {"Sem moldura":0};
 
@@ -1524,8 +1589,8 @@
         conteudos += `<div class="lb-tab-content ${ativo}" id="tab-digital">
           <p class="lb-preco-label">Preço</p>
           <p class="lb-preco">R$ ${precoD}</p>
-          <p style="font-size:.8rem;color:var(--texto2);margin-bottom:1rem;line-height:1.6">JPEG alta resolução — download imediato via Gumroad</p>
-          <a class="lb-btn" href="${gumroad}" target="_blank" rel="noopener">Comprar download</a>
+          <p style="font-size:.8rem;color:var(--texto2);margin-bottom:1rem;line-height:1.6">JPEG alta resolução</p>
+          <button class="lb-btn" onclick="abrirPedido('digital')">Comprar download</button>
         </div>`;
       }
 
@@ -1551,7 +1616,7 @@
           </div>
           <p class="lb-preco-label">Total</p>
           <p class="lb-preco" id="lb-preco-fisica">R$ 0</p>
-          <a class="lb-btn" id="lb-btn-shopify" href="${shopify}" target="_blank" rel="noopener">Comprar impressão</a>
+          <button class="lb-btn" onclick="abrirPedido('fisica')">Comprar impressão</button>
         </div>`;
       }
 
@@ -1575,8 +1640,62 @@
       const total   = base + extra;
       const el = document.getElementById('lb-preco-fisica');
       if(el) el.textContent = 'R$ ' + total;
-      const btn = document.getElementById('lb-btn-shopify');
-      if(btn) btn.href = shopify + '?tamanho='+encodeURIComponent(tam)+'&papel='+encodeURIComponent(papel)+'&moldura='+encodeURIComponent(moldura);
+      return {tam, papel, moldura, total};
+    }
+
+    /* ── Solicitação de compra (grava na aba "Pedidos" da planilha) ── */
+    const PEDIDOS_URL = "https://script.google.com/macros/s/AKfycbw8pprpEngcaRVf4ViIkiBEbzg1_ipeJV6zLfeaFbKAF4uKfiBE-Bx_bzFZoC7CYZ3G/exec";
+    const IDIOMA = "pt";
+    let pedidoAtual = null;
+
+    function esc(s) { const d = document.createElement('div'); d.textContent = s ?? ''; return d.innerHTML; }
+
+    function abrirPedido(tipo) {
+      if(!PEDIDOS_URL) { window.open('https://ig.me/m/douglasnanes', '_blank', 'noopener'); return; }
+      const el = itensVisiveis[idxAtual];
+      const p = {tipo, foto: el.dataset.titulo, arquivo: el.dataset.arquivo || '', foto_id: el.dataset.id,
+                  tamanho: '', papel: '', moldura: '', valor: el.dataset.precoDigital};
+      if(tipo === 'fisica') {
+        const o = calcLbPreco();
+        p.tamanho = o.tam || ''; p.papel = o.papel || ''; p.moldura = o.moldura || ''; p.valor = String(o.total);
+      }
+      pedidoAtual = p;
+      const tipoTxt = tipo === 'digital' ? "Download Digital" : "Impressão Física";
+      const opc = tipo === 'fisica' ? `<br>${esc(p.tamanho)} · ${esc(p.papel)} · ${esc(p.moldura)}` : '';
+      document.getElementById('lb-compra').innerHTML = `
+        <div class="lb-pedido">
+          <p class="lb-preco-label">Solicitar compra</p>
+          <p class="lb-pedido-resumo"><strong>${esc(p.foto)}</strong> — ${tipoTxt}${opc}</p>
+          <p class="lb-preco">R$ ${esc(p.valor)}</p>
+          <p class="lb-pedido-intro">Deixe seu contato e eu retorno para combinar pagamento e entrega.</p>
+          <div class="lb-opcoes">
+            <div class="lb-opcao-grupo"><label>Seu nome</label><input id="ped-nome" type="text" autocomplete="name" /></div>
+            <div class="lb-opcao-grupo"><label>E-mail ou WhatsApp</label><input id="ped-contato" type="text" autocomplete="email" /></div>
+            <div class="lb-opcao-grupo"><label>Mensagem (opcional)</label><textarea id="ped-msg"></textarea></div>
+            <div class="lb-hp" aria-hidden="true"><input id="ped-site" type="text" tabindex="-1" autocomplete="off" /></div>
+          </div>
+          <p class="lb-pedido-aviso" id="ped-aviso"></p>
+          <button class="lb-btn" id="ped-enviar" onclick="enviarPedido()">Enviar pedido</button>
+          <button class="lb-btn secundario" onclick="carregarLightbox(idxAtual)">Voltar</button>
+        </div>`;
+    }
+
+    function enviarPedido() {
+      const nome = document.getElementById('ped-nome').value.trim();
+      const contato = document.getElementById('ped-contato').value.trim();
+      const aviso = document.getElementById('ped-aviso');
+      if(!nome || !contato) { aviso.textContent = "Preencha seu nome e um contato."; return; }
+      if(document.getElementById('ped-site').value) return; /* robô de spam */
+      const btn = document.getElementById('ped-enviar');
+      btn.disabled = true; btn.textContent = "Enviando...";
+      const dados = new URLSearchParams({...pedidoAtual, nome, contato,
+        mensagem: document.getElementById('ped-msg').value.trim(), idioma: IDIOMA});
+      fetch(PEDIDOS_URL, {method: 'POST', mode: 'no-cors', body: dados})
+        .then(() => {
+          document.getElementById('lb-compra').innerHTML = `<p class="lb-pedido-intro" style="font-size:.95rem;color:var(--texto)">Pedido recebido! Vou entrar em contato em breve para combinar pagamento e entrega.</p>`;
+          if (typeof gtag === 'function') gtag('event', 'pedido_compra', {foto_titulo: pedidoAtual.foto, tipo: pedidoAtual.tipo, valor: Number(pedidoAtual.valor) || 0});
+        })
+        .catch(() => { aviso.textContent = "Não consegui enviar agora. Tente de novo ou fale comigo pelo Instagram."; btn.disabled = false; btn.textContent = "Enviar pedido"; });
     }
 
     function fecharLightbox() {
@@ -1593,6 +1712,7 @@
     document.addEventListener('keydown', e => {
       const lb = document.getElementById('lightbox');
       if(!lb.classList.contains('aberto')) return;
+      if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName) && e.key !== 'Escape') return;
       if(e.key === 'Escape')      fecharLightbox();
       if(e.key === 'ArrowRight')  navLightbox(1);
       if(e.key === 'ArrowLeft')   navLightbox(-1);
