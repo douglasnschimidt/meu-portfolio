@@ -51,7 +51,23 @@ O que este script faz:
 import os, csv, io, hashlib, time, requests
 
 PLANILHA_ID  = "1DnSWBiIMxd-BqfgUQkcHa-58IeZ85hcquxwGlNvDC80"
-PLANILHA_GID = "1134133275"  # Página2 — tabela de preços
+PLANILHA_GID = "1134133275"  # aba "Valores de venda" — tabela de preços
+
+# Endereço do Apps Script que grava os pedidos na aba "Pedidos" da planilha.
+# Enquanto estiver vazio, os botões de compra abrem uma conversa no Instagram.
+PEDIDOS_URL = "https://script.google.com/macros/s/AKfycbw8pprpEngcaRVf4ViIkiBEbzg1_ipeJV6zLfeaFbKAF4uKfiBE-Bx_bzFZoC7CYZ3G/exec"
+
+def numero(txt, padrao=0):
+    """Converte '300', '300,00', 'R$ 300,00' ou 'R$ 1.200,50' em número inteiro."""
+    t = str(txt or "").replace("R$", "").replace(" ", "").replace("\u00a0", "").strip()
+    if not t:
+        return padrao
+    if "," in t:
+        t = t.replace(".", "").replace(",", ".")
+    try:
+        return int(round(float(t)))
+    except ValueError:
+        return padrao
 
 PASTAS = {
     "terra": "1tHbeHivJircA47WZnzAK4cmR2iogUWd1",
@@ -94,7 +110,18 @@ TEXTOS = {
         "moldura_label":        "Moldura",
         "btn_comprar_download": "Comprar download",
         "btn_comprar_impressao":"Comprar impressão",
-        "desc_digital":         "JPEG alta resolução — download imediato via Gumroad",
+        "desc_digital":         "JPEG alta resolução",
+        "ped_titulo":           "Solicitar compra",
+        "ped_intro":            "Deixe seu contato e eu retorno para combinar pagamento e entrega.",
+        "ped_nome":             "Seu nome",
+        "ped_contato":          "E-mail ou WhatsApp",
+        "ped_msg":              "Mensagem (opcional)",
+        "ped_enviar":           "Enviar pedido",
+        "ped_enviando":         "Enviando...",
+        "ped_voltar":           "Voltar",
+        "ped_ok":               "Pedido recebido! Vou entrar em contato em breve para combinar pagamento e entrega.",
+        "ped_erro":             "Não consegui enviar agora. Tente de novo ou fale comigo pelo Instagram.",
+        "ped_falta":            "Preencha seu nome e um contato.",
         "sem_venda_pre":        "Entre em ",
         "sem_venda_link":       "contato",
         "sem_venda_pos":        " caso queira comprar essa foto",
@@ -130,7 +157,18 @@ TEXTOS = {
         "moldura_label":        "Frame",
         "btn_comprar_download": "Buy download",
         "btn_comprar_impressao":"Buy print",
-        "desc_digital":         "High-resolution JPEG — instant download via Gumroad",
+        "desc_digital":         "High-resolution JPEG",
+        "ped_titulo":           "Request purchase",
+        "ped_intro":            "Leave your contact details and I'll get back to you to arrange payment and delivery.",
+        "ped_nome":             "Your name",
+        "ped_contato":          "E-mail or WhatsApp",
+        "ped_msg":              "Message (optional)",
+        "ped_enviar":           "Send request",
+        "ped_enviando":         "Sending...",
+        "ped_voltar":           "Back",
+        "ped_ok":               "Request received! I'll be in touch soon to arrange payment and delivery.",
+        "ped_erro":             "Couldn't send right now. Please try again or message me on Instagram.",
+        "ped_falta":            "Please fill in your name and a contact.",
         "sem_venda_pre":        "Get in ",
         "sem_venda_link":       "touch",
         "sem_venda_pos":        " if you'd like to buy this photo",
@@ -184,7 +222,7 @@ def ler_planilha():
                 "titulo_en":     linha.get("titulo_en",      "").strip(),
                 "descricao_en":  linha.get("descricao_en",   "").strip(),
                 "na_loja":       linha.get("na_loja",       "nao").strip().lower(),
-                "preco_digital": linha.get("preco_digital", "29").strip(),
+                "preco_digital": str(numero(linha.get("preco_digital", ""), 29)),
                 "link_gumroad":  linha.get("link_gumroad",  "").strip(),
                 "link_shopify":  linha.get("link_shopify",  "").strip(),
                 "hero":          linha.get("Hero", "").strip().upper() in ("TRUE", "VERDADEIRO", "1", "SIM", "X"),
@@ -214,16 +252,13 @@ def ler_precos():
     for linha in csv.DictReader(io.StringIO(resp.text)):
         tam = linha.get("Tamanho", "").strip()
         if tam:
-            try: tamanhos[tam] = int(float(linha.get("Preço", "0").strip() or "0"))
-            except: pass
+            tamanhos[tam] = numero(linha.get("Preço", "0"))
         papel = linha.get("Papel", "").strip()
         if papel:
-            try: papeis[papel] = int(float(linha.get("Preço adicional", "0").strip() or "0"))
-            except: pass
+            papeis[papel] = numero(linha.get("Preço adicional", "0"))
         moldura = linha.get("Moldura", "").strip()
         if moldura:
-            try: molduras[moldura] = int(float(linha.get("Preço adicional", "0").strip() or "0"))
-            except: pass
+            molduras[moldura] = numero(linha.get("Preço adicional", "0"))
     print(f"  precos: {len(tamanhos)} tamanho(s), {len(papeis)} papel(is), {len(molduras)} moldura(s)")
     return tamanhos, papeis, molduras
 
@@ -450,6 +485,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
         data-descricao="{descricao_f}"
         data-na-loja="{na_loja}"
         data-preco-digital="{f['preco_digital']}"
+        data-arquivo="{f['foto_nome']}"
         data-link-gumroad="{f['link_gumroad']}"
         data-link-shopify="{f['link_shopify']}"
         data-img-expandida="{f['img_expandida']}"
@@ -569,6 +605,13 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
     .lb-opcao-grupo label{{font-family:var(--detalhe);font-size:.75rem;color:var(--texto2);letter-spacing:.08em}}
     .lb-opcao-grupo select{{background:var(--painel);border:1px solid var(--borda);color:var(--texto);font-family:var(--corpo);font-size:.85rem;padding:.35rem .5rem;outline:none;cursor:pointer;width:100%}}
     .lb-opcao-grupo select:focus{{border-color:var(--destaque)}}
+    .lb-pedido input,.lb-pedido textarea{{background:var(--painel);border:1px solid var(--borda);color:var(--texto);font-family:var(--corpo);font-size:.85rem;padding:.45rem .5rem;outline:none;width:100%;box-sizing:border-box}}
+    .lb-pedido input:focus,.lb-pedido textarea:focus{{border-color:var(--destaque)}}
+    .lb-pedido textarea{{resize:vertical;min-height:4.5rem}}
+    .lb-pedido-resumo{{font-size:.85rem;color:var(--texto);line-height:1.6;margin-bottom:.4rem}}
+    .lb-pedido-intro{{font-size:.8rem;color:var(--texto2);line-height:1.6;margin-bottom:1rem}}
+    .lb-pedido-aviso{{font-size:.85rem;color:var(--destaque);line-height:1.6;margin:.4rem 0 .8rem;min-height:1em}}
+    .lb-hp{{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}}
     .lb-tabs{{display:flex;gap:0;margin-bottom:1.5rem}}
     .lb-tab{{flex:1;font-family:var(--detalhe);font-size:.8rem;letter-spacing:.08em;padding:.4rem;border:1px solid var(--borda);background:transparent;color:var(--texto2);cursor:pointer;transition:all var(--transicao);text-align:center}}
     .lb-tab.ativo{{background:var(--destaque);border-color:var(--destaque);color:#0d0d0d}}
@@ -805,7 +848,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
           <p class="lb-preco-label">{t['preco_label']}</p>
           <p class="lb-preco">R$ ${{precoD}}</p>
           <p style="font-size:.8rem;color:var(--texto2);margin-bottom:1rem;line-height:1.6">{t['desc_digital']}</p>
-          <a class="lb-btn" href="${{gumroad}}" target="_blank" rel="noopener">{t['btn_comprar_download']}</a>
+          <button class="lb-btn" onclick="abrirPedido('digital')">{t['btn_comprar_download']}</button>
         </div>`;
       }}
 
@@ -831,7 +874,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
           </div>
           <p class="lb-preco-label">{t['total_label']}</p>
           <p class="lb-preco" id="lb-preco-fisica">R$ 0</p>
-          <a class="lb-btn" id="lb-btn-shopify" href="${{shopify}}" target="_blank" rel="noopener">{t['btn_comprar_impressao']}</a>
+          <button class="lb-btn" onclick="abrirPedido('fisica')">{t['btn_comprar_impressao']}</button>
         </div>`;
       }}
 
@@ -855,8 +898,62 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
       const total   = base + extra;
       const el = document.getElementById('lb-preco-fisica');
       if(el) el.textContent = 'R$ ' + total;
-      const btn = document.getElementById('lb-btn-shopify');
-      if(btn) btn.href = shopify + '?tamanho='+encodeURIComponent(tam)+'&papel='+encodeURIComponent(papel)+'&moldura='+encodeURIComponent(moldura);
+      return {{tam, papel, moldura, total}};
+    }}
+
+    /* ── Solicitação de compra (grava na aba "Pedidos" da planilha) ── */
+    const PEDIDOS_URL = "{PEDIDOS_URL}";
+    const IDIOMA = "{idioma}";
+    let pedidoAtual = null;
+
+    function esc(s) {{ const d = document.createElement('div'); d.textContent = s ?? ''; return d.innerHTML; }}
+
+    function abrirPedido(tipo) {{
+      if(!PEDIDOS_URL) {{ window.open('https://ig.me/m/douglasnanes', '_blank', 'noopener'); return; }}
+      const el = itensVisiveis[idxAtual];
+      const p = {{tipo, foto: el.dataset.titulo, arquivo: el.dataset.arquivo || '', foto_id: el.dataset.id,
+                  tamanho: '', papel: '', moldura: '', valor: el.dataset.precoDigital}};
+      if(tipo === 'fisica') {{
+        const o = calcLbPreco();
+        p.tamanho = o.tam || ''; p.papel = o.papel || ''; p.moldura = o.moldura || ''; p.valor = String(o.total);
+      }}
+      pedidoAtual = p;
+      const tipoTxt = tipo === 'digital' ? "{t['tab_digital']}" : "{t['tab_fisica']}";
+      const opc = tipo === 'fisica' ? `<br>${{esc(p.tamanho)}} · ${{esc(p.papel)}} · ${{esc(p.moldura)}}` : '';
+      document.getElementById('lb-compra').innerHTML = `
+        <div class="lb-pedido">
+          <p class="lb-preco-label">{t['ped_titulo']}</p>
+          <p class="lb-pedido-resumo"><strong>${{esc(p.foto)}}</strong> — ${{tipoTxt}}${{opc}}</p>
+          <p class="lb-preco">R$ ${{esc(p.valor)}}</p>
+          <p class="lb-pedido-intro">{t['ped_intro']}</p>
+          <div class="lb-opcoes">
+            <div class="lb-opcao-grupo"><label>{t['ped_nome']}</label><input id="ped-nome" type="text" autocomplete="name" /></div>
+            <div class="lb-opcao-grupo"><label>{t['ped_contato']}</label><input id="ped-contato" type="text" autocomplete="email" /></div>
+            <div class="lb-opcao-grupo"><label>{t['ped_msg']}</label><textarea id="ped-msg"></textarea></div>
+            <div class="lb-hp" aria-hidden="true"><input id="ped-site" type="text" tabindex="-1" autocomplete="off" /></div>
+          </div>
+          <p class="lb-pedido-aviso" id="ped-aviso"></p>
+          <button class="lb-btn" id="ped-enviar" onclick="enviarPedido()">{t['ped_enviar']}</button>
+          <button class="lb-btn secundario" onclick="carregarLightbox(idxAtual)">{t['ped_voltar']}</button>
+        </div>`;
+    }}
+
+    function enviarPedido() {{
+      const nome = document.getElementById('ped-nome').value.trim();
+      const contato = document.getElementById('ped-contato').value.trim();
+      const aviso = document.getElementById('ped-aviso');
+      if(!nome || !contato) {{ aviso.textContent = "{t['ped_falta']}"; return; }}
+      if(document.getElementById('ped-site').value) return; /* robô de spam */
+      const btn = document.getElementById('ped-enviar');
+      btn.disabled = true; btn.textContent = "{t['ped_enviando']}";
+      const dados = new URLSearchParams({{...pedidoAtual, nome, contato,
+        mensagem: document.getElementById('ped-msg').value.trim(), idioma: IDIOMA}});
+      fetch(PEDIDOS_URL, {{method: 'POST', mode: 'no-cors', body: dados}})
+        .then(() => {{
+          document.getElementById('lb-compra').innerHTML = `<p class="lb-pedido-intro" style="font-size:.95rem;color:var(--texto)">{t['ped_ok']}</p>`;
+          if (typeof gtag === 'function') gtag('event', 'pedido_compra', {{foto_titulo: pedidoAtual.foto, tipo: pedidoAtual.tipo, valor: Number(pedidoAtual.valor) || 0}});
+        }})
+        .catch(() => {{ aviso.textContent = "{t['ped_erro']}"; btn.disabled = false; btn.textContent = "{t['ped_enviar']}"; }});
     }}
 
     function fecharLightbox() {{
@@ -873,6 +970,7 @@ def gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, idioma):
     document.addEventListener('keydown', e => {{
       const lb = document.getElementById('lightbox');
       if(!lb.classList.contains('aberto')) return;
+      if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName) && e.key !== 'Escape') return;
       if(e.key === 'Escape')      fecharLightbox();
       if(e.key === 'ArrowRight')  navLightbox(1);
       if(e.key === 'ArrowLeft')   navLightbox(-1);
@@ -951,6 +1049,7 @@ def main():
                 "img_expandida": img_expandida(f["id"], disponivel_cloudinary),
                 "img_hero":      img_hero(f["id"], disponivel_cloudinary),
                 "hero":          c.get("hero", False),
+                "tem_texto":     bool(c.get("titulo")) and bool(c.get("descricao")),
             })
 
     # Ordena cada categoria pela posição na planilha
@@ -958,6 +1057,13 @@ def main():
     todas_fotos.sort(key=lambda f: (f["slug"], f["posicao"]))
 
     print(f"\nTotal: {len(todas_fotos)} foto(s)")
+
+    sem_texto = [f for f in todas_fotos if not f.get("tem_texto")]
+    com_texto = len(todas_fotos) - len(sem_texto)
+    print(f"  textos: {com_texto}/{len(todas_fotos)} foto(s) com titulo e descricao preenchidos na planilha")
+    if sem_texto:
+        nomes = [f["foto_nome"] for f in sem_texto]
+        print(f"  faltam textos em {len(sem_texto)} foto(s): {nomes[:20]}{' ...' if len(nomes) > 20 else ''}")
 
     with open("portfolio.html", "w", encoding="utf-8") as fh:
         fh.write(gerar_portfolio(todas_fotos, tamanhos, papeis, molduras, "pt"))
